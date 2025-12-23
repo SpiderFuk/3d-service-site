@@ -40,6 +40,21 @@
 							const clonedModel = model.clone(true); // Deep clone para evitar compartir geometrías
 							sceneContext.addModel(clonedModel);
 
+							// Corregir rotación del modelo para mostrar la cara frontal
+							// Los modelos vienen rotados 90° en X (transversal) y 90° en Z (frontal)
+							// Aplicamos rotación inversa para mostrar la vista frontal correcta
+							clonedModel.rotation.x = -Math.PI / 2; // -90° en X (antihorario)
+							clonedModel.rotation.z = -Math.PI / 2; // -90° en Z (antihorario)
+
+							// Recalcular normales para iluminación correcta después de rotar
+							import('three').then(({ Mesh }) => {
+								clonedModel.traverse((child) => {
+									if (child instanceof Mesh && child.geometry) {
+										child.geometry.computeVertexNormals();
+									}
+								});
+							});
+
 							// Ajustar cámara al modelo
 							import('three').then(({ Box3, Vector3 }) => {
 								const box = new Box3().setFromObject(clonedModel);

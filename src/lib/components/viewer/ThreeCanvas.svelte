@@ -29,14 +29,30 @@
 			// Agregar nuevo modelo
 			sceneContext.addModel(model);
 
+			// Corregir rotación del modelo para mostrar la cara frontal
+			// Los modelos vienen rotados 90° en X (transversal) y 90° en Z (frontal)
+			// Aplicamos rotación inversa para mostrar la vista frontal correcta
+			model.rotation.x = -Math.PI / 2; // -90° en X (antihorario)
+			model.rotation.z = -Math.PI / 2; // -90° en Z (antihorario)
+
+			// Recalcular normales para iluminación correcta después de rotar
+			import('three').then(({ Mesh }) => {
+				model.traverse((child) => {
+					if (child instanceof Mesh && child.geometry) {
+						child.geometry.computeVertexNormals();
+					}
+				});
+			});
+
 			// Calcular bounding box del modelo
 			import('three').then(({ Box3, Vector3 }) => {
+				if (!sceneContext) return;
+
 				const box = new Box3().setFromObject(model);
 				const size = box.getSize(new Vector3());
 				const center = box.getCenter(new Vector3());
 
 				// Calcular la diagonal del bounding box
-				const maxDim = Math.max(size.x, size.y, size.z);
 				const diagonal = Math.sqrt(size.x ** 2 + size.y ** 2 + size.z ** 2);
 
 				// Calcular distancia de la cámara basada en el FOV y el tamaño del modelo
