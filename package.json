@@ -1,0 +1,47 @@
+{
+  "name": "3d-service-site",
+  "version": "0.0.1",
+  "private": true,
+  "description": "",
+  "homepage": "https://github.com/SpiderFuk/3d-service-site#readme",
+  "bugs": {
+    "url": "https://github.com/SpiderFuk/3d-service-site/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpiderFuk/3d-service-site.git"
+  },
+  "license": "ISC",
+  "author": "Sebastián Escuder",
+  "type": "module",
+  "main": "postcss.config.js",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@sveltejs/vite-plugin-svelte-inspector": "^5.0.1",
+    "jszip": "^3.10.1",
+    "lucide-svelte": "^0.460.0",
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^7.0.0",
+    "@sveltejs/kit": "^2.49.2",
+    "@sveltejs/vite-plugin-svelte": "^6.2.1",
+    "@types/three": "^0.160.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^9.0.0",
+    "postcss": "^8.4.32",
+    "svelte": "^5.0.0",
+    "svelte-check": "^4.0.0",
+    "tailwindcss": "^3.4.0",
+    "tslib": "^2.4.1",
+    "typescript": "^5.0.0",
+    "vite": "^7.3.0"
+  }
+}

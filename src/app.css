@@ -1,0 +1,63 @@
+/**
+ * Estilos globales de la aplicación
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	* {
+		@apply box-border;
+	}
+
+	html {
+		@apply scroll-smooth;
+	}
+
+	body {
+		@apply font-sans text-text bg-background antialiased;
+	}
+}
+
+@layer utilities {
+	/* Contenedor responsivo */
+	.container {
+		@apply max-w-7xl;
+	}
+
+	/* Animaciones suaves */
+	.transition-smooth {
+		@apply transition-all duration-300 ease-in-out;
+	}
+
+	/* Sombras personalizadas */
+	.shadow-card {
+		box-shadow:
+			0 1px 3px 0 rgba(0, 0, 0, 0.1),
+			0 1px 2px 0 rgba(0, 0, 0, 0.06);
+	}
+
+	.shadow-card-hover {
+		box-shadow:
+			0 10px 15px -3px rgba(0, 0, 0, 0.1),
+			0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	}
+}
+
+/* Ocultar scrollbar pero mantener funcionalidad */
+.hide-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+	display: none;
+}
+
+/* Estilos para Three.js canvas */
+canvas {
+	@apply outline-none;
+}
