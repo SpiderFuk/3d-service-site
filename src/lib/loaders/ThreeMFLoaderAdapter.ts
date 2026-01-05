@@ -37,7 +37,16 @@ export class ThreeMFLoaderAdapter implements IModelLoader {
 
 					resolve(object);
 				} catch (error) {
-					reject(new Error(`Error al parsear 3MF: ${error}`));
+					console.error('Error al parsear archivo 3MF:', error);
+					// El visualizador web no soporta todos los archivos 3MF (ej: Production Extension).
+					// El archivo SÍ puede abrirse en slicers como Bambu Studio, PrusaSlicer o Cura.
+					reject(
+						new Error(
+							'Este archivo 3MF usa características no soportadas por el visualizador web. ' +
+								'El archivo funciona correctamente en slicers (Bambu Studio, PrusaSlicer, Cura). ' +
+								'Para previsualizarlo aquí, expórtalo como STL.'
+						)
+					);
 				}
 			};
 

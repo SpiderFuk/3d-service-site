@@ -28,10 +28,10 @@
 		lg: 'p-6 md:p-8'
 	};
 
-	const shadowClass = shadow ? 'shadow-md' : '';
-	const hoverClass = hover ? 'hover:shadow-xl transition-shadow duration-300' : '';
+	const shadowClass = $derived(shadow ? 'shadow-md' : '');
+	const hoverClass = $derived(hover ? 'hover:shadow-xl transition-shadow duration-300' : '');
 
-	const classes = `${baseClasses} ${paddingClasses[padding]} ${shadowClass} ${hoverClass} ${className}`;
+	const classes = $derived(`${baseClasses} ${paddingClasses[padding]} ${shadowClass} ${hoverClass} ${className}`);
 </script>
 
 <div class={classes}>

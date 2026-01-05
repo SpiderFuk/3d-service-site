@@ -3,11 +3,17 @@
 	 * Sección de colores de filamento y materiales
 	 */
 
-	import { filamentColors, materials } from '$lib/config/filamentColors';
+	import { getMaterialesList, getColoresByMaterial } from '$lib/config/filamentColors';
 	import ColorSwatch from '../ui/ColorSwatch.svelte';
 	import Card from '../ui/Card.svelte';
 
+	const materiales = getMaterialesList();
+
 	let selectedMaterial = $state('pla');
+
+	// Los colores se actualizan automáticamente cuando cambia el material seleccionado
+	const colores = $derived(getColoresByMaterial(selectedMaterial));
+	const materialActual = $derived(materiales.find((m) => m.id === selectedMaterial));
 </script>
 
 <section id="filaments" class="py-20 bg-background-secondary">
@@ -26,7 +32,7 @@
 			<div>
 				<h3 class="text-2xl font-bold text-text mb-6">Materiales Disponibles</h3>
 				<div class="space-y-4">
-					{#each materials as material}
+					{#each materiales as material}
 						<Card
 							padding="md"
 							shadow={true}
@@ -40,20 +46,22 @@
 								class="w-full text-left"
 							>
 								<div class="flex items-start justify-between mb-2">
-									<h4 class="text-xl font-bold text-text">{material.name}</h4>
+									<h4 class="text-xl font-bold text-text">{material.nombre}</h4>
 									<span
-										class="px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full"
+										class="px-3 py-1 text-sm font-medium rounded-full {material.disponible
+											? 'bg-primary/10 text-primary'
+											: 'bg-gray-200 text-gray-500'}"
 									>
-										Disponible
+										{material.disponible ? 'Disponible' : 'No disponible'}
 									</span>
 								</div>
-								<p class="text-text-secondary mb-3">{material.description}</p>
+								<p class="text-text-secondary mb-3">{material.descripcion}</p>
 								<div class="flex flex-wrap gap-2">
-									{#each material.properties as property}
+									{#each material.propiedades as propiedad}
 										<span
 											class="px-2 py-1 bg-background text-text-secondary text-xs rounded-md"
 										>
-											{property}
+											{propiedad}
 										</span>
 									{/each}
 								</div>
@@ -65,10 +73,12 @@
 
 			<!-- Colores -->
 			<div>
-				<h3 class="text-2xl font-bold text-text mb-6">Colores Disponibles</h3>
+				<h3 class="text-2xl font-bold text-text mb-6">
+					Colores en {materialActual?.nombre ?? 'PLA'}
+				</h3>
 				<Card padding="lg" shadow={true}>
 					<div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-4">
-						{#each filamentColors as color}
+						{#each colores as color}
 							<ColorSwatch {color} size="lg" />
 						{/each}
 					</div>

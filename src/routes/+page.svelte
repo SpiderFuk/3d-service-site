@@ -1,6 +1,9 @@
 <script lang="ts">
 	/**
 	 * Página principal - SPA de impresión 3D
+	 *
+	 * Las secciones se muestran/ocultan según la configuración en:
+	 * src/lib/config/sections.ts
 	 */
 
 	import Hero from '$lib/components/sections/Hero.svelte';
@@ -9,6 +12,7 @@
 	import FilamentColors from '$lib/components/sections/FilamentColors.svelte';
 	import Gallery3D from '$lib/components/sections/Gallery3D.svelte';
 	import ContactWhatsApp from '$lib/components/sections/ContactWhatsApp.svelte';
+	import { secciones } from '$lib/config/sections';
 </script>
 
 <svelte:head>
@@ -20,9 +24,26 @@
 	<meta name="keywords" content="impresión 3D, PLA, PETG, ABS, TPU, prototipado, diseño 3D" />
 </svelte:head>
 
-<Hero />
-<Services />
-<ModelViewer />
-<FilamentColors />
-<Gallery3D />
-<ContactWhatsApp />
+{#if secciones.hero.habilitada}
+	<Hero />
+{/if}
+
+{#if secciones.services.habilitada}
+	<Services />
+{/if}
+
+{#if secciones.modelViewer.habilitada}
+	<ModelViewer />
+{/if}
+
+{#if secciones.filamentColors.habilitada}
+	<FilamentColors />
+{/if}
+
+{#if secciones.gallery.habilitada}
+	<Gallery3D />
+{/if}
+
+{#if secciones.contact.habilitada}
+	<ContactWhatsApp />
+{/if}

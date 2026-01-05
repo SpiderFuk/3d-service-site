@@ -39,6 +39,7 @@
 			// Limpiar loader
 			loader.dispose();
 		} catch (err) {
+			console.error('Error al cargar archivo 3D:', err);
 			const errorMessage = err instanceof Error ? err.message : 'Error al cargar el archivo';
 			modelStore.setError(errorMessage);
 		} finally {
@@ -140,7 +141,7 @@
 					Seleccionar Archivo
 				</Button>
 
-				<p class="text-xs text-text-secondary">Formatos: STL, 3MF • Máximo: 50MB</p>
+				<p class="text-xs text-text-secondary">Formato recomendado: STL • También acepta 3MF • Máximo: 50MB</p>
 			</div>
 		</div>
 	{/if}

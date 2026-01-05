@@ -18,7 +18,7 @@
 			id: 'santa',
 			name: 'Santa borracho',
 			description: 'Navidad',
-			file: '/models/DrunkSanta.3mf'
+			file: '/models/DrunkSanta.stl'
 		},
 		{
 			id: 'mini',
@@ -30,7 +30,7 @@
 			id: 'vase',
 			name: 'Jarrón',
 			description: 'Decorativo',
-			file: '/models/FlowerVase.3mf'
+			file: '/models/FlowerVase.stl'
 		},
 		{
 			id: 'dice-tower',
