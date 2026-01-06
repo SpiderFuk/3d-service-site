@@ -24,12 +24,12 @@ export function formatVolume(volume: number): string {
 }
 
 /**
- * Formatea precio en pesos argentinos (opcional, si se implementa cálculo)
+ * Formatea precio en pesos uruguayos (opcional, si se implementa cálculo)
  */
 export function formatPrice(price: number): string {
-	return new Intl.NumberFormat('es-AR', {
+	return new Intl.NumberFormat('es-UY', {
 		style: 'currency',
-		currency: 'ARS',
+		currency: 'UYU',
 		minimumFractionDigits: 0
 	}).format(price);
 }

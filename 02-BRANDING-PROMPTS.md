@@ -5,7 +5,7 @@
 **Tipo de negocio:** Servicio de impresión 3D
 **Público objetivo:** Makers, diseñadores, ingenieros, hobbyistas, pequeñas empresas
 **Tono deseado:** Profesional pero accesible, moderno, tecnológico
-**Ubicación:** Argentina (considerar para idioma si aplica)
+**Ubicación:** Uruguay (considerar para idioma si aplica)
 
 ---
 

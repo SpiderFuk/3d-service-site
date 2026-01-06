@@ -58,13 +58,13 @@ export const materiales: Record<string, Material> = {
 			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: true },
 			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: true },
 			rojo: { nombre: 'Rojo', hex: COLORES_HEX.rojo, disponible: true },
-			azul: { nombre: 'Azul', hex: COLORES_HEX.azul, disponible: true },
-			verde: { nombre: 'Verde', hex: COLORES_HEX.verde, disponible: true },
-			amarillo: { nombre: 'Amarillo', hex: COLORES_HEX.amarillo, disponible: true },
-			naranja: { nombre: 'Naranja', hex: COLORES_HEX.naranja, disponible: true },
-			violeta: { nombre: 'Violeta', hex: COLORES_HEX.violeta, disponible: true },
+			azul: { nombre: 'Azul', hex: COLORES_HEX.azul, disponible: false },
+			verde: { nombre: 'Verde', hex: COLORES_HEX.verde, disponible: false },
+			amarillo: { nombre: 'Amarillo', hex: COLORES_HEX.amarillo, disponible: false },
+			naranja: { nombre: 'Naranja', hex: COLORES_HEX.naranja, disponible: false },
+			violeta: { nombre: 'Violeta', hex: COLORES_HEX.violeta, disponible: false },
 			rosa: { nombre: 'Rosa', hex: COLORES_HEX.rosa, disponible: false },
-			gris: { nombre: 'Gris', hex: COLORES_HEX.gris, disponible: true },
+			gris: { nombre: 'Gris', hex: COLORES_HEX.gris, disponible: false },
 			plateado: { nombre: 'Plateado', hex: COLORES_HEX.plateado, disponible: true },
 			dorado: { nombre: 'Dorado', hex: COLORES_HEX.dorado, disponible: false }
 		}
@@ -75,8 +75,8 @@ export const materiales: Record<string, Material> = {
 		propiedades: ['Resistente', 'Flexible', 'Resistente a químicos', 'Uso alimentario'],
 		disponible: true,
 		colores: {
-			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: true },
-			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: true },
+			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: false },
+			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: false },
 			rojo: { nombre: 'Rojo', hex: COLORES_HEX.rojo, disponible: false },
 			azul: { nombre: 'Azul', hex: COLORES_HEX.azul, disponible: true },
 			verde: { nombre: 'Verde', hex: COLORES_HEX.verde, disponible: false },
@@ -87,7 +87,7 @@ export const materiales: Record<string, Material> = {
 		nombre: 'ABS',
 		descripcion: 'Alta resistencia mecánica y térmica, ideal para piezas funcionales',
 		propiedades: ['Muy resistente', 'Resistente al calor', 'Mecanizable', 'Más fuerte que PLA'],
-		disponible: true,
+		disponible: false,
 		colores: {
 			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: true },
 			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: true },
@@ -99,12 +99,12 @@ export const materiales: Record<string, Material> = {
 		nombre: 'TPU',
 		descripcion: 'Material flexible tipo goma, ideal para piezas que requieren elasticidad',
 		propiedades: ['Muy flexible', 'Resistente a abrasión', 'Absorbe impactos', 'Elástico'],
-		disponible: true,
+		disponible: false,
 		colores: {
 			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: true },
 			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: true },
-			rojo: { nombre: 'Rojo', hex: COLORES_HEX.rojo, disponible: false },
-			azul: { nombre: 'Azul', hex: COLORES_HEX.azul, disponible: false }
+			rojo: { nombre: 'Rojo', hex: COLORES_HEX.rojo, disponible: true },
+			azul: { nombre: 'Azul', hex: COLORES_HEX.azul, disponible: true }
 		}
 	}
 };

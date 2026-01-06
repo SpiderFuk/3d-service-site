@@ -58,7 +58,7 @@
 						</div>
 						<div>
 							<h3 class="font-bold text-lg text-text mb-1">Ubicación</h3>
-							<p class="text-text-secondary">{contactInfo.city}, Argentina</p>
+							<p class="text-text-secondary">{contactInfo.city}, Uruguay</p>
 							<p class="text-sm text-text-secondary mt-2">
 								Consultar disponibilidad de retiro en persona
 							</p>

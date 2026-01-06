@@ -51,9 +51,7 @@
 			<!-- Columna 1: Marca -->
 			<div>
 				<div class="flex items-center gap-2 mb-4">
-					<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-						<span class="text-white font-bold text-xl">3D</span>
-					</div>
+					<img src="/images/logo-with-no-bg.png" alt="Logo" class="w-10 h-10 object-contain" />
 					<span class="font-bold text-xl">{contactInfo.businessName}</span>
 				</div>
 				<p class="text-gray-400 mb-4">
@@ -111,6 +109,20 @@
 								class="text-white hover:text-primary transition-colors"
 							>
 								{contactInfo.whatsappDisplayNumber}
+							</a>
+						</div>
+					</li>
+					<li class="flex items-start gap-2">
+						<Instagram size={20} class="mt-0.5 text-primary flex-shrink-0" />
+						<div>
+							<p class="text-gray-400 text-sm">Instagram</p>
+							<a
+								href={contactInfo.socialMedia.instagram}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="text-white hover:text-primary transition-colors"
+							>
+								@printo.uy
 							</a>
 						</div>
 					</li>

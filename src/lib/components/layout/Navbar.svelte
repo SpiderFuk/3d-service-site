@@ -7,6 +7,7 @@
 	import { uiStore } from '$lib/stores/uiStore';
 	import { contactInfo } from '$lib/config/contact';
 	import { scrollToSection } from '$lib/utils/scroll';
+	import { openWhatsApp } from '$lib/utils/whatsapp';
 	import Button from '../ui/Button.svelte';
 
 	let isMobileMenuOpen = $derived($uiStore.isMobileMenuOpen);
@@ -30,6 +31,10 @@
 
 	function toggleMenu() {
 		uiStore.toggleMobileMenu();
+	}
+
+	function handleCTA() {
+		openWhatsApp();
 	}
 </script>
 
@@ -72,7 +77,7 @@
 
 			<!-- CTA Button Desktop -->
 			<div class="hidden md:block">
-				<Button variant="whatsapp" size="md">Cotizar Ahora</Button>
+				<Button variant="whatsapp" size="md" onclick={handleCTA}>Cotizar Ahora</Button>
 			</div>
 
 			<!-- Mobile Menu Button -->
@@ -103,7 +108,7 @@
 						</a>
 					{/each}
 					<div class="px-4 pt-2">
-						<Button variant="whatsapp" size="md" fullWidth>Cotizar Ahora</Button>
+						<Button variant="whatsapp" size="md" fullWidth onclick={handleCTA}>Cotizar Ahora</Button>
 					</div>
 				</div>
 			</div>

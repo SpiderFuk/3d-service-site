@@ -15,6 +15,14 @@
 		Zap: Icons.Zap,
 		Wrench: Icons.Wrench
 	};
+
+	// Calcular cantidad de servicios para grid dinámico
+	$: serviceCount = services.length;
+	$: gridCols = serviceCount === 4
+		? 'lg:grid-cols-4'
+		: serviceCount === 3
+		? 'lg:grid-cols-3'
+		: 'lg:grid-cols-2';
 </script>
 
 <section id="services" class="py-20 bg-background">
@@ -28,7 +36,7 @@
 			</p>
 		</div>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+		<div class="grid grid-cols-1 md:grid-cols-2 {gridCols} gap-6">
 			{#each services as service}
 				{@const IconComponent = iconMap[service.icon]}
 				<Card padding="lg" shadow={true} hover={true}>

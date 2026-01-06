@@ -148,9 +148,9 @@ CMD ["node", "build"]
 
 ## TODOs Post-Instalación
 
-- [ ] Configurar número de WhatsApp real
-- [ ] Agregar logo e imágenes
-- [ ] Subir modelos 3D de ejemplo a `/static/models`
+- [x] Configurar número de WhatsApp real
+- [x] Agregar logo e imágenes
+- [x] Subir modelos 3D de ejemplo a `/static/models`
 - [ ] Actualizar colores y materiales según inventario
 - [ ] Configurar dominio y SSL
 - [ ] Agregar Google Analytics (opcional)

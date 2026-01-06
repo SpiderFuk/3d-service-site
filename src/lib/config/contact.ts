@@ -13,8 +13,8 @@ export const contactInfo = {
 	email: 'printo.uy@gmail.com',
 
 	socialMedia: {
-		instagram: 'https://instagram.com/impresiones3d', // TODO: Opcional
-		facebook: 'https://facebook.com/impresiones3d', // TODO: Opcional
+		instagram: 'https://www.instagram.com/printo.uy',
+		// facebook: 'https://facebook.com/printo.uy', // TODO: Opcional
 	}
 };
 
