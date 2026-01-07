@@ -10,7 +10,7 @@
 	import Button from '../ui/Button.svelte';
 	import Card from '../ui/Card.svelte';
 
-	let fileInput: HTMLInputElement;
+	let fileInput: HTMLInputElement | undefined = $state(undefined);
 	let isDragging = $state(false);
 	let error = $derived($modelStore.error);
 	let isLoading = $derived($modelStore.isLoading);
@@ -105,6 +105,8 @@
 	{:else}
 		<!-- Zona de carga -->
 		<div
+			role="region"
+			aria-label="Zona de carga de archivos 3D"
 			class="border-2 border-dashed rounded-lg p-8 text-center transition-colors {isDragging
 				? 'border-primary bg-primary/5'
 				: 'border-gray-300'}"

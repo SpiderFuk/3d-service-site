@@ -48,9 +48,9 @@
 		lg: 'px-6 py-3 text-lg gap-2.5'
 	};
 
-	const fullWidthClass = fullWidth ? 'w-full' : '';
+	const fullWidthClass = $derived(fullWidth ? 'w-full' : '');
 
-	const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${fullWidthClass} ${className}`;
+	const classes = $derived(`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${fullWidthClass} ${className}`);
 </script>
 
 <button {type} class={classes} {disabled} {onclick}>
