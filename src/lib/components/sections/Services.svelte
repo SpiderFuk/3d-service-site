@@ -1,10 +1,12 @@
 <script lang="ts">
 	/**
 	 * Sección de servicios
+	 * Filtra servicios según el flag services-visibility de AppConfig
 	 */
 
 	import * as Icons from 'lucide-svelte';
-	import { services } from '$lib/config/services';
+	import { servicesVisibilityFlag } from '$lib/stores/featureFlagsStore';
+	import { getVisibleServices } from '$lib/utils/visibilityHelpers';
 	import Card from '../ui/Card.svelte';
 	import { Check } from 'lucide-svelte';
 
@@ -16,8 +18,9 @@
 		Wrench: Icons.Wrench
 	};
 
-	// Calcular cantidad de servicios para grid dinámico
-	$: serviceCount = services.length;
+	// Filtrar servicios visibles con feature flag
+	$: visibleServices = getVisibleServices($servicesVisibilityFlag);
+	$: serviceCount = visibleServices.length;
 	$: gridCols = serviceCount === 4
 		? 'lg:grid-cols-4'
 		: serviceCount === 3
@@ -37,7 +40,7 @@
 		</div>
 
 		<div class="grid grid-cols-1 md:grid-cols-2 {gridCols} gap-6">
-			{#each services as service}
+			{#each visibleServices as service}
 				{@const IconComponent = iconMap[service.icon]}
 				<Card padding="lg" shadow={true} hover={true}>
 					<div class="space-y-4">

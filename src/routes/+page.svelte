@@ -2,8 +2,9 @@
 	/**
 	 * Página principal - SPA de impresión 3D
 	 *
-	 * Las secciones se muestran/ocultan según la configuración en:
-	 * src/lib/config/sections.ts
+	 * Las secciones se muestran/ocultan según la configuración de feature flags.
+	 * Si el flag sections-visibility está enabled, usa configuración de AppConfig.
+	 * Si no, usa src/lib/config/sections.ts como fallback.
 	 */
 
 	import Hero from '$lib/components/sections/Hero.svelte';
@@ -12,7 +13,8 @@
 	import FilamentColors from '$lib/components/sections/FilamentColors.svelte';
 	import Gallery3D from '$lib/components/sections/Gallery3D.svelte';
 	import ContactWhatsApp from '$lib/components/sections/ContactWhatsApp.svelte';
-	import { secciones } from '$lib/config/sections';
+	import { sectionsVisibilityFlag } from '$lib/stores/featureFlagsStore';
+	import { isSeccionVisible } from '$lib/utils/visibilityHelpers';
 </script>
 
 <svelte:head>
@@ -24,26 +26,26 @@
 	<meta name="keywords" content="impresión 3D, PLA, PETG, ABS, TPU, prototipado, diseño 3D" />
 </svelte:head>
 
-{#if secciones.hero.habilitada}
+{#if isSeccionVisible('hero', $sectionsVisibilityFlag)}
 	<Hero />
 {/if}
 
-{#if secciones.services.habilitada}
+{#if isSeccionVisible('services', $sectionsVisibilityFlag)}
 	<Services />
 {/if}
 
-{#if secciones.modelViewer.habilitada}
+{#if isSeccionVisible('modelViewer', $sectionsVisibilityFlag)}
 	<ModelViewer />
 {/if}
 
-{#if secciones.filamentColors.habilitada}
+{#if isSeccionVisible('filamentColors', $sectionsVisibilityFlag)}
 	<FilamentColors />
 {/if}
 
-{#if secciones.gallery.habilitada}
+{#if isSeccionVisible('gallery', $sectionsVisibilityFlag)}
 	<Gallery3D />
 {/if}
 
-{#if secciones.contact.habilitada}
+{#if isSeccionVisible('contact', $sectionsVisibilityFlag)}
 	<ContactWhatsApp />
 {/if}

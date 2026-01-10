@@ -2,19 +2,22 @@
 	/**
 	 * Modal de notificación de servicio fuera de línea
 	 * Aparece en la primera visita del usuario
+	 * Configuración controlada dinámicamente por AWS AppConfig
 	 */
 
 	import { AlertTriangle, X } from 'lucide-svelte';
-	import { uiStore } from '$lib/stores/uiStore';
-	import { outOfServiceConfig } from '$lib/config/outOfServiceConfig';
+	import { outOfServiceUI, dismissOutOfServiceModal } from '$lib/stores/uiStore';
 	import Button from './Button.svelte';
 	import Card from './Card.svelte';
 
+	// Configuración reactiva desde el derived store
+	const config = $derived($outOfServiceUI.config);
+
 	/**
-	 * Cierra el modal y actualiza el estado
+	 * Cierra el modal y actualiza el estado en localStorage
 	 */
 	function handleDismiss() {
-		uiStore.dismissOutOfServiceModal();
+		dismissOutOfServiceModal();
 	}
 
 	/**
@@ -57,17 +60,17 @@
 
 				<!-- Título -->
 				<h2 id="modal-title" class="text-2xl font-bold text-amber-900">
-					{outOfServiceConfig.modal.title}
+					{config.modal.title}
 				</h2>
 
 				<!-- Mensaje -->
 				<p class="text-amber-800 leading-relaxed">
-					{outOfServiceConfig.modal.message}
+					{config.modal.message}
 				</p>
 
 				<!-- Botón -->
 				<Button variant="primary" size="lg" fullWidth onclick={handleDismiss}>
-					{outOfServiceConfig.modal.buttonText}
+					{config.modal.buttonText}
 				</Button>
 			</div>
 		</Card>

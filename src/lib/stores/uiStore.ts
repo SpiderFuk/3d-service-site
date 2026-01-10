@@ -1,27 +1,27 @@
 /**
  * Store para gestionar el estado de la UI
+ *
+ * NOTA: La lógica de out-of-service fue migrada a un derived store
+ * que consume el featureFlagsStore. Ver outOfServiceUI más abajo.
  */
 
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
+
+const isBrowser = typeof window !== 'undefined';
+import { featureFlagsStore } from './featureFlagsStore';
+import { mergeWithDefaults } from '$lib/config/outOfServiceConfig';
+import type { OutOfServiceFlag } from '$lib/types/featureFlags';
 
 export interface UIState {
 	isMobileMenuOpen: boolean;
 	activeSection: string | null;
 	showUploadModal: boolean;
-	showOutOfServiceModal: boolean;
-	showOutOfServiceBanner: boolean;
-	outOfServiceModalDismissed: boolean;
-	outOfServiceBannerDismissed: boolean;
 }
 
 const initialState: UIState = {
 	isMobileMenuOpen: false,
 	activeSection: null,
-	showUploadModal: false,
-	showOutOfServiceModal: false,
-	showOutOfServiceBanner: false,
-	outOfServiceModalDismissed: false,
-	outOfServiceBannerDismissed: false
+	showUploadModal: false
 };
 
 function createUIStore() {
@@ -73,65 +73,6 @@ function createUIStore() {
 		},
 
 		/**
-		 * Inicializa el estado del sistema de notificación desde localStorage
-		 * Se llama en onMount del layout
-		 */
-		initOutOfServiceState: () => {
-			const modalDismissed = localStorage.getItem('outOfServiceModalDismissed') === 'true';
-
-			update((state) => ({
-				...state,
-				outOfServiceModalDismissed: modalDismissed,
-				outOfServiceBannerDismissed: false,
-				showOutOfServiceModal: !modalDismissed,
-				showOutOfServiceBanner: modalDismissed // Banner siempre aparece si el modal fue cerrado
-			}));
-		},
-
-		/**
-		 * Cierra el modal y muestra el banner
-		 */
-		dismissOutOfServiceModal: () => {
-			localStorage.setItem('outOfServiceModalDismissed', 'true');
-			localStorage.setItem('outOfServiceModalDismissedAt', new Date().toISOString());
-
-			update((state) => ({
-				...state,
-				showOutOfServiceModal: false,
-				outOfServiceModalDismissed: true,
-				showOutOfServiceBanner: true
-			}));
-		},
-
-		/**
-		 * Cierra el banner (solo si es dismissible)
-		 * El banner reaparecerá en el próximo reload
-		 */
-		dismissOutOfServiceBanner: () => {
-			update((state) => ({
-				...state,
-				showOutOfServiceBanner: false,
-				outOfServiceBannerDismissed: true
-			}));
-		},
-
-		/**
-		 * Resetea el sistema de notificación (para testing/admin)
-		 */
-		resetOutOfServiceNotifications: () => {
-			localStorage.removeItem('outOfServiceModalDismissed');
-			localStorage.removeItem('outOfServiceModalDismissedAt');
-
-			update((state) => ({
-				...state,
-				showOutOfServiceModal: true,
-				showOutOfServiceBanner: false,
-				outOfServiceModalDismissed: false,
-				outOfServiceBannerDismissed: false
-			}));
-		},
-
-		/**
 		 * Resetea el store
 		 */
 		reset: () => set(initialState)
@@ -139,3 +80,81 @@ function createUIStore() {
 }
 
 export const uiStore = createUIStore();
+
+/**
+ * Claves de localStorage para el sistema de dismissal
+ */
+const STORAGE_KEY_MODAL = 'outOfServiceModalDismissed';
+const STORAGE_KEY_VERSION = 'outOfServiceFlagVersion';
+
+/**
+ * Store interno para triggear re-evaluación cuando se hace dismiss del modal
+ * Se incrementa cada vez que dismissOutOfServiceModal() se ejecuta
+ */
+const dismissalTrigger = writable(0);
+
+/**
+ * Derived store que combina los feature flags con el estado de dismissal en localStorage
+ * Controla cuándo mostrar el modal y el banner de out-of-service
+ */
+export const outOfServiceUI = derived(
+	[featureFlagsStore, dismissalTrigger],
+	([$flags, $trigger]) => {
+		const flag = $flags.flags['out-of-service'] as OutOfServiceFlag | undefined;
+
+		// Guard SSR: localStorage solo disponible en browser
+		if (!isBrowser) {
+			return {
+				showModal: false,
+				showBanner: false,
+				config: mergeWithDefaults({})
+			};
+		}
+
+		// Si el flag no existe o está deshabilitado, no mostrar nada
+		if (!flag?.enabled) {
+		return {
+			showModal: false,
+			showBanner: false,
+			config: mergeWithDefaults({})
+		};
+	}
+
+	// Verificar si el usuario ya cerró el modal
+	const currentVersion = `v${flag.enabled}`;
+	const storedVersion = localStorage.getItem(STORAGE_KEY_VERSION);
+	const modalDismissed = localStorage.getItem(STORAGE_KEY_MODAL) === 'true';
+
+	// Si el flag se toggleó off->on, resetear el dismissal
+	if (storedVersion !== currentVersion) {
+		localStorage.removeItem(STORAGE_KEY_MODAL);
+		localStorage.setItem(STORAGE_KEY_VERSION, currentVersion);
+		return {
+			showModal: true,
+			showBanner: false,
+			config: mergeWithDefaults(flag.config)
+		};
+	}
+
+	// Flujo normal: modal → dismiss → banner
+	return {
+		showModal: !modalDismissed,
+		showBanner: modalDismissed,
+		config: mergeWithDefaults(flag.config)
+	};
+});
+
+/**
+ * Helper para cerrar el modal de out-of-service
+ * Guarda el estado en localStorage y el derived store se actualizará automáticamente
+ */
+export function dismissOutOfServiceModal(): void {
+	if (!isBrowser) return; // Guard SSR
+
+	localStorage.setItem(STORAGE_KEY_MODAL, 'true');
+	const currentVersion = localStorage.getItem(STORAGE_KEY_VERSION) || 'v1';
+	localStorage.setItem(STORAGE_KEY_VERSION, currentVersion);
+
+	// Trigger re-evaluación del derived store
+	dismissalTrigger.update((n) => n + 1);
+}

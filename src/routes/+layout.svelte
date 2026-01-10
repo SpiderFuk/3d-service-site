@@ -3,14 +3,14 @@
 	 * Layout principal de la aplicación
 	 */
 
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import '../app.css';
 	import Navbar from '$lib/components/layout/Navbar.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import OutOfServiceModal from '$lib/components/ui/OutOfServiceModal.svelte';
 	import OutOfServiceBanner from '$lib/components/ui/OutOfServiceBanner.svelte';
-	import { uiStore } from '$lib/stores/uiStore';
-	import { isOutOfServiceEnabled } from '$lib/config/outOfServiceConfig';
+	import { featureFlagsStore } from '$lib/stores/featureFlagsStore';
+	import { outOfServiceUI } from '$lib/stores/uiStore';
 
 	interface Props {
 		children?: any;
@@ -18,17 +18,20 @@
 
 	let { children }: Props = $props();
 
-	// Inicializa el estado de notificación desde localStorage
+	// Inicializar polling de feature flags
 	onMount(() => {
-		if (isOutOfServiceEnabled()) {
-			uiStore.initOutOfServiceState();
-		}
+		// Iniciar polling cada 5 minutos (300000ms)
+		featureFlagsStore.startPolling(300000);
 	});
 
-	// Valores reactivos derivados
-	let showModal = $derived(isOutOfServiceEnabled() && $uiStore.showOutOfServiceModal);
+	// CRÍTICO: Detener polling para prevenir memory leaks
+	onDestroy(() => {
+		featureFlagsStore.stopPolling();
+	});
 
-	let showBanner = $derived(isOutOfServiceEnabled() && $uiStore.showOutOfServiceBanner);
+	// Valores reactivos desde el derived store
+	let showModal = $derived($outOfServiceUI.showModal);
+	let showBanner = $derived($outOfServiceUI.showBanner);
 </script>
 
 <div class="min-h-screen flex flex-col">
