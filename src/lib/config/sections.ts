@@ -1,8 +1,14 @@
 /**
- * Configuración de secciones de la página
+ * Configuración local de secciones de la página
  *
  * Permite activar/desactivar secciones de forma modular.
  * Cambiá el valor `habilitada` a true/false para mostrar u ocultar cada sección.
+ *
+ * IMPORTANTE: Cuando el feature flag 'sections-visibility' está enabled en AWS AppConfig,
+ * esta configuración es REEMPLAZADA por la del servidor. Esta configuración local se usa
+ * como fallback cuando:
+ * - El flag no existe o está disabled (enabled: false)
+ * - AWS AppConfig no está disponible
  */
 
 // ============================================

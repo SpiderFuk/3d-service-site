@@ -1,7 +1,9 @@
 /**
- * Configuración del sistema de notificación de servicio
+ * Configuración por defecto del sistema de notificación de servicio
  *
- * Para activar/desactivar la notificación, cambia `enabled` a true/false
+ * IMPORTANTE: Este archivo ahora solo provee valores por defecto.
+ * El estado real (enabled/disabled) es controlado por AWS AppConfig.
+ * Los textos aquí se usan como fallback si AWS no especifica valores.
  */
 
 export interface OutOfServiceConfig {
@@ -18,9 +20,13 @@ export interface OutOfServiceConfig {
 	};
 }
 
-export const outOfServiceConfig: OutOfServiceConfig = {
-	// Toggle maestro - cambiar a false para desactivar completamente
-	enabled: true,
+/**
+ * Valores por defecto para el flag out-of-service
+ * Se usan cuando AWS AppConfig no provee configuración o falla el fetch
+ */
+export const outOfServiceDefaults: OutOfServiceConfig = {
+	// Default: deshabilitado (AWS AppConfig controla el estado real)
+	enabled: false,
 
 	modal: {
 		title: '¡Hola!',
@@ -38,8 +44,43 @@ export const outOfServiceConfig: OutOfServiceConfig = {
 };
 
 /**
- * Helper para verificar si el sistema de notificación está habilitado
+ * Tipo para configuración del servidor con propiedades opcionales anidadas
  */
-export function isOutOfServiceEnabled(): boolean {
-	return outOfServiceConfig.enabled;
+export type PartialOutOfServiceConfig = {
+	enabled?: boolean;
+	modal?: {
+		title?: string;
+		message?: string;
+		buttonText?: string;
+	};
+	banner?: {
+		message?: string;
+		icon?: 'alert-circle' | 'alert-triangle' | 'info';
+		dismissible?: boolean;
+	};
+};
+
+/**
+ * Mergea la configuración del servidor con los defaults locales
+ * Garantiza que siempre haya valores para todos los campos
+ *
+ * @param serverConfig - Configuración parcial desde AWS AppConfig
+ * @returns Configuración completa con defaults aplicados
+ */
+export function mergeWithDefaults(
+	serverConfig?: PartialOutOfServiceConfig
+): OutOfServiceConfig {
+	return {
+		enabled: serverConfig?.enabled ?? outOfServiceDefaults.enabled,
+		modal: {
+			title: serverConfig?.modal?.title ?? outOfServiceDefaults.modal.title,
+			message: serverConfig?.modal?.message ?? outOfServiceDefaults.modal.message,
+			buttonText: serverConfig?.modal?.buttonText ?? outOfServiceDefaults.modal.buttonText
+		},
+		banner: {
+			message: serverConfig?.banner?.message ?? outOfServiceDefaults.banner.message,
+			icon: serverConfig?.banner?.icon ?? outOfServiceDefaults.banner.icon,
+			dismissible: serverConfig?.banner?.dismissible ?? outOfServiceDefaults.banner.dismissible
+		}
+	};
 }

@@ -1,8 +1,16 @@
 /**
- * Configuración de colores de filamento y materiales disponibles
+ * Configuración local de colores de filamento y materiales disponibles
  *
  * Cada material tiene sus propios colores con disponibilidad independiente.
  * Un color puede estar disponible en PLA pero no en TPU, por ejemplo.
+ *
+ * IMPORTANTE: Cuando el feature flag 'materials-visibility' está enabled en AWS AppConfig,
+ * la disponibilidad de materiales es REEMPLAZADA por la del servidor. Esta configuración
+ * local se usa como fallback cuando:
+ * - El flag no existe o está disabled (enabled: false)
+ * - AWS AppConfig no está disponible
+ *
+ * Nota: El control es a nivel de material (pla, petg, abs, tpu), no por color individual.
  */
 
 // ============================================

@@ -1,5 +1,11 @@
 /**
- * Configuración de servicios ofrecidos
+ * Configuración local de servicios ofrecidos
+ *
+ * IMPORTANTE: Cuando el feature flag 'services-visibility' está enabled en AWS AppConfig,
+ * solo los servicios especificados en el flag serán visibles. Esta configuración local
+ * se usa como fallback cuando:
+ * - El flag no existe o está disabled (enabled: false)
+ * - AWS AppConfig no está disponible
  */
 
 export interface Service {
