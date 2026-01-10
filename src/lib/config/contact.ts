@@ -10,7 +10,7 @@ export const contactInfo = {
 	businessName: '[PRINTO]',
 	city: 'Montevideo | Las Piedras',
 
-	email: 'printo.uy@gmail.com',
+	email: 'hola@printo.uy',
 
 	socialMedia: {
 		instagram: 'https://www.instagram.com/printo.uy',

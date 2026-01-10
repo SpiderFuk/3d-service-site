@@ -6,6 +6,8 @@
  */
 
 import { writable, derived } from 'svelte/store';
+
+const isBrowser = typeof window !== 'undefined';
 import { featureFlagsStore } from './featureFlagsStore';
 import { mergeWithDefaults } from '$lib/config/outOfServiceConfig';
 import type { OutOfServiceFlag } from '$lib/types/featureFlags';
@@ -86,14 +88,31 @@ const STORAGE_KEY_MODAL = 'outOfServiceModalDismissed';
 const STORAGE_KEY_VERSION = 'outOfServiceFlagVersion';
 
 /**
+ * Store interno para triggear re-evaluación cuando se hace dismiss del modal
+ * Se incrementa cada vez que dismissOutOfServiceModal() se ejecuta
+ */
+const dismissalTrigger = writable(0);
+
+/**
  * Derived store que combina los feature flags con el estado de dismissal en localStorage
  * Controla cuándo mostrar el modal y el banner de out-of-service
  */
-export const outOfServiceUI = derived(featureFlagsStore, ($flags) => {
-	const flag = $flags.flags['out-of-service'] as OutOfServiceFlag | undefined;
+export const outOfServiceUI = derived(
+	[featureFlagsStore, dismissalTrigger],
+	([$flags, $trigger]) => {
+		const flag = $flags.flags['out-of-service'] as OutOfServiceFlag | undefined;
 
-	// Si el flag no existe o está deshabilitado, no mostrar nada
-	if (!flag?.enabled) {
+		// Guard SSR: localStorage solo disponible en browser
+		if (!isBrowser) {
+			return {
+				showModal: false,
+				showBanner: false,
+				config: mergeWithDefaults({})
+			};
+		}
+
+		// Si el flag no existe o está deshabilitado, no mostrar nada
+		if (!flag?.enabled) {
 		return {
 			showModal: false,
 			showBanner: false,
@@ -130,7 +149,12 @@ export const outOfServiceUI = derived(featureFlagsStore, ($flags) => {
  * Guarda el estado en localStorage y el derived store se actualizará automáticamente
  */
 export function dismissOutOfServiceModal(): void {
+	if (!isBrowser) return; // Guard SSR
+
 	localStorage.setItem(STORAGE_KEY_MODAL, 'true');
 	const currentVersion = localStorage.getItem(STORAGE_KEY_VERSION) || 'v1';
 	localStorage.setItem(STORAGE_KEY_VERSION, currentVersion);
+
+	// Trigger re-evaluación del derived store
+	dismissalTrigger.update((n) => n + 1);
 }
