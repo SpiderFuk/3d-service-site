@@ -11,17 +11,17 @@
 	import Card from '../ui/Card.svelte';
 
 	// Filtrar materiales disponibles con feature flag
-	$: materiales = getAvailableMaterials($materialsVisibilityFlag);
+	const materiales = $derived(getAvailableMaterials($materialsVisibilityFlag));
 
 	let selectedMaterial = $state('pla');
 
 	// Verificar que el material seleccionado siga disponible
-	$: {
+	$effect(() => {
 		if (!isMaterialAvailable(selectedMaterial, $materialsVisibilityFlag)) {
 			// Si el material actual no está disponible, seleccionar el primero disponible
 			selectedMaterial = materiales[0]?.id || 'pla';
 		}
-	}
+	});
 
 	// Los colores se actualizan automáticamente cuando cambia el material seleccionado
 	const colores = $derived(getColoresByMaterial(selectedMaterial));
