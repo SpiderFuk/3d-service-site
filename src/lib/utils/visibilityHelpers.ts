@@ -163,3 +163,36 @@ export function getMaterialesWithFlagOverride(
 
 	return result;
 }
+
+// ============================================
+// NAVIGATION
+// ============================================
+
+/**
+ * Item de navegación con su sección asociada
+ */
+export interface NavItem {
+	label: string;
+	href: string;
+	sectionKey: keyof typeof secciones;
+}
+
+/**
+ * Todos los items de navegación con sus secciones correspondientes
+ */
+const navItems: NavItem[] = [
+	{ label: 'Inicio', href: '#hero', sectionKey: 'hero' },
+	{ label: 'Servicios', href: '#services', sectionKey: 'services' },
+	{ label: 'Visor 3D', href: '#viewer', sectionKey: 'modelViewer' },
+	{ label: 'Colores', href: '#filaments', sectionKey: 'filamentColors' },
+	{ label: 'Galería', href: '#gallery', sectionKey: 'gallery' },
+	{ label: 'Contacto', href: '#contact', sectionKey: 'contact' }
+];
+
+/**
+ * Obtiene los items de navegación visibles según el flag de sections-visibility
+ * Override mode: Si el flag está enabled, usa AppConfig; si no, usa sections.ts
+ */
+export function getVisibleNavItems(flag?: SectionsVisibilityFlag): NavItem[] {
+	return navItems.filter((item) => isSeccionVisible(item.sectionKey, flag));
+}

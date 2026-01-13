@@ -6,15 +6,12 @@
 	import { MessageCircle, Mail, Instagram, Facebook } from 'lucide-svelte';
 	import { contactInfo } from '$lib/config/contact';
 	import { scrollToSection } from '$lib/utils/scroll';
+	import { sectionsVisibilityFlag } from '$lib/stores/featureFlagsStore';
+	import { getVisibleNavItems } from '$lib/utils/visibilityHelpers';
 
 	const currentYear = new Date().getFullYear();
 
-	const quickLinks = [
-		{ label: 'Inicio', href: '#hero' },
-		{ label: 'Servicios', href: '#services' },
-		{ label: 'Visor 3D', href: '#viewer' },
-		{ label: 'Galería', href: '#gallery' }
-	];
+	let quickLinks = $derived(getVisibleNavItems($sectionsVisibilityFlag));
 
 	const socialLinks = [
 		{

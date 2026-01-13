@@ -29,18 +29,18 @@ export const services: Service[] = [
 			'Tamaños desde miniatura hasta 30cm'
 		]
 	},
-	// {
-	// 	id: 'design',
-	// 	title: 'Diseño 3D',
-	// 	description: 'Modelado profesional de tus ideas desde cero',
-	// 	icon: 'Pen',
-	// 	features: [
-	// 		'Diseño personalizado',
-	// 		'Optimización para impresión',
-	// 		'Modificación de modelos existentes',
-	// 		'Asesoramiento técnico'
-	// 	]
-	// },
+	{
+		id: 'design',
+		title: 'Diseño 3D',
+		description: 'Modelado profesional de tus ideas desde cero',
+		icon: 'Pen',
+		features: [
+			'Diseño personalizado',
+			'Optimización para impresión',
+			'Modificación de modelos existentes',
+			'Asesoramiento técnico'
+		]
+	},
 	{
 		id: 'prototyping',
 		title: 'Prototipado Rápido',
