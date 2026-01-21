@@ -13,43 +13,34 @@
 		category: string;
 	}
 
-	// TODO: Reemplazar con imágenes reales de trabajos
 	const galleryItems: GalleryItem[] = [
 		{
 			id: '1',
-			title: 'Prototipo Mecánico',
-			description: 'Engranajes funcionales en PETG',
-			category: 'Industrial'
+			title: 'Imagen de una perro',
+			description: 'Impresión en PLA de alta calidad',
+			image: '/images/galery/20260120_211829 (1).jpg',
+			category: 'Cuadros'
 		},
 		{
 			id: '2',
-			title: 'Figura Decorativa',
-			description: 'Escultura detallada en PLA',
+			title: 'Panel de manga favorito',
+			description: 'Arte detallada',
+			image: '/images/galery/20260120_212023 (1).jpg',
 			category: 'Arte'
 		},
 		{
-			id: '3',
-			title: 'Organizador de Escritorio',
-			description: 'Diseño personalizado',
-			category: 'Funcional'
+			id: '6',
+			title: 'Imagen de un gato',
+			description: 'Impresión en PLA detallada',
+			image: '/images/galery/20260120_184323 (1).jpg',
+			category: 'Cuadros'
 		},
 		{
 			id: '4',
-			title: 'Carcasa Personalizada',
-			description: 'Protección a medida',
-			category: 'Accesorios'
-		},
-		{
-			id: '5',
-			title: 'Repuesto Industrial',
-			description: 'Pieza de reemplazo en ABS',
-			category: 'Industrial'
-		},
-		{
-			id: '6',
-			title: 'Miniatura de Arquitectura',
-			description: 'Maqueta de edificio',
-			category: 'Arquitectura'
+			title: 'Cuadro con pareja',
+			description: 'Tu propia foto en 3D',
+			image: '/images/galery/20260120_211651 (1).jpg',
+			category: 'Cuadros'
 		}
 	];
 </script>
@@ -65,9 +56,10 @@
 			</p>
 		</div>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+		<div class="flex flex-wrap justify-center gap-6">
 			{#each galleryItems as item}
-				<Card padding="none" shadow={true} hover={true}>
+				<div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(25%-1.125rem)] max-w-xs">
+					<Card padding="none" shadow={true} hover={true}>
 					<div class="aspect-square bg-background rounded-t-lg flex items-center justify-center">
 						{#if item.image}
 							<img
@@ -90,6 +82,7 @@
 						<p class="text-sm text-text-secondary">{item.description}</p>
 					</div>
 				</Card>
+				</div>
 			{/each}
 		</div>
 	</div>

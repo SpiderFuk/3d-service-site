@@ -29,18 +29,18 @@ export const services: Service[] = [
 			'Tamaños desde miniatura hasta 30cm'
 		]
 	},
-	{
-		id: 'design',
-		title: 'Diseño 3D',
-		description: 'Modelado profesional de tus ideas desde cero',
-		icon: 'Pen',
-		features: [
-			'Diseño personalizado',
-			'Optimización para impresión',
-			'Modificación de modelos existentes',
-			'Asesoramiento técnico'
-		]
-	},
+	// {
+	// 	id: 'design',
+	// 	title: 'Diseño 3D',
+	// 	description: 'Modelado profesional de tus ideas desde cero',
+	// 	icon: 'Pen',
+	// 	features: [
+	// 		'Diseño personalizado',
+	// 		'Optimización para impresión',
+	// 		'Modificación de modelos existentes',
+	// 		'Asesoramiento técnico'
+	// 	]
+	// },
 	{
 		id: 'prototyping',
 		title: 'Prototipado Rápido',
@@ -53,16 +53,16 @@ export const services: Service[] = [
 			'Ahorro en desarrollo'
 		]
 	},
-	{
-		id: 'custom',
-		title: 'Proyectos a Medida',
-		description: 'Soluciones personalizadas para tus necesidades específicas',
-		icon: 'Wrench',
-		features: [
-			'Consultoría personalizada',
-			'Proyectos complejos',
-			'Post-procesado disponible',
-			'Soporte continuo'
-		]
-	}
+	// {
+	// 	id: 'custom',
+	// 	title: 'Proyectos a Medida',
+	// 	description: 'Soluciones personalizadas para tus necesidades específicas',
+	// 	icon: 'Wrench',
+	// 	features: [
+	// 		'Consultoría personalizada',
+	// 		'Proyectos complejos',
+	// 		'Post-procesado disponible',
+	// 		'Soporte continuo'
+	// 	]
+	// }
 ];
