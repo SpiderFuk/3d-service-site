@@ -14,6 +14,7 @@
 		type?: 'button' | 'submit' | 'reset';
 		onclick?: (event: MouseEvent) => void;
 		class?: string;
+		title?: string;
 		children?: any;
 	}
 
@@ -25,6 +26,7 @@
 		type = 'button',
 		onclick,
 		class: className = '',
+		title,
 		children
 	}: Props = $props();
 
@@ -53,6 +55,6 @@
 	const classes = $derived(`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${fullWidthClass} ${className}`);
 </script>
 
-<button {type} class={classes} {disabled} {onclick}>
+<button {type} class={classes} {disabled} {onclick} {title}>
 	{@render children?.()}
 </button>

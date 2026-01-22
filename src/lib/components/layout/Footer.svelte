@@ -66,7 +66,7 @@
 								class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary flex items-center justify-center transition-colors"
 								aria-label={social.name}
 							>
-								<svelte:component this={social.icon} size={20} />
+								<social.icon size={20} />
 							</a>
 						{/if}
 					{/each}
