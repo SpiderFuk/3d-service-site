@@ -20,6 +20,6 @@ export const sectionsVisibilityDefaults: SectionsVisibilityConfig = {
 	services: true,
 	modelViewer: true,
 	filamentColors: true,
-	gallery: false, // Matches current sections.ts
+	gallery: true,
 	contact: true
 };
