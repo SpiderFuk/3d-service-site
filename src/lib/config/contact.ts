@@ -14,7 +14,7 @@ export const contactInfo = {
 
 	socialMedia: {
 		instagram: 'https://www.instagram.com/printo.uy',
-		// facebook: 'https://facebook.com/printo.uy', // TODO: Opcional
+		facebook: undefined as string | undefined // TODO: Opcional, configurar si se tiene
 	}
 };
 

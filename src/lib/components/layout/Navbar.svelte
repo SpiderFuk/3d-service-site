@@ -8,19 +8,14 @@
 	import { contactInfo } from '$lib/config/contact';
 	import { scrollToSection } from '$lib/utils/scroll';
 	import { openWhatsApp } from '$lib/utils/whatsapp';
+	import { sectionsVisibilityFlag } from '$lib/stores/featureFlagsStore';
+	import { getVisibleNavItems } from '$lib/utils/visibilityHelpers';
 	import Button from '../ui/Button.svelte';
 
 	let isMobileMenuOpen = $derived($uiStore.isMobileMenuOpen);
 	let logoError = $state(false);
 
-	const menuItems = [
-		{ label: 'Inicio', href: '#hero' },
-		{ label: 'Servicios', href: '#services' },
-		{ label: 'Visor 3D', href: '#viewer' },
-		{ label: 'Colores', href: '#filaments' },
-		{ label: 'Galería', href: '#gallery' },
-		{ label: 'Contacto', href: '#contact' }
-	];
+	let menuItems = $derived(getVisibleNavItems($sectionsVisibilityFlag));
 
 	function handleNavClick(event: MouseEvent, href: string) {
 		event.preventDefault();

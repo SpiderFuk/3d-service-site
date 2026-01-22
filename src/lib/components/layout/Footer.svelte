@@ -6,15 +6,12 @@
 	import { MessageCircle, Mail, Instagram, Facebook } from 'lucide-svelte';
 	import { contactInfo } from '$lib/config/contact';
 	import { scrollToSection } from '$lib/utils/scroll';
+	import { sectionsVisibilityFlag } from '$lib/stores/featureFlagsStore';
+	import { getVisibleNavItems } from '$lib/utils/visibilityHelpers';
 
 	const currentYear = new Date().getFullYear();
 
-	const quickLinks = [
-		{ label: 'Inicio', href: '#hero' },
-		{ label: 'Servicios', href: '#services' },
-		{ label: 'Visor 3D', href: '#viewer' },
-		{ label: 'Galería', href: '#gallery' }
-	];
+	let quickLinks = $derived(getVisibleNavItems($sectionsVisibilityFlag));
 
 	const socialLinks = [
 		{
@@ -69,7 +66,7 @@
 								class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary flex items-center justify-center transition-colors"
 								aria-label={social.name}
 							>
-								<svelte:component this={social.icon} size={20} />
+								<social.icon size={20} />
 							</a>
 						{/if}
 					{/each}
