@@ -164,6 +164,38 @@ export function getMaterialesWithFlagOverride(
 	return result;
 }
 
+/**
+ * Cuenta materiales disponibles según feature flag
+ * @param flag - MaterialsVisibilityFlag opcional
+ * @returns Número de materiales disponibles
+ */
+export function countAvailableMaterials(flag?: MaterialsVisibilityFlag): number {
+	return getAvailableMaterials(flag).length;
+}
+
+/**
+ * Cuenta colores únicos disponibles en todos los materiales disponibles
+ * Un color se cuenta solo una vez aunque aparezca en múltiples materiales,
+ * y solo si está marcado como disponible (color.disponible === true)
+ *
+ * @param flag - MaterialsVisibilityFlag opcional
+ * @returns Número de colores únicos disponibles
+ */
+export function countAvailableColors(flag?: MaterialsVisibilityFlag): number {
+	const materialesDisponibles = getAvailableMaterials(flag);
+	const coloresUnicos = new Set<string>();
+
+	materialesDisponibles.forEach((material) => {
+		Object.entries(material.colores).forEach(([colorId, color]) => {
+			if (color.disponible) {
+				coloresUnicos.add(colorId);
+			}
+		});
+	});
+
+	return coloresUnicos.size;
+}
+
 // ============================================
 // NAVIGATION
 // ============================================
