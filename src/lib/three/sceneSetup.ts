@@ -20,6 +20,7 @@ export interface SceneConfig {
 	backgroundColor?: string;
 	autoRotate?: boolean;
 	autoRotateSpeed?: number;
+	enableUserControls?: boolean;
 }
 
 export interface SceneContext {
@@ -42,7 +43,8 @@ export function createScene(config: SceneConfig): SceneContext {
 		enableShadows = true,
 		backgroundColor = '#F8FAFC',
 		autoRotate = false,
-		autoRotateSpeed = 2.0
+		autoRotateSpeed = 2.0,
+		enableUserControls = true
 	} = config;
 
 	// Crear escena
@@ -81,6 +83,13 @@ export function createScene(config: SceneConfig): SceneContext {
 	controls.minPolarAngle = 0; // Permite vista completamente desde arriba
 	controls.autoRotate = autoRotate;
 	controls.autoRotateSpeed = autoRotateSpeed;
+
+	// Deshabilitar interacción del usuario si está configurado
+	if (!enableUserControls) {
+		controls.enableRotate = false;
+		controls.enableZoom = false;
+		controls.enablePan = false;
+	}
 
 	// Iluminación
 	const ambientLight = new AmbientLight(0xffffff, 0.6);

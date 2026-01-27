@@ -33,7 +33,8 @@
 							container,
 							enableShadows: false,
 							autoRotate: true,
-							autoRotateSpeed: 3.0
+							autoRotateSpeed: 3.0,
+							enableUserControls: false
 						});
 
 						if (model) {
