@@ -1,6 +1,5 @@
 /**
  * Información de contacto y redes sociales
- * TODO: Configurar con datos reales del negocio
  */
 
 export const contactInfo = {
@@ -14,7 +13,7 @@ export const contactInfo = {
 
 	socialMedia: {
 		instagram: 'https://www.instagram.com/printo.uy',
-		facebook: undefined as string | undefined // TODO: Opcional, configurar si se tiene
+		facebook: undefined as string | undefined
 	}
 };
 

@@ -23,10 +23,10 @@ export const services: Service[] = [
 		description: 'Impresión de alta calidad en diversos materiales y colores',
 		icon: 'Printer',
 		features: [
-			'Múltiples materiales (PLA, PETG, ABS, TPU)',
+			'Múltiples materiales (PLA, PETG y mas en el futuro!)',
 			'Amplia gama de colores',
 			'Alta precisión y acabado',
-			'Tamaños desde miniatura hasta 30cm'
+			'Tamaños desde miniatura hasta 25cm'
 		]
 	},
 	// {

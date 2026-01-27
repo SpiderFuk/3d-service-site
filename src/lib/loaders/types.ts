@@ -41,5 +41,5 @@ export interface IModelLoader {
 /**
  * Extensiones soportadas
  */
-export const SUPPORTED_EXTENSIONS = ['.stl', '.3mf'] as const;
+export const SUPPORTED_EXTENSIONS = ['.stl', '.3mf', '.obj'] as const;
 export type SupportedExtension = (typeof SUPPORTED_EXTENSIONS)[number];

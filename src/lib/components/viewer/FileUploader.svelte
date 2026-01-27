@@ -4,11 +4,14 @@
 	 */
 
 	import { Upload, X, AlertCircle } from 'lucide-svelte';
+	import { Mesh } from 'three';
 	import { modelStore } from '$lib/stores/modelStore';
 	import { ModelLoaderFactory } from '$lib/loaders/ModelLoaderFactory';
+	import { OBJLoaderAdapter } from '$lib/loaders/OBJLoaderAdapter';
 	import { validateFile, formatFileSize } from '$lib/utils/fileValidation';
 	import Button from '../ui/Button.svelte';
 	import Card from '../ui/Card.svelte';
+	import type { Object3D } from 'three';
 
 	let fileInput: HTMLInputElement | undefined = $state(undefined);
 	let isDragging = $state(false);
@@ -76,9 +79,57 @@
 		isDragging = false;
 	}
 
-	function clearModel() {
+	/**
+	 * Mejora materiales para mejor visualización del logo
+	 */
+	function enhanceMaterials(object: Object3D) {
+		object.traverse((child) => {
+			if (child instanceof Mesh) {
+				const materials = Array.isArray(child.material) ? child.material : [child.material];
+				materials.forEach((material: any) => {
+					if (material.color && material.emissive !== undefined) {
+						const color = material.color.clone();
+						const brightness = (color.r + color.g + color.b) / 3;
+
+						// Emisión más fuerte para colores claros (blancos y grises claros)
+						material.emissive = color.clone();
+
+						// Aumentar intensidad emisiva especialmente para colores claros
+						// Colores con brightness > 0.5 reciben boost adicional
+						if (brightness > 0.5) {
+							material.emissiveIntensity = 0.6 + (brightness * 0.4); // 0.6-1.0 para claros
+						} else {
+							material.emissiveIntensity = brightness * 0.5; // 0-0.5 para oscuros
+						}
+
+						material.metalness = 0.1;
+						material.roughness = 0.4;
+					}
+				});
+			}
+		});
+	}
+
+	async function clearModel() {
 		modelStore.clearModel();
 		modelStore.clearError();
+
+		// Restaurar placeholder
+		try {
+			modelStore.setLoading(true);
+			const loader = new OBJLoaderAdapter();
+			const logoModel = await loader.loadFromURL('/logo/logo.obj', '/logo/logo.mtl');
+
+			// Mejorar materiales para mejor visualización
+			enhanceMaterials(logoModel);
+
+			modelStore.setPlaceholder(logoModel);
+			loader.dispose();
+		} catch (err) {
+			console.warn('No se pudo restaurar placeholder:', err);
+		} finally {
+			modelStore.setLoading(false);
+		}
 	}
 
 	function openFilePicker() {
