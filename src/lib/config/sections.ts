@@ -58,7 +58,7 @@ export const secciones = {
 	gallery: {
 		id: 'gallery',
 		nombre: 'Galería de Proyectos',
-		habilitada: false, // Deshabilitada hasta tener proyectos para mostrar
+		habilitada: true,
 		descripcion: 'Galería con trabajos realizados'
 	},
 	contact: {

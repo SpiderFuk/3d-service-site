@@ -42,6 +42,20 @@ function createModelStore() {
 		},
 
 		/**
+		 * Establece un modelo placeholder (logo)
+		 * No guarda modelInfo ni fileName para distinguir de modelos reales
+		 */
+		setPlaceholder: (model: Object3D) => {
+			update((state) => ({
+				...state,
+				currentModel: model,
+				modelInfo: null,
+				fileName: null,
+				error: null
+			}));
+		},
+
+		/**
 		 * Limpia el modelo actual
 		 */
 		clearModel: () => {

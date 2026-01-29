@@ -23,24 +23,24 @@ export const services: Service[] = [
 		description: 'Impresión de alta calidad en diversos materiales y colores',
 		icon: 'Printer',
 		features: [
-			'Múltiples materiales (PLA, PETG, ABS, TPU)',
+			'Múltiples materiales (PLA, PETG y mas en el futuro!)',
 			'Amplia gama de colores',
 			'Alta precisión y acabado',
-			'Tamaños desde miniatura hasta 30cm'
+			'Tamaños desde miniatura hasta 25cm'
 		]
 	},
-	{
-		id: 'design',
-		title: 'Diseño 3D',
-		description: 'Modelado profesional de tus ideas desde cero',
-		icon: 'Pen',
-		features: [
-			'Diseño personalizado',
-			'Optimización para impresión',
-			'Modificación de modelos existentes',
-			'Asesoramiento técnico'
-		]
-	},
+	// {
+	// 	id: 'design',
+	// 	title: 'Diseño 3D',
+	// 	description: 'Modelado profesional de tus ideas desde cero',
+	// 	icon: 'Pen',
+	// 	features: [
+	// 		'Diseño personalizado',
+	// 		'Optimización para impresión',
+	// 		'Modificación de modelos existentes',
+	// 		'Asesoramiento técnico'
+	// 	]
+	// },
 	{
 		id: 'prototyping',
 		title: 'Prototipado Rápido',
@@ -53,16 +53,16 @@ export const services: Service[] = [
 			'Ahorro en desarrollo'
 		]
 	},
-	{
-		id: 'custom',
-		title: 'Proyectos a Medida',
-		description: 'Soluciones personalizadas para tus necesidades específicas',
-		icon: 'Wrench',
-		features: [
-			'Consultoría personalizada',
-			'Proyectos complejos',
-			'Post-procesado disponible',
-			'Soporte continuo'
-		]
-	}
+	// {
+	// 	id: 'custom',
+	// 	title: 'Proyectos a Medida',
+	// 	description: 'Soluciones personalizadas para tus necesidades específicas',
+	// 	icon: 'Wrench',
+	// 	features: [
+	// 		'Consultoría personalizada',
+	// 		'Proyectos complejos',
+	// 		'Post-procesado disponible',
+	// 		'Soporte continuo'
+	// 	]
+	// }
 ];

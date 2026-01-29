@@ -4,6 +4,7 @@
 
 import { STLLoaderAdapter } from './STLLoaderAdapter';
 import { ThreeMFLoaderAdapter } from './ThreeMFLoaderAdapter';
+import { OBJLoaderAdapter } from './OBJLoaderAdapter';
 import type { IModelLoader } from './types';
 
 export class ModelLoaderFactory {
@@ -18,9 +19,11 @@ export class ModelLoaderFactory {
 				return new STLLoaderAdapter();
 			case '.3mf':
 				return new ThreeMFLoaderAdapter();
+			case '.obj':
+				return new OBJLoaderAdapter();
 			default:
 				throw new Error(
-					`Formato de archivo no soportado: ${extension}. Usa .stl o .3mf`
+					`Formato de archivo no soportado: ${extension}. Usa .stl, .3mf o .obj`
 				);
 		}
 	}
@@ -30,6 +33,6 @@ export class ModelLoaderFactory {
 	 */
 	static isSupportedExtension(filename: string): boolean {
 		const extension = filename.toLowerCase().slice(filename.lastIndexOf('.'));
-		return ['.stl', '.3mf'].includes(extension);
+		return ['.stl', '.3mf', '.obj'].includes(extension);
 	}
 }
