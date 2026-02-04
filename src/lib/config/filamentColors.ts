@@ -32,23 +32,25 @@ export interface Material {
 }
 
 // ============================================
-// COLORES BASE (para referencia de hex)
-// Podés usar estos valores o definir colores únicos por material
+// COLORES BASE (actualizados desde my-spools.json)
 // ============================================
 
 const COLORES_HEX = {
-	blanco: '#FFFFFF',
 	negro: '#000000',
-	rojo: '#EF4444',
+	blanco: '#FFFFFF',
+	rojo: '#FF0000',
+	cyan: '#0086D6',
+	gris: '#8E9089',
+	amarillo: '#FFD834',
+	beige: '#F7E6DE',
+	plateado: '#C8C8C8',
+	azulHielo: '#B8CDE9',
+	azulPetg: '#001489',
+	grisTranslucido: '#8E8E8E',
+	// Temporalmente agotados
 	azul: '#3B82F6',
 	verde: '#10B981',
-	amarillo: '#FBBF24',
-	naranja: '#F97316',
-	violeta: '#A855F7',
-	rosa: '#EC4899',
-	gris: '#6B7280',
-	plateado: '#D1D5DB',
-	dorado: '#F59E0B'
+	violeta: '#A855F7'
 } as const;
 
 // ============================================
@@ -63,18 +65,19 @@ export const materiales: Record<string, Material> = {
 		propiedades: ['Biodegradable', 'Bajo olor', 'Buena calidad superficial', 'No flexible'],
 		disponible: true,
 		colores: {
-			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: true },
 			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: true },
+			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: true },
 			rojo: { nombre: 'Rojo', hex: COLORES_HEX.rojo, disponible: true },
+			cyan: { nombre: 'Cyan', hex: COLORES_HEX.cyan, disponible: true },
+			gris: { nombre: 'Gris', hex: COLORES_HEX.gris, disponible: true },
+			amarillo: { nombre: 'Amarillo', hex: COLORES_HEX.amarillo, disponible: true },
+			beige: { nombre: 'Beige', hex: COLORES_HEX.beige, disponible: true },
+			plateado: { nombre: 'Plateado', hex: COLORES_HEX.plateado, disponible: true },
+			azulHieloTranslucido: { nombre: 'Azul Hielo translúcido', hex: COLORES_HEX.azulHielo, disponible: true },
+			// Temporalmente agotados
 			azul: { nombre: 'Azul', hex: COLORES_HEX.azul, disponible: false },
 			verde: { nombre: 'Verde', hex: COLORES_HEX.verde, disponible: false },
-			amarillo: { nombre: 'Amarillo', hex: COLORES_HEX.amarillo, disponible: false },
-			naranja: { nombre: 'Naranja', hex: COLORES_HEX.naranja, disponible: false },
-			violeta: { nombre: 'Violeta', hex: COLORES_HEX.violeta, disponible: false },
-			rosa: { nombre: 'Rosa', hex: COLORES_HEX.rosa, disponible: false },
-			gris: { nombre: 'Gris', hex: COLORES_HEX.gris, disponible: false },
-			plateado: { nombre: 'Plateado', hex: COLORES_HEX.plateado, disponible: true },
-			dorado: { nombre: 'Dorado', hex: COLORES_HEX.dorado, disponible: false }
+			violeta: { nombre: 'Violeta', hex: COLORES_HEX.violeta, disponible: false }
 		}
 	},
 	petg: {
@@ -83,36 +86,10 @@ export const materiales: Record<string, Material> = {
 		propiedades: ['Resistente', 'Flexible', 'Resistente a químicos', 'Uso alimentario'],
 		disponible: true,
 		colores: {
-			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: false },
-			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: false },
-			rojo: { nombre: 'Rojo', hex: COLORES_HEX.rojo, disponible: false },
-			azul: { nombre: 'Azul', hex: COLORES_HEX.azul, disponible: true },
-			verde: { nombre: 'Verde', hex: COLORES_HEX.verde, disponible: false },
-			gris: { nombre: 'Gris', hex: COLORES_HEX.gris, disponible: true }
-		}
-	},
-	abs: {
-		nombre: 'ABS',
-		descripcion: 'Alta resistencia mecánica y térmica, ideal para piezas funcionales',
-		propiedades: ['Muy resistente', 'Resistente al calor', 'Mecanizable', 'Más fuerte que PLA'],
-		disponible: false,
-		colores: {
-			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: true },
-			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: true },
-			rojo: { nombre: 'Rojo', hex: COLORES_HEX.rojo, disponible: true },
-			gris: { nombre: 'Gris', hex: COLORES_HEX.gris, disponible: true }
-		}
-	},
-	tpu: {
-		nombre: 'TPU',
-		descripcion: 'Material flexible tipo goma, ideal para piezas que requieren elasticidad',
-		propiedades: ['Muy flexible', 'Resistente a abrasión', 'Absorbe impactos', 'Elástico'],
-		disponible: false,
-		colores: {
-			blanco: { nombre: 'Blanco', hex: COLORES_HEX.blanco, disponible: true },
-			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: true },
-			rojo: { nombre: 'Rojo', hex: COLORES_HEX.rojo, disponible: true },
-			azul: { nombre: 'Azul', hex: COLORES_HEX.azul, disponible: true }
+			azul: { nombre: 'Azul', hex: COLORES_HEX.azulPetg, disponible: true },
+			grisTranslucido: { nombre: 'Gris translúcido', hex: COLORES_HEX.grisTranslucido, disponible: true },
+			// Temporalmente agotado
+			negro: { nombre: 'Negro', hex: COLORES_HEX.negro, disponible: false }
 		}
 	}
 };
