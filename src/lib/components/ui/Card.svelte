@@ -2,13 +2,14 @@
 	/**
 	 * Componente Card reutilizable
 	 */
+	import type { Snippet } from 'svelte';
 
 	interface Props {
 		padding?: 'none' | 'sm' | 'md' | 'lg';
 		shadow?: boolean;
 		hover?: boolean;
 		class?: string;
-		children?: any;
+		children?: Snippet;
 	}
 
 	let {

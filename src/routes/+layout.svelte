@@ -3,6 +3,7 @@
 	 * Layout principal de la aplicación
 	 */
 
+	import type { Snippet } from 'svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import '../app.css';
 	import Navbar from '$lib/components/layout/Navbar.svelte';
@@ -13,7 +14,7 @@
 	import { outOfServiceUI } from '$lib/stores/uiStore';
 
 	interface Props {
-		children?: any;
+		children?: Snippet;
 	}
 
 	let { children }: Props = $props();

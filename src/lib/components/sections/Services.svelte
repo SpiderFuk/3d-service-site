@@ -11,7 +11,7 @@
 	import { Check } from 'lucide-svelte';
 
 	// Map de iconos
-	const iconMap: Record<string, any> = {
+	const iconMap: Record<string, typeof Icons.Printer> = {
 		Printer: Icons.Printer,
 		Pen: Icons.PenTool,
 		Zap: Icons.Zap,
@@ -19,13 +19,13 @@
 	};
 
 	// Filtrar servicios visibles con feature flag
-	$: visibleServices = getVisibleServices($servicesVisibilityFlag);
-	$: serviceCount = visibleServices.length;
-	$: gridCols = serviceCount === 4
+	const visibleServices = $derived(getVisibleServices($servicesVisibilityFlag));
+	const serviceCount = $derived(visibleServices.length);
+	const gridCols = $derived(serviceCount === 4
 		? 'lg:grid-cols-4'
 		: serviceCount === 3
 		? 'lg:grid-cols-3'
-		: 'lg:grid-cols-2';
+		: 'lg:grid-cols-2');
 </script>
 
 <section id="services" class="py-20 bg-background">
@@ -45,7 +45,7 @@
 				<Card padding="lg" shadow={true} hover={true}>
 					<div class="space-y-4">
 						<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-							<svelte:component this={IconComponent} size={24} class="text-primary" />
+							<IconComponent size={24} class="text-primary" />
 						</div>
 
 						<div>

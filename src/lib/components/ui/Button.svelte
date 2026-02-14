@@ -2,6 +2,7 @@
 	/**
 	 * Componente Button reutilizable
 	 */
+	import type { Snippet } from 'svelte';
 
 	type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'whatsapp';
 	type ButtonSize = 'sm' | 'md' | 'lg';
@@ -15,7 +16,7 @@
 		onclick?: (event: MouseEvent) => void;
 		class?: string;
 		title?: string;
-		children?: any;
+		children?: Snippet;
 	}
 
 	let {

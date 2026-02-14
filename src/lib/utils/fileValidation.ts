@@ -31,7 +31,7 @@ export function validateFile(file: File): ValidationResult {
 
 	// Validar extensión
 	const extension = file.name.toLowerCase().slice(file.name.lastIndexOf('.'));
-	if (!SUPPORTED_EXTENSIONS.includes(extension as any)) {
+	if (!(SUPPORTED_EXTENSIONS as readonly string[]).includes(extension)) {
 		return {
 			valid: false,
 			error: `Formato no soportado. Usa archivos ${SUPPORTED_EXTENSIONS.join(' o ')}`

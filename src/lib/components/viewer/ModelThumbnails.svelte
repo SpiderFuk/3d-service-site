@@ -4,6 +4,7 @@
 	 */
 
 	import { onMount } from 'svelte';
+	import type { Object3D } from 'three';
 	import { modelStore } from '$lib/stores/modelStore';
 	import { ModelLoaderFactory } from '$lib/loaders/ModelLoaderFactory';
 	import Card from '../ui/Card.svelte';
@@ -23,7 +24,7 @@
 
 	let { models }: Props = $props();
 	let selectedId = $state<string | null>(null);
-	let loadedPreviews = $state<Record<string, any>>({});
+	let loadedPreviews = $state<Record<string, Object3D>>({});
 	let isLoadingPreviews = $state(true);
 
 	// Precargar modelos para previsualizaciones
@@ -52,7 +53,7 @@
 		const results = await Promise.all(loadPromises);
 
 		// Actualizar el estado con todos los modelos cargados
-		const newPreviews: Record<string, any> = {};
+		const newPreviews: Record<string, Object3D> = {};
 		results.forEach((result) => {
 			if (result) {
 				newPreviews[result.id] = result.object3D;

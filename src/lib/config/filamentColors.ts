@@ -142,36 +142,3 @@ export function getTodosLosColores() {
 	return Array.from(coloresMap.values());
 }
 
-// ============================================
-// EXPORTS LEGACY (compatibilidad)
-// ============================================
-
-export interface FilamentColor {
-	id: string;
-	name: string;
-	hex: string;
-	available: boolean;
-}
-
-export interface MaterialLegacy {
-	id: string;
-	name: string;
-	description: string;
-	properties: string[];
-}
-
-/** @deprecated Usá getColoresByMaterial() en su lugar */
-export const filamentColors: FilamentColor[] = getColoresByMaterial('pla').map((c) => ({
-	id: c.id,
-	name: c.nombre,
-	hex: c.hex,
-	available: c.disponible
-}));
-
-/** @deprecated Usá getMaterialesList() en su lugar */
-export const materials: MaterialLegacy[] = getMaterialesList().map((m) => ({
-	id: m.id,
-	name: m.nombre,
-	description: m.descripcion,
-	properties: m.propiedades
-}));

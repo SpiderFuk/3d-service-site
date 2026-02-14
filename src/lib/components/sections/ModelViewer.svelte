@@ -5,7 +5,6 @@
 
 	import { onMount } from 'svelte';
 	import { MessageCircle } from 'lucide-svelte';
-	import { Mesh } from 'three';
 	import ThreeCanvas from '../viewer/ThreeCanvas.svelte';
 	import FileUploader from '../viewer/FileUploader.svelte';
 	import ModelInfo from '../viewer/ModelInfo.svelte';
@@ -13,8 +12,7 @@
 	import Button from '../ui/Button.svelte';
 	import { modelStore } from '$lib/stores/modelStore';
 	import { openWhatsApp } from '$lib/utils/whatsapp';
-	import { OBJLoaderAdapter } from '$lib/loaders/OBJLoaderAdapter';
-	import type { Object3D } from 'three';
+	import { loadPlaceholder } from '$lib/three/placeholderLoader';
 
 	// Modelos de ejemplo
 	const exampleModels = [
@@ -48,61 +46,6 @@
 
 	function handleQuote() {
 		openWhatsApp({ modelInfo: modelInfo || undefined });
-	}
-
-	/**
-	 * Mejora materiales para mejor visualización
-	 * Aumenta emisión y ajusta propiedades para colores más vibrantes
-	 */
-	function enhanceMaterials(object: Object3D) {
-		object.traverse((child) => {
-			if (child instanceof Mesh) {
-				const materials = Array.isArray(child.material) ? child.material : [child.material];
-				materials.forEach((material: any) => {
-					if (material.color && material.emissive !== undefined) {
-						const color = material.color.clone();
-						const brightness = (color.r + color.g + color.b) / 3;
-
-						// Emisión más fuerte para colores claros (blancos y grises claros)
-						material.emissive = color.clone();
-
-						// Aumentar intensidad emisiva especialmente para colores claros
-						// Colores con brightness > 0.5 reciben boost adicional
-						if (brightness > 0.5) {
-							material.emissiveIntensity = 0.6 + (brightness * 0.4); // 0.6-1.0 para claros
-						} else {
-							material.emissiveIntensity = brightness * 0.5; // 0-0.5 para oscuros
-						}
-
-						material.metalness = 0.1;
-						material.roughness = 0.4;
-					}
-				});
-			}
-		});
-	}
-
-	/**
-	 * Carga el logo como placeholder inicial
-	 */
-	async function loadPlaceholder() {
-		try {
-			modelStore.setLoading(true);
-
-			const loader = new OBJLoaderAdapter();
-			const logoModel = await loader.loadFromURL('/logo/logo.obj', '/logo/logo.mtl');
-
-			// Mejorar materiales para mejor visualización
-			enhanceMaterials(logoModel);
-
-			modelStore.setPlaceholder(logoModel);
-			loader.dispose();
-		} catch (err) {
-			console.warn('No se pudo cargar placeholder:', err);
-			// No mostrar error al usuario, el canvas quedará vacío
-		} finally {
-			modelStore.setLoading(false);
-		}
 	}
 
 	onMount(() => {
