@@ -5,6 +5,7 @@
     "code-review-ai@claude-code-workflows": true,
     "security-scanning@claude-code-workflows": true,
     "code-documentation@claude-code-workflows": true,
-    "seo-technical-optimization@claude-code-workflows": true
+    "seo-technical-optimization@claude-code-workflows": true,
+    "cloud-infrastructure@claude-code-workflows": true
   }
 }
