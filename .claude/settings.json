@@ -1,0 +1,10 @@
+{
+  "enabledPlugins": {
+    "javascript-typescript@claude-code-workflows": true,
+    "frontend-mobile-development@claude-code-workflows": true,
+    "code-review-ai@claude-code-workflows": true,
+    "security-scanning@claude-code-workflows": true,
+    "code-documentation@claude-code-workflows": true,
+    "seo-technical-optimization@claude-code-workflows": true
+  }
+}

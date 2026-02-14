@@ -1,0 +1,19 @@
+{
+  "id": "codebase-audit_20260214",
+  "title": "Codebase Audit & Cleanup",
+  "type": "refactor",
+  "status": "complete",
+  "created": "2026-02-14T00:00:00Z",
+  "updated": "2026-02-14T00:00:00Z",
+  "current_phase": 3,
+  "current_task": "3.3",
+  "phases": {
+    "total": 3,
+    "completed": 3
+  },
+  "tasks": {
+    "total": 10,
+    "completed": 10
+  },
+  "commits": []
+}
