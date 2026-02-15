@@ -1,0 +1,36 @@
+{
+	"materials": {
+		"pla": {
+			"nombre": "PLA",
+			"descripcion": "Material versátil y fácil de usar, ideal para la mayoría de aplicaciones",
+			"propiedades": ["Biodegradable", "Bajo olor", "Buena calidad superficial", "No flexible"],
+			"disponible": true,
+			"colores": {
+				"negro": { "nombre": "Negro", "hex": "#000000", "disponible": true },
+				"blanco": { "nombre": "Blanco", "hex": "#FFFFFF", "disponible": true },
+				"rojo": { "nombre": "Rojo", "hex": "#FF0000", "disponible": true },
+				"cyan": { "nombre": "Cyan", "hex": "#0086D6", "disponible": true },
+				"gris": { "nombre": "Gris", "hex": "#8E9089", "disponible": true },
+				"amarillo": { "nombre": "Amarillo", "hex": "#FFD834", "disponible": true },
+				"beige": { "nombre": "Beige", "hex": "#F7E6DE", "disponible": true },
+				"plateado": { "nombre": "Plateado", "hex": "#C8C8C8", "disponible": true },
+				"azulHieloTranslucido": { "nombre": "Azul Hielo translúcido", "hex": "#B8CDE9", "disponible": true },
+				"azul": { "nombre": "Azul", "hex": "#3B82F6", "disponible": false },
+				"verde": { "nombre": "Verde", "hex": "#10B981", "disponible": false },
+				"violeta": { "nombre": "Violeta", "hex": "#A855F7", "disponible": false }
+			}
+		},
+		"petg": {
+			"nombre": "PETG",
+			"descripcion": "Mayor resistencia y durabilidad que PLA, resistente a impactos",
+			"propiedades": ["Resistente", "Flexible", "Resistente a químicos", "Uso alimentario"],
+			"disponible": true,
+			"colores": {
+				"azul": { "nombre": "Azul", "hex": "#001489", "disponible": true },
+				"grisTranslucido": { "nombre": "Gris translúcido", "hex": "#8E8E8E", "disponible": true },
+				"negro": { "nombre": "Negro", "hex": "#000000", "disponible": false }
+			}
+		}
+	},
+	"updatedAt": "2026-02-14T00:00:00Z"
+}

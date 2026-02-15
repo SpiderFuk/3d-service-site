@@ -1,23 +1,21 @@
 <script lang="ts">
 	/**
 	 * Galería de trabajos realizados - Carrusel horizontal con auto-scroll
+	 * Carga items desde /content/data/gallery.json con fallback local
 	 */
 
-	interface GalleryItem {
-		id: string;
-		title: string;
-		description: string;
-		image: string;
-		category: string;
-	}
+	import { onMount } from 'svelte';
+	import { fetchContent } from '$lib/services/contentService';
+	import type { GalleryItem, GalleryContent } from '$lib/types/content';
 
-	const galleryItems: GalleryItem[] = [
+	const fallbackItems: GalleryItem[] = [
 		{
 			id: "1",
 			title: "Tu compañero peludo",
 			description: "Dale vida a su personalidad única",
 			image: "/images/galery/20260120_184323 (1).jpg",
 			category: "Mascotas",
+			createdAt: "2026-01-20T18:43:23Z",
 		},
 		{
 			id: "2",
@@ -25,6 +23,7 @@
 			description: "El momento que cambió toda la historia",
 			image: "/images/galery/20260120_212023 (1).jpg",
 			category: "Colección",
+			createdAt: "2026-01-20T21:20:23Z",
 		},
 		{
 			id: "3",
@@ -32,6 +31,7 @@
 			description: "Inmortalizamos tu historia de amor",
 			image: "/images/galery/20260120_211651 (1).jpg",
 			category: "Momentos",
+			createdAt: "2026-01-20T21:16:51Z",
 		},
 		{
 			id: "4",
@@ -39,11 +39,28 @@
 			description: "Dale forma a ese panel inolvidable",
 			image: "/images/galery/20260120_211545(2).jpg",
 			category: "Ilustración",
+			createdAt: "2026-01-20T21:15:45Z",
 		},
 	];
 
+	let galleryItems = $state<GalleryItem[]>(fallbackItems);
+	let isLoading = $state(true);
+
 	// Triplicar items para scroll infinito continuo
-	const displayItems = [...galleryItems, ...galleryItems, ...galleryItems];
+	const displayItems = $derived([...galleryItems, ...galleryItems, ...galleryItems]);
+
+	onMount(async () => {
+		const fallback: GalleryContent = { items: fallbackItems, updatedAt: '' };
+		const content = await fetchContent<GalleryContent>('gallery', fallback);
+
+		// Ordenar por createdAt (más reciente primero) si viene del remoto
+		if (content.updatedAt) {
+			content.items.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+		}
+
+		galleryItems = content.items;
+		isLoading = false;
+	});
 
 	const MAX_SPEED = 0.5;
 	const EASE_DECEL = 0.008;

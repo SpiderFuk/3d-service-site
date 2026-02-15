@@ -66,7 +66,32 @@ El flag `materials-visibility` de AppConfig se elimina. La disponibilidad de mat
 - `sections-visibility` — mostrar/ocultar secciones enteras
 - `services-visibility` — mostrar/ocultar servicios
 
-### Decision 5: Decisiones tecnicas resueltas
+### Decision 5: Separar procesamiento de publicacion (gallery-processor vs gallery-publisher)
+
+**Elegido: Dos Lambdas separadas con un endpoint de confirmacion en el medio**
+
+El pipeline de galeria tiene un humano en el loop (el admin revisa y edita el contenido generado por IA antes de publicar). Esto es incompatible con una unica Lambda que hace todo, porque Lambda es de corta duracion y no puede esperar una decision humana.
+
+| Aspecto | Lambda unica (descartado) | Dos Lambdas (elegido) |
+|---|---|---|
+| **Duracion del Lambda** | Deberia sobrevivir una decision humana | Cada Lambda corre segundos y termina |
+| **Trigger claro** | S3 event arranca todo pero no puede terminar todo | S3 event = procesamiento, API call = publicacion |
+| **Edicion del admin** | No queda claro como los campos editados vuelven al Lambda | El admin envia los campos editados en el POST body |
+| **"Solo web" vs "Web + Instagram"** | Dificil de branchar — el Lambda fue triggereado por S3 | Trivial — el POST body incluye `publishToInstagram: true/false` |
+| **Recuperacion de errores** | Si Instagram falla, todo falla | Si Instagram falla, gallery.json ya esta actualizado. Se puede reintentar solo Instagram |
+| **"Descartar"** | El Lambda ya proceso y guardo la imagen. Como deshacer? | La imagen esta en assets/ pero no en gallery.json. Un endpoint de discard limpia los archivos |
+
+**Flujo resultante:**
+
+```
+S3 Event → gallery-processor (Sharp + Claude Vision) → guarda resultado en _uploads/results/{id}.json
+                                                                    ↓
+                                              Admin hace polling, ve preview, edita campos
+                                                                    ↓
+POST /admin/gallery/{id}/publish → gallery-publisher (gallery.json + Instagram + CF invalidation)
+```
+
+### Decision 6: Decisiones tecnicas resueltas
 
 | Decision | Elegido | Justificacion |
 |---|---|---|
@@ -82,56 +107,59 @@ El flag `materials-visibility` de AppConfig se elimina. La disponibilidad de mat
 ## Arquitectura General
 
 ```
-                    ┌────────────────────────────────────────────────────┐
-                    │              admin.printo.uy                       │
-                    │  ┌───────────────────┐  ┌───────────────────────┐  │
-                    │  │  Galeria          │  │  Materiales           │  │
-                    │  │  (upload foto)    │  │  (editar JSON)        │  │
-                    │  └────────┬──────────┘  └───────────┬───────────┘  │
-                    └───────────┼─────────────────────────┼──────────────┘
-                                │                         │
-             ┌──────────────────┘                         └──────────────────┐
-             ▼                                                               ▼
-  ┌─────────────────────┐                                    ┌──────────────────────────┐
-  │ API GW              │                                    │ API GW                   │
-  │ POST /admin/        │                                    │ PUT /admin/              │
-  │   upload-url        │                                    │   content/{type}         │
-  └────────┬────────────┘                                    └───────────┬──────────────┘
-           ▼                                                             ▼
-  ┌─────────────────────┐                                    ┌──────────────────────────┐
-  │ Lambda:             │                                    │ Lambda:                  │
-  │ gallery-upload-url  │                                    │ content-writer           │
-  │ (presigned URL)     │                                    │ (write JSON + invalidate)│
-  └────────┬────────────┘                                    └───────────┬──────────────┘
-           │                                                             │
-           │  Browser sube directo a S3                                  │
-           ▼                                                             ▼
+                    ┌─────────────────────────────────────────────────────────────────┐
+                    │                      admin.printo.uy                             │
+                    │  ┌───────────────────┐  ┌───────────────────────┐                │
+                    │  │  Galeria          │  │  Materiales           │                │
+                    │  │  (upload foto)    │  │  (editar JSON)        │                │
+                    │  └───┬──────────┬────┘  └───────────┬───────────┘                │
+                    └──────┼──────────┼───────────────────┼────────────────────────────┘
+                           │          │                   │
+          ┌────────────────┘          │                   └────────────────────┐
+          ▼                           │                                        ▼
+  ┌─────────────────────┐             │                        ┌──────────────────────────┐
+  │ API GW              │             │                        │ API GW                   │
+  │ POST /admin/        │             │                        │ PUT /admin/              │
+  │   upload-url        │             │                        │   content/{type}         │
+  └────────┬────────────┘             │                        └───────────┬──────────────┘
+           ▼                          │                                    ▼
+  ┌─────────────────────┐             │                        ┌──────────────────────────┐
+  │ Lambda:             │             │                        │ Lambda:                  │
+  │ gallery-upload-url  │             │                        │ content-writer           │
+  │ (presigned URL)     │             │                        │ (write JSON + invalidate)│
+  └────────┬────────────┘             │                        └───────────┬──────────────┘
+           │                          │                                    │
+           │  Browser sube directo    │  Admin confirma                    │
+           │  a S3                    │  publicacion                       │
+           ▼                          ▼                                    ▼
   ┌────────────────────────────────────────────────────────────────────────────────┐
   │                        S3: printo-content                                      │
   │                                                                                │
   │  data/                    assets/                     _uploads/                │
   │  ├── gallery.json         ├── gallery/                ├── raw/                 │
   │  ├── materials.json       │   └── {id}.jpg            │   └── {id}.jpg         │
-  │  └── [futuro].json        └── [futuro]/               └── meta/                │
+  │  └── [futuro].json        └── [futuro]/               ├── meta/                │
+  │                                                       │   └── {id}.json        │
+  │                                                       └── results/             │
   │                                                           └── {id}.json        │
-  └──────────┬─────────────────────────────────────────────────────────────────────┘
-             │
-             │  S3 Event: ObjectCreated en _uploads/raw/
-             ▼
-  ┌──────────────────────────┐
-  │ Lambda:                  │
-  │ gallery-processor        │
-  │ (Sharp + Claude Vision)  │
-  └──────┬──────┬──────┬─────┘
-         │      │      │
-         ▼      │      ▼
-  ┌──────────┐  │  ┌──────────┐
-  │ Claude   │  │  │Instagram │
-  │ API      │  │  │Graph API │
-  │ (Vision) │  │  │          │
-  └──────────┘  │  └──────────┘
-                │
-                ▼
+  └──────────┬──────────────────────────────────────────────┬─────────────────────┘
+             │                                              │
+             │  S3 Event: ObjectCreated                     │  POST /admin/gallery/
+             │  en _uploads/raw/                            │  {id}/publish
+             ▼                                              ▼
+  ┌──────────────────────────┐              ┌──────────────────────────────┐
+  │ Lambda:                  │              │ Lambda:                      │
+  │ gallery-processor        │              │ gallery-publisher            │
+  │ (Sharp + Claude Vision)  │              │ (gallery.json + Instagram)   │
+  └──────┬───────────────────┘              └──────┬──────┬───────────────┘
+         │                                         │      │
+         ▼                                         ▼      ▼
+  ┌──────────┐                              ┌──────────┐  ┌──────────┐
+  │ Claude   │                              │Instagram │  │CloudFront│
+  │ API      │                              │Graph API │  │Invalidate│
+  │ (Vision) │                              │          │  │          │
+  └──────────┘                              └──────────┘  └──────────┘
+
   ┌──────────────────────────────────┐
   │  CloudFront: printo.uy           │
   │                                  │
@@ -172,8 +200,10 @@ printo-content/
 └── _uploads/                          ← Interno, NO servido por CloudFront
     ├── raw/                           ← Imagenes sin procesar (subidas desde admin)
     │   └── 2026-02-14_abc123.jpg
-    └── meta/                          ← Contexto/notas del admin para el procesador
-        └── 2026-02-14_abc123.json     ← {"context": "litofania san valentin", "uploadedAt": "..."}
+    ├── meta/                          ← Contexto/notas del admin para el procesador
+    │   └── 2026-02-14_abc123.json     ← {"context": "litofania san valentin", "uploadedAt": "..."}
+    └── results/                       ← Resultados de IA pendientes de confirmacion
+        └── 2026-02-14_abc123.json     ← {"title": "...", "description": "...", "status": "pending"}
 ```
 
 ### Configuracion
@@ -339,15 +369,29 @@ El admin puede desde su panel:
 
 Mismo patron: leer JSON del bucket → UI para editar → guardar JSON → invalidar cache.
 
-**Flujo tecnico de upload (galeria):**
+**Flujo tecnico de upload (galeria) — dos momentos separados:**
+
+**Momento 1: Upload + procesamiento (automatico)**
 
 1. El admin page hace request a API Gateway: `POST /admin/upload-url`
 2. Lambda `gallery-upload-url` genera **presigned URLs** de S3 (PUT)
 3. El browser sube el meta JSON a `_uploads/meta/{id}.json` (si hay contexto)
 4. El browser sube la imagen a `_uploads/raw/{id}.jpg` (trigger de S3 Event)
-5. Lambda `gallery-processor` procesa la imagen y genera contenido con IA
-6. El resultado vuelve al admin via polling o WebSocket para preview/edicion
-7. El admin confirma → el processor finaliza (actualiza gallery.json, publica Instagram)
+5. Lambda `gallery-processor` se ejecuta: optimiza imagen con Sharp, genera contenido con Claude Vision
+6. El resultado se guarda en `_uploads/results/{id}.json` con `status: "pending"`
+7. El admin page hace polling a `GET /admin/gallery/{id}/result` hasta que el resultado exista
+
+**Momento 2: Confirmacion + publicacion (manual)**
+
+8. El admin ve el preview con titulo, descripcion, categoria, caption generados por IA
+9. El admin puede editar cualquier campo
+10. El admin elige: "Publicar en web + Instagram" / "Solo web" / "Descartar"
+11. `POST /admin/gallery/{id}/publish` → Lambda `gallery-publisher`
+12. gallery-publisher: actualiza gallery.json, publica en Instagram (si elegido), invalida CloudFront
+
+**Ventaja de esta separacion:** Cada Lambda es corta y stateless. No hay Lambda esperando
+una decision humana. Si Instagram falla, gallery.json ya esta actualizado y se puede
+reintentar solo la parte de Instagram.
 
 **Autenticacion:**
 
@@ -401,7 +445,7 @@ Mismo patron: leer JSON del bucket → UI para editar → guardar JSON → inval
 
 ### 3. Lambda: `gallery-processor`
 
-**Proposito:** Procesa la imagen subida, genera contenido con IA, actualiza la galeria, publica en Instagram.
+**Proposito:** Procesa la imagen subida y genera contenido con IA. **Solo procesamiento, no publica nada.** El resultado queda pendiente de confirmacion del admin.
 
 **Trigger:** S3 Event Notification (`ObjectCreated` en `_uploads/raw/`)
 
@@ -454,25 +498,76 @@ Responde UNICAMENTE con JSON valido, sin markdown ni explicaciones:
 }
 ```
 
-#### Paso 4: Retornar resultado al admin para preview
+#### Paso 4: Guardar resultado para preview
 
-- Guardar resultado en `_uploads/meta/{id}-result.json`
-- El admin page hace polling a un endpoint que lee este resultado
-- El admin puede editar titulo, descripcion, caption, etc.
-- El admin confirma → continua al paso 5
+- Guardar resultado en `_uploads/results/{id}.json` con estructura:
 
-#### Paso 5: Actualizar gallery.json
+```json
+{
+  "id": "2026-02-14_abc123",
+  "status": "pending",
+  "image": "/content/assets/gallery/2026-02-14_abc123.jpg",
+  "aiGenerated": {
+    "title": "Tu golden en 3D",
+    "description": "Litofania personalizada de tu mascota favorita",
+    "category": "Mascotas",
+    "instagramCaption": "Cada mascota merece ser inmortalizada ...",
+    "hashtags": ["impresion3d", "3dprinting", ...]
+  },
+  "processedAt": "2026-02-14T15:30:00Z"
+}
+```
+
+- **Fin del Lambda.** No actualiza gallery.json ni publica en Instagram.
+- El admin page hace polling a `GET /admin/gallery/{id}/result` para obtener este resultado.
+
+**Runtime:** Node.js 20.x | **Memory:** 512MB (Sharp necesita mas) | **Timeout:** 60s
+
+**Variables de entorno:**
+
+```
+CONTENT_BUCKET=printo-content
+CLAUDE_API_KEY_PARAM=/printo/claude-api-key
+```
+
+---
+
+### 4. Lambda: `gallery-publisher`
+
+**Proposito:** Publica un item de galeria previamente procesado. Recibe los datos (posiblemente editados por el admin) y ejecuta: actualizar gallery.json, publicar en Instagram (opcional), invalidar CloudFront.
+
+**Trigger:** API Gateway `POST /admin/gallery/{id}/publish`
+
+**Input:**
+
+```json
+{
+  "id": "2026-02-14_abc123",
+  "title": "Tu golden en 3D",
+  "description": "Litofania personalizada de tu mascota favorita",
+  "category": "Mascotas",
+  "instagramCaption": "Cada mascota merece ser inmortalizada ...",
+  "hashtags": ["impresion3d", "3dprinting", "litofania", ...],
+  "publishToInstagram": true
+}
+```
+
+**Nota:** Los campos title, description, etc. vienen del admin page, que puede haberlos editado respecto al resultado original de la IA. El Lambda publica exactamente lo que el admin aprobo.
+
+**Flujo paso a paso:**
+
+#### Paso 1: Actualizar gallery.json
 
 - Leer `data/gallery.json` actual del bucket
 - Agregar nuevo item al inicio del array `items`
 - Escribir de vuelta a S3
 - **Importante:** Usar `If-Match` con ETag para evitar race conditions
 
-#### Paso 6: Publicar en Instagram
+#### Paso 2: Publicar en Instagram (si `publishToInstagram: true`)
 
 Instagram Graph API requiere 2+ llamadas:
 
-**6a. Crear media container:**
+**2a. Crear media container:**
 
 ```
 POST https://graph.facebook.com/v19.0/{ig-user-id}/media
@@ -483,14 +578,14 @@ POST https://graph.facebook.com/v19.0/{ig-user-id}/media
 
 **Nota:** La `image_url` debe ser publica. Como la imagen ya esta en CloudFront, se usa `https://printo.uy/content/assets/gallery/{id}.jpg`.
 
-**6b. Esperar procesamiento (polling):**
+**2b. Esperar procesamiento (polling):**
 
 ```
 GET https://graph.facebook.com/v19.0/{container-id}?fields=status_code
   Poll cada 5s, max 60s, hasta status_code == "FINISHED"
 ```
 
-**6c. Publicar:**
+**2c. Publicar:**
 
 ```
 POST https://graph.facebook.com/v19.0/{ig-user-id}/media_publish
@@ -498,9 +593,9 @@ POST https://graph.facebook.com/v19.0/{ig-user-id}/media_publish
   access_token = {token}
 ```
 
-**6d. Guardar el Instagram Post ID** en gallery.json
+**2d. Guardar el Instagram Post ID** en gallery.json (actualizar el item recien agregado)
 
-#### Paso 7: Invalidar CloudFront
+#### Paso 3: Invalidar CloudFront
 
 ```
 Crear invalidation para:
@@ -508,21 +603,28 @@ Crear invalidation para:
   - /content/assets/gallery/{id}.jpg
 ```
 
-**Runtime:** Node.js 20.x | **Memory:** 512MB (Sharp necesita mas) | **Timeout:** 120s
+#### Paso 4: Marcar resultado como publicado
+
+- Actualizar `_uploads/results/{id}.json` con `status: "published"`
+
+**Runtime:** Node.js 20.x | **Memory:** 256MB | **Timeout:** 90s
 
 **Variables de entorno:**
 
 ```
 CONTENT_BUCKET=printo-content
 CLOUDFRONT_DISTRIBUTION_ID=EXXXXXXXXX
-CLAUDE_API_KEY_PARAM=/printo/claude-api-key
 INSTAGRAM_TOKEN_PARAM=/printo/instagram-token
 INSTAGRAM_USER_ID_PARAM=/printo/instagram-user-id
 ```
 
+**Endpoint adicional para descartar:**
+
+`DELETE /admin/gallery/{id}/discard` — Limpia los archivos de `_uploads/` y `assets/gallery/` para un item no publicado. Puede ser manejado por el mismo Lambda o por `content-writer`.
+
 ---
 
-### 4. Lambda: `content-writer`
+### 5. Lambda: `content-writer`
 
 **Proposito:** Escribe JSONs de contenido al bucket y invalida el cache de CloudFront. Usado para secciones que no requieren procesamiento especial (materiales, futuros).
 
@@ -554,7 +656,7 @@ INSTAGRAM_USER_ID_PARAM=/printo/instagram-user-id
 
 ---
 
-### 5. Lambda: `instagram-token-refresh`
+### 6. Lambda: `instagram-token-refresh`
 
 **Proposito:** Renovar automaticamente el token de Instagram antes de que expire.
 
@@ -578,7 +680,7 @@ INSTAGRAM_USER_ID_PARAM=/printo/instagram-user-id
 
 ---
 
-### 6. Cambios en 3d-service-site (este repo)
+### 7. Cambios en 3d-service-site (este repo)
 
 #### Patron de consumo: fetch dinamico con fallback local
 
@@ -639,7 +741,7 @@ La disponibilidad de materiales ahora viene directamente del JSON remoto.
 
 ---
 
-### 7. SSM Parameter Store
+### 8. SSM Parameter Store
 
 Todos los secretos en AWS SSM Parameter Store como SecureString:
 
@@ -674,7 +776,9 @@ printo-admin-pipeline/
 ├── lambdas/                            ← Funciones Lambda
 │   ├── gallery-upload-url/
 │   │   └── index.ts
-│   ├── gallery-processor/
+│   ├── gallery-processor/             ← Solo procesamiento: Sharp + Claude Vision
+│   │   └── index.ts
+│   ├── gallery-publisher/             ← Publicacion: gallery.json + Instagram + CF invalidation
 │   │   └── index.ts
 │   ├── content-writer/
 │   │   └── index.ts
@@ -758,15 +862,19 @@ NUEVOS:
 ├── DNS Record: admin.printo.uy CNAME → CloudFront admin
 ├── API Gateway:
 │   ├── POST /admin/upload-url
+│   ├── GET  /admin/gallery/{id}/result
+│   ├── POST /admin/gallery/{id}/publish
+│   ├── DELETE /admin/gallery/{id}/discard
 │   └── PUT /admin/content/{type}
 ├── Lambda: gallery-upload-url (128MB, 10s timeout)
-├── Lambda: gallery-processor (512MB, 120s timeout)
+├── Lambda: gallery-processor (512MB, 60s timeout) — solo Sharp + Claude Vision
+├── Lambda: gallery-publisher (256MB, 90s timeout) — gallery.json + Instagram + CF invalidation
 ├── Lambda: content-writer (128MB, 15s timeout)
 ├── Lambda: instagram-token-refresh (128MB, 30s timeout)
 ├── Lambda Layer: Sharp
 ├── EventBridge Rule: instagram-token-refresh cada 50 dias
 ├── SSM Parameter Store: 6 parametros
-└── IAM Roles: 4 roles de ejecucion Lambda
+└── IAM Roles: 5 roles de ejecucion Lambda
 
 MODIFICADOS:
 ├── CloudFront printo.uy: nuevo origin behavior /content/* → S3 printo-content
@@ -827,23 +935,26 @@ SIN CAMBIOS:
 ### Fase 3: Pipeline de galeria (en `printo-admin-pipeline`)
 
 15. CDK Stack: Lambda `gallery-upload-url` + API Gateway `POST /admin/upload-url`
-16. CDK Stack: Lambda `gallery-processor` (Sharp + update gallery.json, sin IA ni Instagram aun)
-17. CDK Stack: S3 Event Notification `_uploads/raw/` → gallery-processor
-18. Admin page: pagina de galeria (upload + preview)
-19. **Test E2E:** Subir foto desde admin → aparece en galeria
+16. CDK Stack: Lambda `gallery-processor` (Sharp + optimizacion de imagen, sin IA aun)
+17. CDK Stack: Lambda `gallery-publisher` + API Gateway `POST /admin/gallery/{id}/publish`
+18. CDK Stack: S3 Event Notification `_uploads/raw/` → gallery-processor
+19. CDK Stack: API Gateway `GET /admin/gallery/{id}/result` (leer resultado pendiente)
+20. Admin page: pagina de galeria (upload, preview de resultado, confirmar/descartar)
+21. **Test E2E:** Subir foto desde admin → processor optimiza → admin confirma → publisher actualiza galeria → aparece en printo.uy
 
 ### Fase 4: IA + Instagram (en `printo-admin-pipeline`)
 
-20. Configurar cuenta Business de Instagram + Meta App + token (prerequisitos)
-21. Agregar integracion Claude Vision al gallery-processor
-22. Agregar preview/edicion en admin page (ver resultado de IA antes de publicar)
-23. Agregar publicacion a Instagram al gallery-processor
-24. CDK Stack: Lambda `instagram-token-refresh` + EventBridge rule
-25. **Test E2E:** Subir foto → IA genera contenido → preview → confirmar → galeria + Instagram
+22. Configurar cuenta Business de Instagram + Meta App + token (prerequisitos)
+23. Agregar integracion Claude Vision al gallery-processor (genera titulo, descripcion, caption, hashtags)
+24. Actualizar admin page: mostrar campos generados por IA, permitir edicion antes de confirmar
+25. Agregar publicacion a Instagram al gallery-publisher (cuando `publishToInstagram: true`)
+26. CDK Stack: Lambda `instagram-token-refresh` + EventBridge rule
+27. **Test E2E:** Subir foto → processor genera contenido con IA → admin preview/edita → confirma → publisher actualiza galeria + publica en Instagram
 
 ### Fase 5: Pulido
 
-26. Mejorar admin page: historial de uploads, estados, errores
-27. Agregar manejo de errores y reintentos en el processor
-28. Agregar notificaciones (email o WhatsApp) si algo falla
-29. Considerar: boton de "eliminar" en admin, reordenar galeria, editar items existentes
+28. Mejorar admin page: historial de uploads, estados, errores
+29. Agregar manejo de errores y reintentos en el publisher (ej: reintentar solo Instagram si fallo)
+30. Agregar notificaciones (email o WhatsApp) si algo falla
+31. Implementar `DELETE /admin/gallery/{id}/discard` para limpiar items no publicados
+32. Considerar: boton de "eliminar" en admin, reordenar galeria, editar items existentes

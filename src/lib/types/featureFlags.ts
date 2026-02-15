@@ -67,27 +67,13 @@ export interface ServicesVisibilityFlag extends BaseFeatureFlag<'services-visibi
 }
 
 /**
- * Configuración del flag materials-visibility
- * Controla qué materiales están disponibles (control a nivel de material, no por color)
- */
-export interface MaterialsVisibilityFlag extends BaseFeatureFlag<'materials-visibility'> {
-	config?: {
-		pla?: boolean;
-		petg?: boolean;
-		abs?: boolean;
-		tpu?: boolean;
-	};
-}
-
-/**
  * Union type de todos los feature flags disponibles
  * Agregar nuevos tipos de flags aquí para soporte completo de TypeScript
  */
 export type FeatureFlag =
 	| OutOfServiceFlag
 	| SectionsVisibilityFlag
-	| ServicesVisibilityFlag
-	| MaterialsVisibilityFlag;
+	| ServicesVisibilityFlag;
 
 /**
  * Estado completo del store de feature flags

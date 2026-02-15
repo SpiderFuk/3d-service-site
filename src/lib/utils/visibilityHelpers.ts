@@ -8,15 +8,12 @@
 
 import type {
 	SectionsVisibilityFlag,
-	ServicesVisibilityFlag,
-	MaterialsVisibilityFlag
+	ServicesVisibilityFlag
 } from '$lib/types/featureFlags';
 import { secciones } from '$lib/config/sections';
 import { services, type Service } from '$lib/config/services';
-import { materiales, type Material } from '$lib/config/filamentColors';
 import { sectionsVisibilityDefaults } from '$lib/config/sectionsVisibilityDefaults';
 import { servicesVisibilityDefaults } from '$lib/config/servicesVisibilityDefaults';
-import { materialsVisibilityDefaults } from '$lib/config/materialsVisibilityDefaults';
 
 // ============================================
 // SECTIONS
@@ -91,109 +88,6 @@ export function isServiceVisible(
  */
 export function getVisibleServices(flag?: ServicesVisibilityFlag): Service[] {
 	return services.filter((service) => isServiceVisible(service.id, flag));
-}
-
-// ============================================
-// MATERIALS
-// ============================================
-
-/**
- * Determina si un material está disponible
- * Override mode: Si el flag está enabled, usa AppConfig; si no, usa filamentColors.ts
- */
-export function isMaterialAvailable(
-	materialId: string,
-	flag?: MaterialsVisibilityFlag
-): boolean {
-	const material = materiales[materialId];
-
-	if (!material) {
-		return false;
-	}
-
-	if (!flag) {
-		// No hay flag: usar configuración local
-		return material.disponible;
-	}
-
-	if (!flag.enabled) {
-		// Flag existe pero está disabled: usar configuración local
-		return material.disponible;
-	}
-
-	// Flag enabled: usar configuración de AppConfig (override)
-	const configValue = flag.config?.[materialId as keyof typeof flag.config];
-	return (
-		configValue ??
-		materialsVisibilityDefaults[materialId as keyof typeof materialsVisibilityDefaults] ??
-		false
-	);
-}
-
-/**
- * Filtra materiales por disponibilidad
- */
-export function getAvailableMaterials(flag?: MaterialsVisibilityFlag) {
-	return Object.entries(materiales)
-		.filter(([id]) => isMaterialAvailable(id, flag))
-		.map(([id, material]) => ({ id, ...material }));
-}
-
-/**
- * Crea un objeto materiales modificado con disponibilidad actualizada
- * Útil para mantener compatibilidad con código existente
- */
-export function getMaterialesWithFlagOverride(
-	flag?: MaterialsVisibilityFlag
-): Record<string, Material> {
-	if (!flag || !flag.enabled) {
-		// Sin override: devolver original
-		return materiales;
-	}
-
-	// Con override: clonar y actualizar disponible
-	const result: Record<string, Material> = {};
-
-	for (const [id, material] of Object.entries(materiales)) {
-		result[id] = {
-			...material,
-			disponible: isMaterialAvailable(id, flag)
-		};
-	}
-
-	return result;
-}
-
-/**
- * Cuenta materiales disponibles según feature flag
- * @param flag - MaterialsVisibilityFlag opcional
- * @returns Número de materiales disponibles
- */
-export function countAvailableMaterials(flag?: MaterialsVisibilityFlag): number {
-	return getAvailableMaterials(flag).length;
-}
-
-/**
- * Cuenta colores únicos disponibles en todos los materiales disponibles
- * Un color se cuenta solo una vez aunque aparezca en múltiples materiales,
- * y solo si está marcado como disponible (color.disponible === true)
- *
- * @param flag - MaterialsVisibilityFlag opcional
- * @returns Número de colores únicos disponibles
- */
-export function countAvailableColors(flag?: MaterialsVisibilityFlag): number {
-	const materialesDisponibles = getAvailableMaterials(flag);
-	const coloresUnicos = new Set<string>();
-
-	materialesDisponibles.forEach((material) => {
-		Object.entries(material.colores).forEach(([colorId, color]) => {
-			if (color.disponible) {
-				coloresUnicos.add(colorId);
-			}
-		});
-	});
-
-	return coloresUnicos.size;
 }
 
 // ============================================

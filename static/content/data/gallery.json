@@ -1,0 +1,41 @@
+{
+	"items": [
+		{
+			"id": "1",
+			"title": "Tu compañero peludo",
+			"description": "Dale vida a su personalidad única",
+			"image": "/images/galery/20260120_184323 (1).jpg",
+			"category": "Mascotas",
+			"createdAt": "2026-01-20T18:43:23Z",
+			"instagramPostId": ""
+		},
+		{
+			"id": "2",
+			"title": "Panel de manga favorito",
+			"description": "El momento que cambió toda la historia",
+			"image": "/images/galery/20260120_212023 (1).jpg",
+			"category": "Colección",
+			"createdAt": "2026-01-20T21:20:23Z",
+			"instagramPostId": ""
+		},
+		{
+			"id": "3",
+			"title": "Juntos para siempre",
+			"description": "Inmortalizamos tu historia de amor",
+			"image": "/images/galery/20260120_211651 (1).jpg",
+			"category": "Momentos",
+			"createdAt": "2026-01-20T21:16:51Z",
+			"instagramPostId": ""
+		},
+		{
+			"id": "4",
+			"title": "Tu escena favorita",
+			"description": "Dale forma a ese panel inolvidable",
+			"image": "/images/galery/20260120_211545(2).jpg",
+			"category": "Ilustración",
+			"createdAt": "2026-01-20T21:15:45Z",
+			"instagramPostId": ""
+		}
+	],
+	"updatedAt": "2026-02-14T00:00:00Z"
+}

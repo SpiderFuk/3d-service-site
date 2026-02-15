@@ -14,8 +14,7 @@ import type {
 	FeatureFlagsState,
 	OutOfServiceFlag,
 	SectionsVisibilityFlag,
-	ServicesVisibilityFlag,
-	MaterialsVisibilityFlag
+	ServicesVisibilityFlag
 } from '$lib/types/featureFlags';
 import { fetchFeatureFlags } from '$lib/services/featureFlagsService';
 
@@ -227,15 +226,6 @@ export const sectionsVisibilityFlag = derived(
 export const servicesVisibilityFlag = derived(
 	featureFlagsStore,
 	($flags) => $flags.flags['services-visibility'] as ServicesVisibilityFlag | undefined
-);
-
-/**
- * Derived store para el flag materials-visibility
- * Provee acceso conveniente y tipado al flag específico
- */
-export const materialsVisibilityFlag = derived(
-	featureFlagsStore,
-	($flags) => $flags.flags['materials-visibility'] as MaterialsVisibilityFlag | undefined
 );
 
 /**

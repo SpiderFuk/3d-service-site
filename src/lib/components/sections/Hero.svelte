@@ -8,8 +8,7 @@
 	import { openWhatsApp } from '$lib/utils/whatsapp';
 	import { scrollToSection } from '$lib/utils/scroll';
 	import Button from '../ui/Button.svelte';
-	import { materialsVisibilityFlag } from '$lib/stores/featureFlagsStore';
-	import { countAvailableMaterials, countAvailableColors } from '$lib/utils/visibilityHelpers';
+	import { materialsCount as materialsCountStore, colorsCount as colorsCountStore } from '$lib/stores/materialsStore';
 
 	function handleCTA() {
 		openWhatsApp();
@@ -19,9 +18,8 @@
 		scrollToSection('viewer');
 	}
 
-	// Contadores dinámicos basados en feature flags
-	const materialsCount = $derived(countAvailableMaterials($materialsVisibilityFlag));
-	const colorsCount = $derived(countAvailableColors($materialsVisibilityFlag));
+	const materialsCount = $derived($materialsCountStore);
+	const colorsCount = $derived($colorsCountStore);
 </script>
 
 <section id="hero" class="relative min-h-screen flex items-center bg-gradient-to-br from-background via-background-secondary to-primary/5">

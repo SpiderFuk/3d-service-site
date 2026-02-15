@@ -1,30 +1,26 @@
 <script lang="ts">
 	/**
 	 * Sección de colores de filamento y materiales
-	 * Filtra materiales según el flag materials-visibility de AppConfig
+	 * Consume datos del materialsStore (remoto con fallback local)
 	 */
 
-	import { getColoresByMaterial } from '$lib/config/filamentColors';
-	import { materialsVisibilityFlag } from '$lib/stores/featureFlagsStore';
-	import { getAvailableMaterials, isMaterialAvailable } from '$lib/utils/visibilityHelpers';
+	import { availableMaterials, materialsStore, getColoresForMaterial } from '$lib/stores/materialsStore';
 	import ColorSwatch from '../ui/ColorSwatch.svelte';
 	import Card from '../ui/Card.svelte';
 
-	// Filtrar materiales disponibles con feature flag
-	const materiales = $derived(getAvailableMaterials($materialsVisibilityFlag));
+	const materiales = $derived($availableMaterials);
 
 	let selectedMaterial = $state('pla');
 
 	// Verificar que el material seleccionado siga disponible
 	$effect(() => {
-		if (!isMaterialAvailable(selectedMaterial, $materialsVisibilityFlag)) {
-			// Si el material actual no está disponible, seleccionar el primero disponible
+		if (!materiales.find((m) => m.id === selectedMaterial)) {
 			selectedMaterial = materiales[0]?.id || 'pla';
 		}
 	});
 
 	// Los colores se actualizan automáticamente cuando cambia el material seleccionado
-	const colores = $derived(getColoresByMaterial(selectedMaterial));
+	const colores = $derived(getColoresForMaterial($materialsStore.materials, selectedMaterial));
 	const materialActual = $derived(materiales.find((m) => m.id === selectedMaterial));
 </script>
 

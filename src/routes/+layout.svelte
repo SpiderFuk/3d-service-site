@@ -12,6 +12,7 @@
 	import OutOfServiceBanner from '$lib/components/ui/OutOfServiceBanner.svelte';
 	import { featureFlagsStore } from '$lib/stores/featureFlagsStore';
 	import { outOfServiceUI } from '$lib/stores/uiStore';
+	import { loadMaterials } from '$lib/stores/materialsStore';
 
 	interface Props {
 		children?: Snippet;
@@ -19,10 +20,11 @@
 
 	let { children }: Props = $props();
 
-	// Inicializar polling de feature flags
+	// Inicializar polling de feature flags y carga de materiales
 	onMount(() => {
 		// Iniciar polling cada 5 minutos (300000ms)
 		featureFlagsStore.startPolling(300000);
+		loadMaterials();
 	});
 
 	// CRÍTICO: Detener polling para prevenir memory leaks

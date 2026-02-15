@@ -12,13 +12,11 @@ import type {
 	FeatureFlag,
 	OutOfServiceFlag,
 	SectionsVisibilityFlag,
-	ServicesVisibilityFlag,
-	MaterialsVisibilityFlag
+	ServicesVisibilityFlag
 } from '$lib/types/featureFlags';
 import { outOfServiceDefaults } from '$lib/config/outOfServiceConfig';
 import { sectionsVisibilityDefaults } from '$lib/config/sectionsVisibilityDefaults';
 import { servicesVisibilityDefaults } from '$lib/config/servicesVisibilityDefaults';
-import { materialsVisibilityDefaults } from '$lib/config/materialsVisibilityDefaults';
 
 /**
  * Endpoint de AWS API Gateway que conecta con Lambda + AppConfig
@@ -144,24 +142,6 @@ function parseAPIResponse(data: unknown): FeatureFlag[] {
 				flags.push(flag);
 			}
 
-			if (key === 'materials-visibility') {
-				// Parsear materials-visibility flag
-				const rawFlag = value as Record<string, unknown>;
-				const enabled = rawFlag.enabled === true;
-
-				const flag: MaterialsVisibilityFlag = {
-					type: 'materials-visibility',
-					enabled,
-					config: {
-						pla: (rawFlag.pla as boolean) ?? materialsVisibilityDefaults.pla,
-						petg: (rawFlag.petg as boolean) ?? materialsVisibilityDefaults.petg,
-						abs: (rawFlag.abs as boolean) ?? materialsVisibilityDefaults.abs,
-						tpu: (rawFlag.tpu as boolean) ?? materialsVisibilityDefaults.tpu
-					}
-				};
-
-				flags.push(flag);
-			}
 		} catch (error) {
 			// Silently continue with the next flag if one fails
 		}
