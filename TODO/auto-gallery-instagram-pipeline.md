@@ -910,16 +910,16 @@ SIN CAMBIOS:
 
 ## Orden de Implementacion
 
-### Fase 1: Contenido dinamico en el sitio (en `3d-service-site`)
+### Fase 1: Contenido dinamico en el sitio (en `3d-service-site`) — IMPLEMENTADA
 
 **Rama:** `feature/dynamic-content`
 
-1. Crear `materials.json` inicial (migracion de `filamentColors.ts`)
-2. Crear `gallery.json` inicial (migracion de los 4 items hardcodeados)
-3. Crear servicio generico de fetch con cache y fallback (patron reutilizable)
-4. Modificar `FilamentColors.svelte` para consumir `materials.json` con fallback a config local
-5. Modificar `Gallery3D.svelte` para consumir `gallery.json` con fallback a items hardcodeados
-6. Eliminar flag `materials-visibility` de AppConfig (store, types, helpers)
+1. ~~Crear `materials.json` inicial (migracion de `filamentColors.ts`)~~
+2. ~~Crear `gallery.json` inicial (migracion de los 4 items hardcodeados)~~
+3. ~~Crear servicio generico de fetch con cache y fallback (patron reutilizable)~~
+4. ~~Modificar `FilamentColors.svelte` para consumir `materials.json` con fallback a config local~~
+5. ~~Modificar `Gallery3D.svelte` para consumir `gallery.json` con fallback a items hardcodeados~~
+6. ~~Eliminar flag `materials-visibility` de AppConfig (store, types, helpers)~~
 7. Deploy del sitio. Todo funciona igual que antes pero listo para datos dinamicos
 
 ### Fase 2: Infraestructura y admin basico (en `printo-admin-pipeline`)
