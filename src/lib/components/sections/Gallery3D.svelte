@@ -66,33 +66,33 @@
 	const EASE_DECEL = 0.008;
 	const EASE_ACCEL = 0.06;
 
-	let scrollContainer: HTMLDivElement;
+	let trackEl: HTMLDivElement;
 	let isDragging = $state(false);
 	let isHovering = $state(false);
-	let startX = $state(0);
-	let scrollStart = $state(0);
+	let startX = 0;
+	let dragStart = 0;
 	let currentSpeed = MAX_SPEED;
+	let offset = 0;
 
 	function handlePointerDown(e: PointerEvent) {
 		if (e.pointerType === "touch") return;
 		isDragging = true;
-		startX = e.pageX - scrollContainer.offsetLeft;
-		scrollStart = scrollContainer.scrollLeft;
-		scrollContainer.setPointerCapture(e.pointerId);
+		startX = e.pageX;
+		dragStart = offset;
+		(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
 	}
 
 	function handlePointerMove(e: PointerEvent) {
 		if (!isDragging) return;
 		e.preventDefault();
-		const x = e.pageX - scrollContainer.offsetLeft;
-		const walk = (x - startX) * 1.5;
-		scrollContainer.scrollLeft = scrollStart - walk;
+		offset = dragStart + (e.pageX - startX);
+		trackEl.style.transform = `translateX(${offset}px)`;
 	}
 
 	function handlePointerUp(e: PointerEvent) {
 		if (!isDragging) return;
 		isDragging = false;
-		scrollContainer.releasePointerCapture(e.pointerId);
+		(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
 	}
 
 	function handleMouseEnter() {
@@ -105,35 +105,39 @@
 	}
 
 	$effect(() => {
-		if (!scrollContainer) return;
-
-		function getOneSetWidth(): number {
-			const count = galleryItems.length;
-			const first = scrollContainer.children[0] as HTMLElement;
-			const nthChild = scrollContainer.children[count] as HTMLElement;
-			return nthChild.offsetLeft - first.offsetLeft;
-		}
+		if (!trackEl) return;
 
 		function animate() {
-			const targetSpeed = isHovering || isDragging ? 0 : MAX_SPEED;
-			const easing = targetSpeed > currentSpeed ? EASE_ACCEL : EASE_DECEL;
-			currentSpeed += (targetSpeed - currentSpeed) * easing;
+			if (!isDragging) {
+				const targetSpeed = isHovering ? 0 : MAX_SPEED;
+				const easing = targetSpeed > currentSpeed ? EASE_ACCEL : EASE_DECEL;
+				currentSpeed += (targetSpeed - currentSpeed) * easing;
 
-			if (currentSpeed > 0.01 && scrollContainer) {
-				scrollContainer.scrollLeft += currentSpeed;
-
-				// Reset para loop infinito: al pasar un set completo, volver atrás
-				const oneSet = getOneSetWidth();
-				if (scrollContainer.scrollLeft >= oneSet) {
-					scrollContainer.scrollLeft -= oneSet;
+				if (currentSpeed > 0.01) {
+					offset -= currentSpeed;
 				}
+
+				// Medir ancho de un set desde el DOM (soporta items dinámicos)
+				const count = galleryItems.length;
+				if (count > 0 && trackEl.children.length > count) {
+					const w =
+						(trackEl.children[count] as HTMLElement).offsetLeft -
+						(trackEl.children[0] as HTMLElement).offsetLeft;
+					if (w > 0) {
+						if (offset <= -w) offset += w;
+						else if (offset > 0) offset -= w;
+					}
+				}
+
+				trackEl.style.transform = `translateX(${offset}px)`;
+			} else {
+				currentSpeed += (0 - currentSpeed) * EASE_DECEL;
 			}
 
 			rafId = requestAnimationFrame(animate);
 		}
 
 		let rafId = requestAnimationFrame(animate);
-
 		return () => cancelAnimationFrame(rafId);
 	});
 </script>
@@ -159,10 +163,9 @@
 			class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background-secondary to-transparent z-10 pointer-events-none"
 		></div>
 
-		<!-- Contenedor scrollable -->
+		<!-- Contenedor: recorta el track y captura eventos de puntero -->
 		<div
-			bind:this={scrollContainer}
-			class="flex gap-4 overflow-x-auto hide-scrollbar px-6 py-2"
+			class="overflow-hidden py-2"
 			class:cursor-grabbing={isDragging}
 			class:cursor-grab={!isDragging}
 			role="region"
@@ -174,6 +177,7 @@
 			onmouseenter={handleMouseEnter}
 			onmouseleave={handleMouseLeave}
 		>
+			<div bind:this={trackEl} class="flex gap-4 will-change-transform">
 			{#each displayItems as item, i (i)}
 				<div
 					class="flex-shrink-0 w-[280px] rounded-xl overflow-hidden shadow-card select-none"
@@ -207,6 +211,7 @@
 					</div>
 				</div>
 			{/each}
+			</div>
 		</div>
 	</div>
 </section>
