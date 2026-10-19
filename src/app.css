@@ -1,8 +1,7 @@
 /**
  * Estilos globales de la aplicación
+ * Fuentes (Bricolage Grotesque + Figtree) y variables de marca se cargan en src/app.html
  */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -19,6 +18,31 @@
 
 	body {
 		@apply font-sans text-text bg-background antialiased;
+	}
+
+	/* Titulos con Bricolage Grotesque, tracking apretado */
+	h1,
+	h2,
+	h3 {
+		@apply font-display;
+	}
+
+	h1,
+	h2 {
+		@apply font-extrabold;
+	}
+
+	h1 {
+		letter-spacing: -0.04em;
+	}
+
+	h2 {
+		letter-spacing: -0.02em;
+	}
+
+	h3 {
+		@apply font-bold;
+		letter-spacing: -0.01em;
 	}
 }
 
