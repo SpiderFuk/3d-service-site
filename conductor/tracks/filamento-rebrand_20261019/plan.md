@@ -23,7 +23,7 @@ Tokens, fonts and base typography. No component changes.
 
 ### Verification
 
-- [ ] Workflow checkpoint passes; site recolored with no broken layout; fonts load (Network tab)
+- [x] Workflow checkpoint passes; site recolored with no broken layout; fonts load (Network tab)
 
 ## Phase 2: Logo and Icons
 
