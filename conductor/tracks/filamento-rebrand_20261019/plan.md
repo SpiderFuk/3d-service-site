@@ -16,7 +16,7 @@ Tokens, fonts and base typography. No component changes.
 ### Tasks
 
 - [x] Task 1.1: Commit the brand kit (`docs/`, `static/brand/`, `REBRAND-PLAN.md`, `tailwind.extend.snippet.js`) (`docs`)
-- [ ] Task 1.2: Update `tailwind.config.js` with tokens from `tailwind.extend.snippet.js`, keeping `primary` / `background` / `text` names; add `font-display`, brand radii
+- [x] Task 1.2: Update `tailwind.config.js` with tokens from `tailwind.extend.snippet.js`, keeping `primary` / `background` / `text` names; add `font-display`, brand radii
 - [ ] Task 1.3: In `src/app.css` replace the Inter import with Bricolage Grotesque (500, 700, 800) and Figtree (400, 500, 600); body `font-sans`, h1-h3 `font-display`, 800 on h1/h2, `-0.04em` tracking on h1; import or mirror `static/brand/brand.css` variables
 - [ ] Task 1.4: Set `theme-color` in `src/app.html` to `#2B3CFF`
 - [ ] Task 1.5: Align `conductor/tech-stack.md` with the new fonts/tokens if needed
