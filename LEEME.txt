@@ -1,0 +1,29 @@
+PRINTO - kit de identidad para el repo (direccion B, Filamento)
+
+Contenido
+  static/brand/logo/     SVG, PNG e iconos del logo (wordmark y p)
+  static/brand/brand.css Variables de color, fuentes, radios y clases base
+  static/brand/favicon.svg y favicon.ico
+  docs/brand.md          Guia de marca (voz, logo, color, tipografia, layout)
+  docs/tokens.json       Tokens del design system
+  conductor-brief.md     Como hacer el rebrand como un track de Conductor
+  conductor-seed/        product-guidelines.md actualizado para conductor/
+  REBRAND-PLAN.md        Prompts por fase (Claude Code sin Conductor)
+  tailwind.extend.snippet.js  Tokens para tailwind.config.js
+  CLAUDE.md.snippet      Texto para pegar en el CLAUDE.md del repo
+
+Como usarlo
+  1. Descomprimir en la raiz del repo ((SvelteKit sirve static/ en la raiz: /brand/... funciona tal cual);
+     no hace falta ajustar rutas).
+  2. Pegar el contenido de CLAUDE.md.snippet en el CLAUDE.md de la raiz (crearlo si no existe).
+  3. En el <head> del sitio:
+       <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml">
+       <link rel="icon" href="/brand/favicon.ico" sizes="48x48">
+       <link rel="apple-touch-icon" href="/brand/logo/icons/favicon-180.png">
+       <link rel="stylesheet" href="/brand/brand.css">
+     y las fuentes de Google (ver el comentario al inicio de brand.css).
+  4. Si usas el plugin Conductor: leer conductor-brief.md (copia conductor-seed/product-guidelines.md
+     a conductor/ y crea un track con /conductor:new-track).
+  5. Primer pedido a Claude Code (sin Conductor), por ejemplo:
+     "Lee docs/brand.md. Reemplaza el logo y el favicon, y aplica la paleta y las tipografias
+      al header y al hero, en una rama nueva."

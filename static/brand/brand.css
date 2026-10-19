@@ -1,0 +1,37 @@
+/* PRINTO - direccion B "Filamento". Importar una vez, antes del resto de estilos.
+   Fuentes: agregar en el <head>:
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+*/
+:root{
+  --cobalto:#2B3CFF;      /* marca: logo, botones primarios, bloques hero. Texto encima: crema */
+  --tomate:#FF5A47;       /* acento: extrusion de la p, punto de la i. Texto encima: tinta. Nunca como texto */
+  --mantequilla:#FFD84D;  /* apoyo calido. Texto encima: tinta */
+  --menta:#86E3C0;        /* apoyo frio. Texto encima: tinta */
+  --crema:#FFF4E0;        /* fondo base; texto sobre cobalto y tinta */
+  --blanco:#FFFFFF;       /* superficies elevadas, siempre con borde tinta 2px */
+  --tinta:#1B1B2F;        /* texto principal, bordes, fondo oscuro */
+  --tinta-suave:#4A4A63;  /* texto secundario */
+
+  --font-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --font-sans:"Figtree",system-ui,-apple-system,sans-serif;
+
+  --space-1:4px; --space-2:8px; --space-3:14px; --space-4:16px; --space-5:20px;
+  --space-6:28px; --space-7:32px; --space-8:48px; --space-9:64px;
+  --radius-md:20px; --radius-lg:24px; --radius-xl:28px; --radius-pill:999px;
+  --extrude:6px 6px 0 #ff5a47,12px 12px 0 #ff5a47,18px 18px 0 #ff5a47,24px 24px 0 #ff5a47,30px 30px 0 #ff5a47;
+}
+body{background:var(--crema);color:var(--tinta);font-family:var(--font-sans);font-size:15px;line-height:1.5}
+.t-display{font-family:var(--font-display);font-weight:800;font-size:72px;line-height:.95;letter-spacing:-.04em}
+.t-title{font-family:var(--font-display);font-weight:700;font-size:30px;line-height:1.1;letter-spacing:-.01em}
+.t-body-lg{font-size:18px;line-height:1.55}
+.t-eyebrow{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-suave)}
+.btn{display:inline-flex;align-items:center;min-height:44px;padding:0 var(--space-6);border-radius:var(--radius-pill);border:2px solid transparent;font:600 17px/1 var(--font-sans);text-decoration:none;cursor:pointer}
+.btn-primary{background:var(--cobalto);color:var(--crema)}
+.btn-secondary{background:var(--blanco);color:var(--tinta);border-color:var(--tinta)}
+.btn-warm{background:var(--mantequilla);color:var(--tinta)}
+.btn:focus-visible{outline:3px solid var(--tinta);outline-offset:3px}
+.tag{display:inline-block;padding:var(--space-2) var(--space-4);border-radius:var(--radius-pill);font:600 14px/1 var(--font-sans);color:var(--tinta)}
+.card{background:var(--blanco);border:2px solid var(--tinta);border-radius:var(--radius-xl)}
+@media (max-width:640px){.t-display{font-size:44px}}
