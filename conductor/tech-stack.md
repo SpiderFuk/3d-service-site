@@ -13,7 +13,8 @@
 | --- | --- | --- |
 | Svelte | 5.x | UI framework (runes reactive system) |
 | SvelteKit | 2.x | Application framework (static adapter, SPA) |
-| Tailwind CSS | 3.4 | Utility-first styling |
+| Tailwind CSS | 3.4 | Utility-first styling (Filamento brand tokens; see `docs/brand.md`) |
+| Google Fonts | - | Bricolage Grotesque (titles) + Figtree (text), linked in `src/app.html` |
 | Three.js | 0.160+ | 3D model rendering and interaction |
 | Lucide Svelte | 0.460+ | Icon library |
 | JSZip | 3.10+ | 3MF file parsing (ZIP extraction) |
