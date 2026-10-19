@@ -417,13 +417,14 @@ debounce(func, wait)
 ### Design Tokens (Tailwind)
 
 **Colors:**
-- Primary: `#3B82F6` (blue)
-- WhatsApp: `#25D366` (green)
-- Background: `#FFFFFF`, secondary `#F8FAFC`
-- Text: `#1E293B`, secondary `#64748B`
+- Primary: cobalto `#2B3CFF`; accent: tomate `#FF5A47`
+- Secondary: mantequilla `#FFD84D`, menta `#86E3C0`
+- WhatsApp: `#25D366` (green), with tinta text
+- Background: crema `#FFF4E0`
+- Text: tinta `#1B1B2F`, secondary tinta-suave `#4A4A63`
 
 **Typography:**
-- Font: Inter (weights: 400, 500, 600, 700)
+- Titles: Bricolage Grotesque (700-800); text: Figtree (400-600)
 
 **Responsive:**
 - Mobile-first approach
@@ -437,6 +438,14 @@ debounce(func, wait)
 .shadow-card       /* Custom card shadow */
 .hide-scrollbar    /* Hides scrollbar but keeps functionality */
 ```
+
+## Identidad visual (PRINTO - Filamento)
+Antes de tocar UI, logo, colores o textos, lee `docs/brand.md`. Reglas clave:
+- Usar siempre las variables de `static/brand/brand.css` (colores, fuentes, radios); no inventar colores.
+- Logo desde `static/brand/logo/`; cobalto sobre fondos claros, crema sobre cobalto/tinta. Nunca recolorear.
+- Titulos en Bricolage Grotesque 800, texto en Figtree. Botones y etiquetas en forma de pastilla.
+- Textos en espanol con voseo, sin emojis. Tomate/mantequilla/menta nunca como color de texto.
+- Hacer cambios chicos y en una rama; mostrar el resultado antes de seguir.
 
 ## Common Patterns
 
