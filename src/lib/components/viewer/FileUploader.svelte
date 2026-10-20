@@ -6,7 +6,7 @@
 	import { Upload, X, AlertCircle } from 'lucide-svelte';
 	import { modelStore } from '$lib/stores/modelStore';
 	import { ModelLoaderFactory } from '$lib/loaders/ModelLoaderFactory';
-	import { validateFile, formatFileSize } from '$lib/utils/fileValidation';
+	import { validateFile } from '$lib/utils/fileValidation';
 	import { loadPlaceholder } from '$lib/three/placeholderLoader';
 	import Button from '../ui/Button.svelte';
 	import Card from '../ui/Card.svelte';
@@ -100,8 +100,9 @@
 			</div>
 			<button
 				onclick={clearModel}
-				class="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+				class="w-11 h-11 flex items-center justify-center hover:bg-crema rounded-full transition-colors"
 				title="Quitar modelo"
+				aria-label="Quitar modelo"
 			>
 				<X size={20} class="text-text-secondary" />
 			</button>
@@ -111,9 +112,9 @@
 		<div
 			role="region"
 			aria-label="Zona de carga de archivos 3D"
-			class="border-2 border-dashed rounded-lg p-8 text-center transition-colors {isDragging
-				? 'border-primary bg-primary/5'
-				: 'border-gray-300'}"
+			class="border-2 border-dashed rounded-brand-lg p-8 text-center transition-colors {isDragging
+				? 'border-primary bg-crema'
+				: 'border-tinta-suave'}"
 			ondrop={handleDrop}
 			ondragover={handleDragOver}
 			ondragleave={handleDragLeave}
@@ -128,8 +129,8 @@
 			/>
 
 			<div class="flex flex-col items-center gap-4">
-				<div class="p-4 bg-primary/10 rounded-full">
-					<Upload size={32} class="text-primary" />
+				<div class="p-4 bg-mantequilla rounded-full">
+					<Upload size={32} class="text-tinta" />
 				</div>
 
 				<div>
@@ -137,14 +138,14 @@
 						{#if isLoading}
 							Cargando modelo...
 						{:else}
-							Arrastra tu archivo aquí
+							Arrastrá tu archivo acá
 						{/if}
 					</p>
 					<p class="text-sm text-text-secondary">o</p>
 				</div>
 
 				<Button variant="primary" onclick={openFilePicker} disabled={isLoading}>
-					Seleccionar Archivo
+					Elegir archivo
 				</Button>
 
 				<p class="text-xs text-text-secondary">Formato recomendado: STL • También acepta 3MF • Máximo: 50MB</p>
@@ -153,7 +154,7 @@
 	{/if}
 
 	{#if error}
-		<div class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
+		<div class="mt-4 p-3 bg-red-50 border border-red-200 rounded-brand flex items-start gap-2">
 			<AlertCircle size={20} class="text-red-600 flex-shrink-0 mt-0.5" />
 			<p class="text-sm text-red-800">{error}</p>
 		</div>

@@ -41,7 +41,7 @@ export function createScene(config: SceneConfig): SceneContext {
 	const {
 		container,
 		enableShadows = true,
-		backgroundColor = '#F8FAFC',
+		backgroundColor = '#FFF4E0', // crema
 		autoRotate = false,
 		autoRotateSpeed = 2.0,
 		enableUserControls = true

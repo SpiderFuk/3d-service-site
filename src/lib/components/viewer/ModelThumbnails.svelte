@@ -104,13 +104,13 @@
 </script>
 
 <div class="space-y-3">
-	<h3 class="font-bold text-lg text-text">Modelos de Ejemplo</h3>
+	<h3 class="font-bold text-lg text-text">Modelos de ejemplo</h3>
 
 	<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-		{#each models as model}
+		{#each models as model (model.id)}
 			<button
 				onclick={() => loadModel(model)}
-				class="group"
+				class="group rounded-brand-xl text-left focus:outline-none focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-tinta"
 				disabled={$modelStore.isLoading}
 			>
 				<Card
@@ -120,7 +120,7 @@
 						? 'ring-2 ring-primary'
 						: 'group-hover:ring-2 group-hover:ring-primary/50'}"
 				>
-					<div class="aspect-square bg-background-secondary rounded-lg mb-2 flex items-center justify-center overflow-hidden">
+					<div class="aspect-square bg-crema rounded-brand mb-2 flex items-center justify-center overflow-hidden">
 						{#if loadedPreviews[model.id]}
 							<ModelThumbnailPreview
 								model={loadedPreviews[model.id]}
@@ -130,7 +130,7 @@
 							<img
 								src={model.thumbnail}
 								alt={model.name}
-								class="w-full h-full object-cover rounded-lg"
+								class="w-full h-full object-cover rounded-brand"
 							/>
 						{:else}
 							<div class="text-4xl text-text-secondary animate-pulse">3D</div>

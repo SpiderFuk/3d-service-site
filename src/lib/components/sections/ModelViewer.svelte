@@ -54,11 +54,12 @@
 </script>
 
 <section id="viewer" class="py-20 bg-background">
-	<div class="container mx-auto px-4">
+	<div class="container mx-auto px-4 md:px-16">
 		<div class="text-center mb-12">
-			<h2 class="text-3xl md:text-4xl font-bold text-text mb-4">
-				Visor 3D Interactivo
-			</h2>
+			<p class="text-[13px] font-semibold uppercase tracking-[0.1em] text-text-secondary mb-3">
+				Visor 3D
+			</p>
+			<h2 class="text-3xl md:text-5xl text-text mb-4">Mirá tu modelo en 3D</h2>
 			<p class="text-lg text-text-secondary max-w-2xl mx-auto">
 				Cargá tu modelo o seleccioná uno de ejemplo para visualizarlo en 3D
 			</p>
@@ -67,15 +68,15 @@
 		<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
 			<!-- Canvas 3D (ocupa 2 columnas) -->
 			<div class="lg:col-span-2 relative">
-				<div class="bg-background-secondary rounded-lg overflow-hidden shadow-lg h-[500px] lg:h-[600px]">
+				<div class="bg-crema border-2 border-tinta rounded-brand-xl overflow-hidden h-[500px] lg:h-[600px]">
 					<ThreeCanvas autoRotate={$modelStore.fileName === null} />
 				</div>
 
 				<!-- Mensaje indicativo para placeholder -->
 				{#if $modelStore.fileName === null && !$modelStore.isLoading}
 					<div class="absolute inset-x-0 top-8 flex justify-center pointer-events-none">
-						<div class="bg-background/90 backdrop-blur-sm px-6 py-3 rounded-lg shadow-lg">
-							<p class="text-sm text-text-secondary text-center">
+						<div class="bg-white border-2 border-tinta px-5 py-2 rounded-full">
+							<p class="text-sm font-medium text-tinta text-center">
 								Cargá tu modelo o seleccioná uno de ejemplo
 							</p>
 						</div>
@@ -97,7 +98,7 @@
 						onclick={handleQuote}
 					>
 						<MessageCircle size={20} />
-						Cotizar este Modelo
+						Cotizar este modelo
 					</Button>
 				{/if}
 			</div>

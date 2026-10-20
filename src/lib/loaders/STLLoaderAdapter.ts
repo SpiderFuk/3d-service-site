@@ -37,7 +37,7 @@ export class STLLoaderAdapter implements IModelLoader {
 
 					// Crear mesh con material estándar
 					const material = new MeshStandardMaterial({
-						color: 0x3b82f6,
+						color: 0x2b3cff, // cobalto
 						metalness: 0.3,
 						roughness: 0.6
 					});
