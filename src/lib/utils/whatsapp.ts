@@ -23,7 +23,7 @@ function generateMessage(options: WhatsAppMessageOptions = {}): string {
 	let message = '¡Hola! Me gustaría solicitar una cotización para impresión 3D.';
 
 	if (modelInfo) {
-		message += '\n\n📦 Información del modelo:';
+		message += '\n\nInformación del modelo:';
 		message += `\n• Archivo: ${modelInfo.filename}`;
 		message += `\n• Dimensiones: ${modelInfo.dimensions.x} × ${modelInfo.dimensions.y} × ${modelInfo.dimensions.z} mm`;
 		message += `\n• Volumen aproximado: ${modelInfo.volume} cm³`;
