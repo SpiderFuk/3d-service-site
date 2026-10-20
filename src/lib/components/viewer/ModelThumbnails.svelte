@@ -24,6 +24,11 @@
 
 	let { models }: Props = $props();
 	let selectedId = $state<string | null>(null);
+	// Solo se marca la miniatura mientras su modelo sigue cargado en el visor
+	// (al quitar el modelo o subir un archivo propio deja de estar seleccionada)
+	const activeId = $derived(
+		models.find((m) => m.id === selectedId && $modelStore.fileName === m.name)?.id ?? null
+	);
 	let loadedPreviews = $state<Record<string, Object3D>>({});
 	let isLoadingPreviews = $state(true);
 
@@ -116,7 +121,7 @@
 				<Card
 					padding="sm"
 					hover={true}
-					class="transition-all {selectedId === model.id
+					class="transition-all {activeId === model.id
 						? 'ring-2 ring-primary'
 						: 'group-hover:ring-2 group-hover:ring-primary/50'}"
 				>
