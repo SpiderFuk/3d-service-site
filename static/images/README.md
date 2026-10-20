@@ -4,15 +4,14 @@ Este directorio contiene todos los recursos visuales del sitio.
 
 ## Archivos Actualmente en Uso
 
-### Logo (Navbar)
-- **Principal**: `logo animado.gif` - Logo animado usado en el header/navbar
-- **Fallback**: `logo nombre H recortado.png` - Se usa si el GIF falla al cargar
+### Logo
+El logo actual vive en `static/brand/logo/` (ver `docs/brand.md`). No usar logos de esta carpeta.
 
 ### Otros Archivos Disponibles
 - `background.png` - Puede usarse como fondo en secciones
 - `imagen hero.png` - Imagen para la sección Hero
 - `Íconos de Servicios.png` - Referencia de iconos
-- `logo.png`, `logo nombre 1.png`, `logo nombre 2.jpeg`, `logo nombre H.png` - Variantes del logo
+- `_old-logos/` - Logos anteriores al rebrand "Filamento" (cubo animado y variantes). Solo como archivo, sin referencias en el codigo
 
 ## Cómo Usar las Imágenes
 

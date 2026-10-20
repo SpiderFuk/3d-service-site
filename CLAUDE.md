@@ -65,7 +65,8 @@ src/
 ├── routes/                # SvelteKit routes
 └── app.css                # Global styles
 static/
-├── images/                # Logo variants, hero image (13 files)
+├── images/                # Hero and gallery images; old logos archived in _old-logos/
+├── brand/                 # Filamento logo, favicons, brand.css
 └── models/                # Preloaded 3D models (4 STL files)
 ```
 
@@ -401,9 +402,15 @@ debounce(func, wait)
 
 ### Images (`static/images/`)
 
-- **Logo variants:** `logo.png`, `logo-with-no-bg.png`, `logo animado.gif` (animated), logo nombre variants
-- **SEO:** `og-image.png`
 - **Hero:** `imagen hero.png`
+- **Old logos:** `_old-logos/` (pre-rebrand archive, not referenced; use `static/brand/logo/` instead)
+
+### Brand (`static/brand/`)
+
+- **Logo:** `logo/svg/printo-wordmark-*.svg` (wordmark), `logo/icons/` (PNG icons)
+- **Favicon:** `favicon.svg`, `favicon.ico` (root copies: `static/favicon.*`, `static/apple-touch-icon.png`)
+- **Variables:** `brand.css` (linked in `src/app.html`)
+- **SEO:** `static/og-image.png`
 
 ### 3D Models (`static/models/`)
 

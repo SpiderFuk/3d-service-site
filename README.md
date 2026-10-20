@@ -69,8 +69,7 @@ Agregar archivos STL/3MF en `static/models/` y actualizar la lista en:
 ### 5. Imágenes
 
 Agregar:
-- Logo en `static/images/logo.png`
-- Favicon en `static/favicon.png`
+- Logo y favicon en `static/brand/` (ver `docs/brand.md`)
 - Open Graph image en `static/og-image.jpg`
 
 ## Estructura del Proyecto
