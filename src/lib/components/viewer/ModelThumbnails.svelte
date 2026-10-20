@@ -109,7 +109,7 @@
 <div class="space-y-3">
 	<h3 class="font-bold text-lg text-text">Modelos de ejemplo</h3>
 
-	<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+	<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
 		{#each models as model (model.id)}
 			<button
 				onclick={() => loadModel(model)}

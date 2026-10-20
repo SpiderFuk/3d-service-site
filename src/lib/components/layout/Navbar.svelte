@@ -45,7 +45,7 @@
 			</a>
 
 			<!-- Desktop Menu -->
-			<div class="hidden md:flex items-center gap-1">
+			<div class="hidden lg:flex items-center gap-1">
 				{#each menuItems as item (item.href)}
 					<a
 						href={item.href}
@@ -58,13 +58,13 @@
 			</div>
 
 			<!-- CTA Button Desktop -->
-			<div class="hidden md:block">
+			<div class="hidden lg:block">
 				<Button variant="whatsapp" size="md" onclick={handleCTA}>Pedir presupuesto</Button>
 			</div>
 
 			<!-- Mobile Menu Button -->
 			<button
-				class="md:hidden w-11 h-11 flex items-center justify-center rounded-full text-text hover:text-primary transition-colors"
+				class="lg:hidden w-11 h-11 flex items-center justify-center rounded-full text-text hover:text-primary transition-colors"
 				onclick={toggleMenu}
 				aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
 				aria-expanded={isMobileMenuOpen}
@@ -79,7 +79,7 @@
 
 		<!-- Mobile Menu -->
 		{#if isMobileMenuOpen}
-			<div class="md:hidden py-4 border-t-2 border-tinta">
+			<div class="lg:hidden py-4 border-t-2 border-tinta">
 				<div class="flex flex-col gap-3">
 					{#each menuItems as item (item.href)}
 						<a
