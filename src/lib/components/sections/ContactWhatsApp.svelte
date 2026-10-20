@@ -14,32 +14,34 @@
 	}
 </script>
 
-<section id="contact" class="py-20 bg-background">
-	<div class="container mx-auto px-4">
+<section id="contact" class="py-20 bg-white">
+	<div class="container mx-auto px-4 md:px-16">
 		<div class="text-center mb-12">
-			<h2 class="text-3xl md:text-4xl font-bold text-text mb-4">
-				¿Tenés un proyecto en mente?
-			</h2>
+			<p class="text-[13px] font-semibold uppercase tracking-[0.1em] text-text-secondary mb-3">
+				Contacto
+			</p>
+			<h2 class="text-3xl md:text-5xl text-text mb-4">¿Tenés un proyecto en mente?</h2>
 			<p class="text-lg text-text-secondary max-w-2xl mx-auto">
 				Contactanos por WhatsApp y recibí una cotización personalizada
 			</p>
 		</div>
 
 		<div class="max-w-4xl mx-auto">
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-				<!-- Tarjeta WhatsApp -->
-				<Card padding="lg">
+			<!-- gap-10: deja lugar a la extrusion de la tarjeta de WhatsApp (30px) -->
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
+				<!-- Tarjeta WhatsApp (la unica con extrusion en esta vista) -->
+				<Card padding="lg" extrude>
 					<div class="flex items-start gap-4">
-						<div class="p-3 bg-whatsapp/10 rounded-lg">
-							<MessageCircle size={24} class="text-whatsapp" />
+						<div class="p-3 bg-whatsapp rounded-full">
+							<MessageCircle size={24} class="text-tinta" />
 						</div>
 						<div>
-							<h3 class="font-bold text-lg text-text mb-1">WhatsApp</h3>
+							<h3 class="text-lg text-text mb-1">WhatsApp</h3>
 							<a
 								href="https://wa.me/{contactInfo.whatsappNumber}"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-primary hover:underline"
+								class="font-semibold text-primary hover:underline"
 							>
 								{contactInfo.whatsappDisplayNumber}
 							</a>
@@ -53,11 +55,11 @@
 				<!-- Tarjeta Ubicación -->
 				<Card padding="lg">
 					<div class="flex items-start gap-4">
-						<div class="p-3 bg-primary/10 rounded-lg">
-							<MapPin size={24} class="text-primary" />
+						<div class="p-3 bg-menta rounded-full">
+							<MapPin size={24} class="text-tinta" />
 						</div>
 						<div>
-							<h3 class="font-bold text-lg text-text mb-1">Ubicación</h3>
+							<h3 class="text-lg text-text mb-1">Ubicación</h3>
 							<p class="text-text-secondary">{contactInfo.city}, Uruguay</p>
 							<p class="text-sm text-text-secondary mt-2">
 								Consultar disponibilidad de retiro en persona
@@ -70,14 +72,14 @@
 			<!-- Horarios -->
 			<Card padding="lg" class="mb-8">
 				<div class="flex items-start gap-4">
-					<div class="p-3 bg-primary/10 rounded-lg">
-						<Clock size={24} class="text-primary" />
+					<div class="p-3 bg-mantequilla rounded-full">
+						<Clock size={24} class="text-tinta" />
 					</div>
 					<div class="flex-1">
-						<h3 class="font-bold text-lg text-text mb-3">Horarios de Atención</h3>
+						<h3 class="text-lg text-text mb-3">Horarios de atención</h3>
 						<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
 							<div>
-								<p class="text-sm font-medium text-text">Lunes a Viernes</p>
+								<p class="text-sm font-medium text-text">Lunes a viernes</p>
 								<p class="text-sm text-text-secondary">9:00 - 18:00</p>
 							</div>
 							<div>
@@ -97,7 +99,7 @@
 			<div class="text-center">
 				<Button variant="whatsapp" size="lg" onclick={handleContact}>
 					<MessageCircle size={24} />
-					Iniciar Conversación
+					Escribinos por WhatsApp
 				</Button>
 				<p class="text-sm text-text-secondary mt-4">
 					Te respondemos en minutos y te enviamos tu cotización personalizada
