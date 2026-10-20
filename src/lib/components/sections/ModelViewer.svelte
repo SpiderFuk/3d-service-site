@@ -13,6 +13,7 @@
 	import { modelStore } from '$lib/stores/modelStore';
 	import { openWhatsApp } from '$lib/utils/whatsapp';
 	import { loadPlaceholder } from '$lib/three/placeholderLoader';
+	import { prefersReducedMotion } from '$lib/stores/reducedMotion';
 
 	// Modelos de ejemplo
 	const exampleModels = [
@@ -69,7 +70,7 @@
 			<!-- Canvas 3D (ocupa 2 columnas) -->
 			<div class="lg:col-span-2 relative">
 				<div class="bg-crema border-2 border-tinta rounded-brand-xl overflow-hidden h-[500px] lg:h-[600px]">
-					<ThreeCanvas autoRotate={$modelStore.fileName === null} />
+					<ThreeCanvas autoRotate={$modelStore.fileName === null && !$prefersReducedMotion} />
 				</div>
 
 				<!-- Mensaje indicativo para placeholder -->

@@ -6,6 +6,7 @@
 
 	import { onMount } from 'svelte';
 	import { fetchContent } from '$lib/services/contentService';
+	import { prefersReducedMotion } from '$lib/stores/reducedMotion';
 	import type { GalleryItem, GalleryContent } from '$lib/types/content';
 
 	const fallbackItems: GalleryItem[] = [
@@ -44,10 +45,14 @@
 	];
 
 	let galleryItems = $state<GalleryItem[]>(fallbackItems);
-	let isLoading = $state(true);
 
-	// Triplicar items para scroll infinito continuo
-	const displayItems = $derived([...galleryItems, ...galleryItems, ...galleryItems]);
+	// Con "reducir movimiento" no hay auto-scroll: la galeria es un scroll horizontal normal
+	const reduceMotion = $derived($prefersReducedMotion);
+
+	// Triplicar items para scroll infinito continuo (solo con animacion)
+	const displayItems = $derived(
+		reduceMotion ? galleryItems : [...galleryItems, ...galleryItems, ...galleryItems]
+	);
 
 	onMount(async () => {
 		const fallback: GalleryContent = { items: fallbackItems, updatedAt: '' };
@@ -59,7 +64,6 @@
 		}
 
 		galleryItems = content.items;
-		isLoading = false;
 	});
 
 	const MAX_SPEED = 0.5;
@@ -75,7 +79,7 @@
 	let offset = 0;
 
 	function handlePointerDown(e: PointerEvent) {
-		if (e.pointerType === "touch") return;
+		if (e.pointerType === "touch" || reduceMotion) return;
 		isDragging = true;
 		startX = e.pageX;
 		dragStart = offset;
@@ -106,6 +110,11 @@
 
 	$effect(() => {
 		if (!trackEl) return;
+		if (reduceMotion) {
+			offset = 0;
+			trackEl.style.transform = '';
+			return;
+		}
 
 		function animate() {
 			if (!isDragging) {
@@ -158,9 +167,9 @@
 	<div class="relative">
 		<!-- Contenedor: recorta el track y captura eventos de puntero -->
 		<div
-			class="overflow-hidden py-2"
-			class:cursor-grabbing={isDragging}
-			class:cursor-grab={!isDragging}
+			class="py-2 {reduceMotion ? 'overflow-x-auto px-4 md:px-16' : 'overflow-hidden'}"
+			class:cursor-grabbing={isDragging && !reduceMotion}
+			class:cursor-grab={!isDragging && !reduceMotion}
 			role="region"
 			aria-label="Galería de proyectos"
 			onpointerdown={handlePointerDown}

@@ -4,7 +4,9 @@
 	 */
 
 	import { onMount, onDestroy } from 'svelte';
+	import { get } from 'svelte/store';
 	import { createScene } from '$lib/three/sceneSetup';
+	import { prefersReducedMotion } from '$lib/stores/reducedMotion';
 	import type { SceneContext } from '$lib/three/sceneSetup';
 	import type { Object3D } from 'three';
 
@@ -32,7 +34,7 @@
 						sceneContext = createScene({
 							container,
 							enableShadows: false,
-							autoRotate: true,
+							autoRotate: !get(prefersReducedMotion),
 							autoRotateSpeed: 3.0,
 							enableUserControls: false
 						});
