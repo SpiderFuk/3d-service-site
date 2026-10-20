@@ -24,12 +24,13 @@
 	const materialActual = $derived(materiales.find((m) => m.id === selectedMaterial));
 </script>
 
-<section id="filaments" class="py-20 bg-background-secondary">
-	<div class="container mx-auto px-4">
+<section id="filaments" class="py-20 bg-white">
+	<div class="container mx-auto px-4 md:px-16">
 		<div class="text-center mb-12">
-			<h2 class="text-3xl md:text-4xl font-bold text-text mb-4">
-				Materiales y Colores
-			</h2>
+			<p class="text-[13px] font-semibold uppercase tracking-[0.1em] text-text-secondary mb-3">
+				Materiales
+			</p>
+			<h2 class="text-3xl md:text-5xl text-text mb-4">Materiales y colores</h2>
 			<p class="text-lg text-text-secondary max-w-2xl mx-auto">
 				Amplia variedad de materiales y colores para tus proyectos
 			</p>
@@ -38,35 +39,36 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
 			<!-- Materiales -->
 			<div>
-				<h3 class="text-2xl font-bold text-text mb-6">Materiales Disponibles</h3>
+				<h3 class="text-2xl text-text mb-6">Materiales disponibles</h3>
 				<div class="space-y-4">
-					{#each materiales as material}
+					{#each materiales as material (material.id)}
 						<Card
 							padding="md"
 							hover={true}
 							class="cursor-pointer transition-all {selectedMaterial === material.id
-								? 'ring-2 ring-primary'
+								? 'ring-4 ring-primary ring-offset-2'
 								: ''}"
 						>
 							<button
 								onclick={() => (selectedMaterial = material.id)}
-								class="w-full text-left"
+								class="w-full text-left rounded-brand focus:outline-none focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-tinta"
+								aria-pressed={selectedMaterial === material.id}
 							>
 								<div class="flex items-start justify-between mb-2">
-									<h4 class="text-xl font-bold text-text">{material.nombre}</h4>
+									<h4 class="font-display text-xl font-bold text-text">{material.nombre}</h4>
 									<span
-										class="px-3 py-1 text-sm font-medium rounded-full {material.disponible
-											? 'bg-primary/10 text-primary'
-											: 'bg-gray-200 text-gray-500'}"
+										class="px-3 py-1 text-sm font-semibold rounded-full {material.disponible
+											? 'bg-menta text-tinta'
+											: 'bg-crema text-text-secondary'}"
 									>
 										{material.disponible ? 'Disponible' : 'No disponible'}
 									</span>
 								</div>
 								<p class="text-text-secondary mb-3">{material.descripcion}</p>
 								<div class="flex flex-wrap gap-2">
-									{#each material.propiedades as propiedad}
+									{#each material.propiedades as propiedad (propiedad)}
 										<span
-											class="px-2 py-1 bg-background text-text-secondary text-xs rounded-md"
+											class="px-3 py-1 bg-crema text-text-secondary text-xs font-medium rounded-full"
 										>
 											{propiedad}
 										</span>
@@ -80,17 +82,17 @@
 
 			<!-- Colores -->
 			<div>
-				<h3 class="text-2xl font-bold text-text mb-6">
+				<h3 class="text-2xl text-text mb-6">
 					Colores en {materialActual?.nombre ?? 'PLA'}
 				</h3>
 				<Card padding="lg">
 					<div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-4">
-						{#each colores as color}
+						{#each colores as color (color.id)}
 							<ColorSwatch {color} size="lg" />
 						{/each}
 					</div>
 
-					<div class="mt-6 pt-6 border-t border-gray-200">
+					<div class="mt-6 pt-6 border-t-2 border-crema">
 						<p class="text-sm text-text-secondary">
 							<span class="font-medium text-text">Nota:</span>
 							Los colores marcados con ✕ están temporalmente agotados.
