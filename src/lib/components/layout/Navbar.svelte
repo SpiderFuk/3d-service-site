@@ -36,7 +36,7 @@
 	<div class="container mx-auto px-4 md:px-16">
 		<div class="flex items-center justify-between h-16">
 			<!-- Logo -->
-			<a href="#hero" class="flex items-center" onclick={(e) => handleNavClick(e, '#hero')}>
+			<a href="#hero" class="flex items-center min-h-11" onclick={(e) => handleNavClick(e, '#hero')}>
 				<img
 					src="/brand/logo/svg/printo-wordmark-cobalto.svg"
 					alt={contactInfo.businessName}

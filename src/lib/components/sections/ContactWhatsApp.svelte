@@ -41,7 +41,7 @@
 								href="https://wa.me/{contactInfo.whatsappNumber}"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="font-semibold text-primary hover:underline"
+								class="inline-flex items-center min-h-11 font-semibold text-primary hover:underline"
 							>
 								{contactInfo.whatsappDisplayNumber}
 							</a>

@@ -81,12 +81,12 @@
 			<!-- Columna 2: Enlaces Rápidos -->
 			<div>
 				<h3 class="text-lg mb-4">Enlaces rápidos</h3>
-				<ul class="space-y-2">
+				<ul>
 					{#each quickLinks as link (link.href)}
 						<li>
 							<a
 								href={link.href}
-								class="text-crema/75 hover:text-crema hover:underline transition-colors rounded {focusRing}"
+								class="inline-flex items-center min-h-11 min-w-11 text-crema/75 hover:text-crema hover:underline transition-colors rounded {focusRing}"
 								onclick={(e) => handleLinkClick(e, link.href)}
 							>
 								{link.label}
@@ -108,7 +108,7 @@
 								href="https://wa.me/{contactInfo.whatsappNumber}"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-crema hover:underline rounded {focusRing}"
+								class="inline-flex items-center min-h-11 text-crema hover:underline rounded {focusRing}"
 							>
 								{contactInfo.whatsappDisplayNumber}
 							</a>
@@ -122,7 +122,7 @@
 								href={contactInfo.socialMedia.instagram}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-crema hover:underline rounded {focusRing}"
+								class="inline-flex items-center min-h-11 text-crema hover:underline rounded {focusRing}"
 							>
 								@printo.uy
 							</a>
@@ -134,7 +134,7 @@
 							<p class="text-crema/75 text-sm">Email</p>
 							<a
 								href="mailto:{contactInfo.email}"
-								class="text-crema hover:underline rounded {focusRing}"
+								class="inline-flex items-center min-h-11 text-crema hover:underline rounded {focusRing}"
 							>
 								{contactInfo.email}
 							</a>
