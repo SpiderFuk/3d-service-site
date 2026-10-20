@@ -36,9 +36,10 @@
 			model.rotation.z = -Math.PI / 2; // -90° en Z (antihorario)
 
 			// Recalcular normales para iluminación correcta después de rotar
+			// (salvo mallas que ya traen normales suaves, como el logo placeholder)
 			import('three').then(({ Mesh }) => {
 				model.traverse((child) => {
-					if (child instanceof Mesh && child.geometry) {
+					if (child instanceof Mesh && child.geometry && !child.userData.preserveNormals) {
 						child.geometry.computeVertexNormals();
 					}
 				});

@@ -1,24 +1,40 @@
 /**
- * Logo 3D de printo: la p extruida en cobalto con capas tomate detras,
+ * Logo 3D de printo: la p extruida en cobalto con una extrusion tomate detras,
  * como una pieza recien impresa (ver docs/brand.md)
  *
  * Geometria tomada de static/brand/logo/svg/printo-p-cobalto.svg:
- * un palo con extremos redondeados y un aro, ambos con trazo de 162
+ * un palo con extremos redondeados y un aro, ambos con trazo de 162.
+ * Se arma un unico contorno (union de palo y aro) para poder biselarlo sin costuras.
  */
 
-import { ExtrudeGeometry, Group, Mesh, MeshStandardMaterial, Path, Shape } from 'three';
+import {
+	ExtrudeGeometry,
+	Group,
+	Mesh,
+	MeshStandardMaterial,
+	Path,
+	Shape,
+	Vector2,
+	Vector3
+} from 'three';
+import type { BufferGeometry } from 'three';
 
 const TRAZO = 162;
 const RADIO_TRAZO = TRAZO / 2;
 
-// Palo de la p (coordenadas del SVG, con el eje Y hacia arriba)
+// Coordenadas del SVG, con el eje Y hacia arriba
 const PALO = { x: 117, yInferior: -44, ySuperior: 461 };
-// Aro de la p
 const ARO = { x: 307, y: 271, radio: 190 };
 
 const PROFUNDIDAD_FRENTE = 60;
-const CAPAS_EXTRUSION = 5;
-const PASO_CAPA = { xy: 12, z: 16 };
+const BISEL = { tamano: 10, grosor: 10, segmentos: 6 };
+const CURVA_SEGMENTOS = 96;
+// Radio de los empalmes donde el aro se junta con el palo
+const RADIO_EMPALME = 24;
+
+// Extrusion tomate: largo hacia atras, corrimiento hacia abajo-derecha y retraccion del
+// contorno para que arranque por dentro de la pieza cobalto (sin superficies coincidentes)
+const EXTRUSION = { largo: 120, corrimiento: 70, retraccion: BISEL.tamano + 4 };
 
 // La p mide ~700 unidades; se escala para entrar en el rango de OrbitControls (distancia max 500)
 const ESCALA = 0.2;
@@ -26,67 +42,203 @@ const ESCALA = 0.2;
 const COBALTO = 0x2b3cff;
 const TOMATE = 0xff5a47;
 
-function crearFormasP(): Shape[] {
-	const palo = new Shape();
-	palo.moveTo(PALO.x - RADIO_TRAZO, PALO.yInferior);
-	palo.lineTo(PALO.x - RADIO_TRAZO, PALO.ySuperior);
-	palo.absarc(PALO.x, PALO.ySuperior, RADIO_TRAZO, Math.PI, 0, true);
-	palo.lineTo(PALO.x + RADIO_TRAZO, PALO.yInferior);
-	palo.absarc(PALO.x, PALO.yInferior, RADIO_TRAZO, 0, -Math.PI, true);
+interface Circulo {
+	x: number;
+	y: number;
+	r: number;
+}
 
-	const aro = new Shape();
-	aro.absarc(ARO.x, ARO.y, ARO.radio + RADIO_TRAZO, 0, Math.PI * 2, false);
+/** Interseccion de dos circulos que se cortan (devuelve los dos puntos) */
+function interseccionCirculos(a: Circulo, b: Circulo): [number, number][] {
+	const dx = b.x - a.x;
+	const dy = b.y - a.y;
+	const d = Math.hypot(dx, dy);
+	const largo = (d * d + a.r * a.r - b.r * b.r) / (2 * d);
+	const alto = Math.sqrt(a.r * a.r - largo * largo);
+	const mx = a.x + (dx * largo) / d;
+	const my = a.y + (dy * largo) / d;
+	return [
+		[mx - (dy * alto) / d, my + (dx * alto) / d],
+		[mx + (dy * alto) / d, my - (dx * alto) / d]
+	];
+}
+
+/** Angulo de un punto visto desde el centro de un circulo */
+function angulo(centro: { x: number; y: number }, punto: { x: number; y: number }): number {
+	return Math.atan2(punto.y - centro.y, punto.x - centro.x);
+}
+
+/** Arco corto de un circulo entre dos angulos (elige el sentido solo) */
+function arcoCorto(forma: Shape, c: Circulo, desde: number, hasta: number): void {
+	const delta = Math.atan2(Math.sin(hasta - desde), Math.cos(hasta - desde));
+	forma.absarc(c.x, c.y, c.r, desde, hasta, delta < 0);
+}
+
+/**
+ * Contorno de la p (antihorario): union del palo y el aro exterior, con el hueco del aro.
+ * El aro exterior es tangente al borde izquierdo del palo y el hueco al borde derecho,
+ * asi que el contorno solo tiene dos esquinas entrantes (donde el aro se junta con el palo).
+ * Esas esquinas se redondean con un empalme para que el bisel no genere picos.
+ */
+function crearContornoP(): Shape {
+	const xIzq = PALO.x - RADIO_TRAZO;
+	const xDer = PALO.x + RADIO_TRAZO;
+	const aro: Circulo = { x: ARO.x, y: ARO.y, r: ARO.radio + RADIO_TRAZO };
+	const tapaSuperior: Circulo = { x: PALO.x, y: PALO.ySuperior, r: RADIO_TRAZO };
+
+	// Empalme inferior: tangente al borde derecho del palo y por fuera del aro
+	const empalmeInferior: Circulo = {
+		x: xDer + RADIO_EMPALME,
+		y: aro.y - Math.sqrt((aro.r + RADIO_EMPALME) ** 2 - (xDer + RADIO_EMPALME - aro.x) ** 2),
+		r: RADIO_EMPALME
+	};
+
+	// Empalme superior: por fuera del aro y de la tapa superior del palo,
+	// del lado que se encuentra primero recorriendo el aro en sentido antihorario
+	const [centroSuperior] = interseccionCirculos(
+		{ ...aro, r: aro.r + RADIO_EMPALME },
+		{ ...tapaSuperior, r: tapaSuperior.r + RADIO_EMPALME }
+	)
+		.map(([x, y]) => ({ x, y }))
+		.sort((p, q) => angulo(aro, p) - angulo(aro, q));
+	const empalmeSuperior: Circulo = { ...centroSuperior, r: RADIO_EMPALME };
+
+	const contorno = new Shape();
+	contorno.moveTo(xDer, PALO.yInferior);
+	contorno.lineTo(xDer, empalmeInferior.y);
+	arcoCorto(contorno, empalmeInferior, Math.PI, angulo(empalmeInferior, aro));
+	contorno.absarc(aro.x, aro.y, aro.r, angulo(aro, empalmeInferior), angulo(aro, empalmeSuperior), false);
+	arcoCorto(contorno, empalmeSuperior, angulo(empalmeSuperior, aro), angulo(empalmeSuperior, tapaSuperior));
+	contorno.absarc(tapaSuperior.x, tapaSuperior.y, tapaSuperior.r, angulo(tapaSuperior, empalmeSuperior), Math.PI, false);
+	contorno.lineTo(xIzq, PALO.yInferior);
+	contorno.absarc(PALO.x, PALO.yInferior, RADIO_TRAZO, Math.PI, Math.PI * 2, false);
+
 	const hueco = new Path();
 	hueco.absarc(ARO.x, ARO.y, ARO.radio - RADIO_TRAZO, 0, Math.PI * 2, true);
-	aro.holes.push(hueco);
+	contorno.holes.push(hueco);
 
-	return [palo, aro];
+	return contorno;
+}
+
+/**
+ * Muestrea el contorno y quita puntos repetidos: absarc repite el punto donde termina
+ * el tramo anterior, y esos segmentos de largo cero rompen las normales del bisel
+ */
+function sinPuntosRepetidos(contorno: Shape): Shape {
+	const limpiar = (puntos: Vector2[]) => {
+		const resultado = puntos.filter((p, i) => i === 0 || p.distanceTo(puntos[i - 1]) > 1e-6);
+		if (resultado.length > 1 && resultado[0].distanceTo(resultado[resultado.length - 1]) < 1e-6) {
+			resultado.pop();
+		}
+		return resultado;
+	};
+
+	const limpio = new Shape(limpiar(contorno.getPoints(CURVA_SEGMENTOS / 2)));
+	for (const hueco of contorno.holes) {
+		limpio.holes.push(new Path(limpiar(hueco.getPoints(CURVA_SEGMENTOS / 2))));
+	}
+	return limpio;
+}
+
+function extruir(contorno: Shape, profundidad: number, retraccion = 0): ExtrudeGeometry {
+	return new ExtrudeGeometry(contorno, {
+		depth: profundidad,
+		bevelEnabled: true,
+		bevelSize: BISEL.tamano,
+		bevelThickness: BISEL.grosor,
+		bevelOffset: -retraccion,
+		bevelSegments: BISEL.segmentos,
+		curveSegments: CURVA_SEGMENTOS
+	});
+}
+
+/**
+ * Normales suaves en los laterales y el bisel (grupo 1 de ExtrudeGeometry),
+ * manteniendo planas las tapas. Solo se promedian caras con menos de 60° entre si.
+ */
+function suavizarLaterales(geometria: BufferGeometry): void {
+	geometria.computeVertexNormals();
+	const laterales = geometria.groups.find((g) => g.materialIndex === 1);
+	if (!laterales) return;
+
+	const posicion = geometria.getAttribute('position');
+	const normal = geometria.getAttribute('normal');
+	const fin = laterales.start + laterales.count;
+	const limite = Math.cos(Math.PI / 3);
+	const clave = (i: number) =>
+		`${posicion.getX(i).toFixed(3)},${posicion.getY(i).toFixed(3)},${posicion.getZ(i).toFixed(3)}`;
+
+	const normalesPorPunto = new Map<string, Vector3[]>();
+	for (let i = laterales.start; i < fin; i++) {
+		const n = new Vector3(normal.getX(i), normal.getY(i), normal.getZ(i));
+		const lista = normalesPorPunto.get(clave(i));
+		if (lista) lista.push(n);
+		else normalesPorPunto.set(clave(i), [n]);
+	}
+
+	for (let i = laterales.start; i < fin; i++) {
+		const propia = new Vector3(normal.getX(i), normal.getY(i), normal.getZ(i));
+		const suma = new Vector3();
+		for (const n of normalesPorPunto.get(clave(i)) ?? []) {
+			if (n.dot(propia) > limite) suma.add(n);
+		}
+		suma.normalize();
+		normal.setXYZ(i, suma.x, suma.y, suma.z);
+	}
+	normal.needsUpdate = true;
 }
 
 /**
  * Crea el logo como Group listo para agregar a la escena
  */
 export function createPrintoLogo(): Group {
-	const formas = crearFormasP();
+	const contorno = sinPuntosRepetidos(crearContornoP());
 	const logo = new Group();
 
-	const frente = new ExtrudeGeometry(formas, {
-		depth: PROFUNDIDAD_FRENTE,
-		bevelEnabled: false,
-		curveSegments: 48
-	});
+	// Pieza cobalto: la cara frontal queda en z = PROFUNDIDAD_FRENTE + BISEL.grosor
+	const frente = extruir(contorno, PROFUNDIDAD_FRENTE);
+	suavizarLaterales(frente);
+
+	// Extrusion tomate continua: arranca dentro de la pieza cobalto (sin hueco entre biseles)
+	// y se corre hacia abajo-derecha a medida que va hacia atras
+	const extrusion = extruir(contorno, EXTRUSION.largo, EXTRUSION.retraccion);
+	const pendiente = EXTRUSION.corrimiento / EXTRUSION.largo;
+	const frenteExtrusion = EXTRUSION.largo + BISEL.grosor;
+	const posicion = extrusion.getAttribute('position');
+	for (let i = 0; i < posicion.count; i++) {
+		const atras = frenteExtrusion - posicion.getZ(i);
+		posicion.setXYZ(
+			i,
+			posicion.getX(i) + pendiente * atras,
+			posicion.getY(i) - pendiente * atras,
+			PROFUNDIDAD_FRENTE / 2 - atras
+		);
+	}
+	suavizarLaterales(extrusion);
+
 	// Un poco de emision para que los colores de marca no se apaguen con la iluminacion de la escena
 	const materialCobalto = new MeshStandardMaterial({
 		color: COBALTO,
 		emissive: COBALTO,
 		emissiveIntensity: 0.25,
-		roughness: 0.5
-	});
-	logo.add(new Mesh(frente, materialCobalto));
-
-	// Capas tomate escalonadas hacia abajo, a la derecha y hacia atras
-	const capa = new ExtrudeGeometry(formas, {
-		depth: PASO_CAPA.z,
-		bevelEnabled: false,
-		curveSegments: 48
+		roughness: 0.45
 	});
 	const materialTomate = new MeshStandardMaterial({
 		color: TOMATE,
 		emissive: TOMATE,
 		emissiveIntensity: 0.2,
-		roughness: 0.6
+		roughness: 0.55
 	});
-	for (let i = 1; i <= CAPAS_EXTRUSION; i++) {
-		const mesh = new Mesh(capa, materialTomate);
-		mesh.position.set(PASO_CAPA.xy * i, -PASO_CAPA.xy * i, -PASO_CAPA.z * i);
-		logo.add(mesh);
-	}
+	logo.add(new Mesh(frente, materialCobalto));
+	logo.add(new Mesh(extrusion, materialTomate));
 
 	logo.scale.setScalar(ESCALA);
 	logo.traverse((child) => {
 		if (child instanceof Mesh) {
 			child.castShadow = true;
 			child.receiveShadow = true;
+			// ThreeCanvas recalcula normales de todo modelo; estas ya son suaves y no se deben pisar
+			child.userData.preserveNormals = true;
 		}
 	});
 
