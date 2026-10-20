@@ -58,10 +58,10 @@ Shape language from `docs/brand.md`.
 
 ### Tasks
 
-- [ ] Task 4.1: Propose headline options ("Dale vida a tus ideas con Impresión 3D" vs "Tu idea, en tus manos.") and **wait for the user's choice**
-- [ ] Task 4.2: Restyle `Hero.svelte` keeping `openWhatsApp`, `scrollToSection` and store-driven counts: crema background, eyebrow pill, display h1, body-lg paragraph, two CTAs; no gradients (`hero`)
-- [ ] Task 4.3: Cobalto `rounded-brand-xl` block (right on desktop, below on mobile) with the spool SVG: five concentric circles tomate, mantequilla, menta, crema, cobalto, radii 146/116/86/56/26 in a 300 viewBox, `aria-hidden` (`hero`)
-- [ ] Task 4.4: Quick stats as tiles with mantequilla, menta, tomate backgrounds and tinta text (`hero`)
+- [x] Task 4.1: Propose headline options ("Dale vida a tus ideas con Impresión 3D" vs "Tu idea, en tus manos.") and **wait for the user's choice**
+- [x] Task 4.2: Restyle `Hero.svelte` keeping `openWhatsApp`, `scrollToSection` and store-driven counts: crema background, eyebrow pill, display h1, body-lg paragraph, two CTAs; no gradients (`hero`)
+- [x] Task 4.3: Cobalto `rounded-brand-xl` block (right on desktop, below on mobile) with the spool SVG: five concentric circles tomate, mantequilla, menta, crema, cobalto, radii 146/116/86/56/26 in a 300 viewBox, `aria-hidden` (`hero`)
+- [x] Task 4.4: Quick stats as tiles with mantequilla, menta, tomate backgrounds and tinta text (`hero`)
 
 ### Verification
 
