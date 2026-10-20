@@ -47,10 +47,11 @@
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 			<!-- Columna 1: Marca -->
 			<div>
-				<div class="flex items-center gap-2 mb-4">
-					<img src="/images/logo-with-no-bg.png" alt="Logo" class="w-10 h-10 object-contain" />
-					<span class="font-bold text-xl">{contactInfo.businessName}</span>
-				</div>
+				<img
+					src="/brand/logo/svg/printo-wordmark-crema.svg"
+					alt={contactInfo.businessName}
+					class="h-10 w-auto mb-4"
+				/>
 				<p class="text-gray-400 mb-4">
 					Servicios profesionales de impresión 3D en {contactInfo.city}. Calidad, rapidez y
 					atención personalizada.
