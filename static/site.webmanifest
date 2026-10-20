@@ -1,0 +1,22 @@
+{
+	"name": "printo | Impresión 3D en Montevideo y Las Piedras",
+	"short_name": "printo",
+	"description": "Impresión 3D hecha en Uruguay.",
+	"lang": "es-UY",
+	"start_url": "/",
+	"display": "browser",
+	"background_color": "#FFF4E0",
+	"theme_color": "#2B3CFF",
+	"icons": [
+		{
+			"src": "/brand/logo/icons/printo-icon-cobalto-192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/brand/logo/icons/printo-icon-cobalto-512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	]
+}
