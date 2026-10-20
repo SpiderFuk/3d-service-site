@@ -8,6 +8,9 @@ export default defineConfig({
 	testDir: 'tests',
 	outputDir: 'test-results',
 	timeout: 600_000,
+	// En serie: en paralelo las tres capturas compiten por la CPU (raster por software) y la
+	// seccion Contacto de escritorio no termina a tiempo
+	workers: 1,
 	reporter: 'list',
 	use: {
 		baseURL: 'http://localhost:4173',
