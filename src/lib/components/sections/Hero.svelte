@@ -5,7 +5,6 @@
 	 */
 
 	import { ArrowRight } from 'lucide-svelte';
-	import { contactInfo } from '$lib/config/contact';
 	import { openWhatsApp } from '$lib/utils/whatsapp';
 	import { scrollToSection } from '$lib/utils/scroll';
 	import Button from '../ui/Button.svelte';
@@ -41,7 +40,7 @@
 					class="inline-flex items-center gap-2 bg-white border-2 border-tinta rounded-full px-4 py-2 text-[13px] font-semibold uppercase tracking-[0.1em] text-tinta"
 				>
 					<span class="w-2 h-2 rounded-full bg-tomate" aria-hidden="true"></span>
-					Impresión 3D en {contactInfo.city}
+					Impresión 3D hecha en Uruguay
 				</p>
 
 				<h1 class="text-[44px] sm:text-6xl lg:text-[72px] leading-[0.95] text-tinta">

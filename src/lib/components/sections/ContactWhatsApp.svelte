@@ -29,8 +29,9 @@
 		<div class="max-w-4xl mx-auto">
 			<!-- gap-10: deja lugar a la extrusion de la tarjeta de WhatsApp (30px) -->
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-12">
-				<!-- Tarjeta WhatsApp (la unica con extrusion en esta vista) -->
-				<Card padding="lg" extrude>
+				<!-- Tarjeta WhatsApp (la unica con extrusion en esta vista); en celular deja margen
+				     a la derecha para que la extrusion no quede cortada por el borde de la pantalla -->
+				<Card padding="lg" extrude class="mr-8 md:mr-0">
 					<div class="flex items-start gap-4">
 						<div class="p-3 bg-whatsapp rounded-full">
 							<MessageCircle size={24} class="text-tinta" />
