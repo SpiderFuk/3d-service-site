@@ -25,10 +25,8 @@
 	};
 
 	const baseClasses =
-		'rounded-full border-2 transition-all duration-200 cursor-pointer hover:scale-110';
-	const selectedClass = $derived(
-		selected ? 'ring-4 ring-primary ring-offset-2 scale-110' : 'border-gray-300'
-	);
+		'rounded-full border-2 border-tinta transition-all duration-200 cursor-pointer hover:scale-110 focus:outline-none focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-tinta';
+	const selectedClass = $derived(selected ? 'ring-4 ring-primary ring-offset-2 scale-110' : '');
 	const disabledClass = $derived(!color.disponible ? 'opacity-40 cursor-not-allowed grayscale' : '');
 
 	const classes = $derived(`${baseClasses} ${sizeClasses[size]} ${selectedClass} ${disabledClass}`);
@@ -56,7 +54,7 @@
 		{/if}
 	</button>
 
-	<span class="text-xs text-center text-text-secondary {!color.disponible ? 'line-through' : ''}">
+	<span class="text-xs font-medium text-center text-text-secondary {!color.disponible ? 'line-through' : ''}">
 		{color.nombre}
 	</span>
 </div>
