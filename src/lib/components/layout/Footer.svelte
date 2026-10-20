@@ -33,6 +33,10 @@
 		}
 	];
 
+	// Foco visible sobre fondo tinta (el contorno tinta global no se veria)
+	const focusRing =
+		'focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crema';
+
 	function handleLinkClick(event: MouseEvent, href: string) {
 		if (href.startsWith('#')) {
 			event.preventDefault();
@@ -42,8 +46,8 @@
 	}
 </script>
 
-<footer class="bg-text text-white">
-	<div class="container mx-auto px-4 py-12">
+<footer class="bg-tinta text-crema">
+	<div class="container mx-auto px-4 md:px-16 py-12">
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 			<!-- Columna 1: Marca -->
 			<div>
@@ -52,19 +56,19 @@
 					alt={contactInfo.businessName}
 					class="h-10 w-auto mb-4"
 				/>
-				<p class="text-gray-400 mb-4">
+				<p class="text-crema/75 mb-4">
 					Servicios profesionales de impresión 3D en {contactInfo.city}. Calidad, rapidez y
 					atención personalizada.
 				</p>
 				<!-- Redes Sociales -->
 				<div class="flex gap-3">
-					{#each socialLinks as social}
+					{#each socialLinks as social (social.name)}
 						{#if social.show !== false}
 							<a
 								href={social.url}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="w-10 h-10 rounded-full bg-gray-800 hover:bg-primary flex items-center justify-center transition-colors"
+								class="w-11 h-11 rounded-full border-2 border-crema hover:bg-crema hover:text-tinta flex items-center justify-center transition-colors {focusRing}"
 								aria-label={social.name}
 							>
 								<social.icon size={20} />
@@ -76,13 +80,13 @@
 
 			<!-- Columna 2: Enlaces Rápidos -->
 			<div>
-				<h3 class="font-bold text-lg mb-4">Enlaces Rápidos</h3>
+				<h3 class="text-lg mb-4">Enlaces rápidos</h3>
 				<ul class="space-y-2">
-					{#each quickLinks as link}
+					{#each quickLinks as link (link.href)}
 						<li>
 							<a
 								href={link.href}
-								class="text-gray-400 hover:text-primary transition-colors"
+								class="text-crema/75 hover:text-crema hover:underline transition-colors rounded {focusRing}"
 								onclick={(e) => handleLinkClick(e, link.href)}
 							>
 								{link.label}
@@ -94,43 +98,43 @@
 
 			<!-- Columna 3: Contacto -->
 			<div>
-				<h3 class="font-bold text-lg mb-4">Contacto</h3>
+				<h3 class="text-lg mb-4">Contacto</h3>
 				<ul class="space-y-3">
 					<li class="flex items-start gap-2">
 						<MessageCircle size={20} class="mt-0.5 text-whatsapp flex-shrink-0" />
 						<div>
-							<p class="text-gray-400 text-sm">WhatsApp</p>
+							<p class="text-crema/75 text-sm">WhatsApp</p>
 							<a
 								href="https://wa.me/{contactInfo.whatsappNumber}"
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-white hover:text-primary transition-colors"
+								class="text-crema hover:underline rounded {focusRing}"
 							>
 								{contactInfo.whatsappDisplayNumber}
 							</a>
 						</div>
 					</li>
 					<li class="flex items-start gap-2">
-						<Instagram size={20} class="mt-0.5 text-primary flex-shrink-0" />
+						<Instagram size={20} class="mt-0.5 text-crema flex-shrink-0" />
 						<div>
-							<p class="text-gray-400 text-sm">Instagram</p>
+							<p class="text-crema/75 text-sm">Instagram</p>
 							<a
 								href={contactInfo.socialMedia.instagram}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="text-white hover:text-primary transition-colors"
+								class="text-crema hover:underline rounded {focusRing}"
 							>
 								@printo.uy
 							</a>
 						</div>
 					</li>
 					<li class="flex items-start gap-2">
-						<Mail size={20} class="mt-0.5 text-primary flex-shrink-0" />
+						<Mail size={20} class="mt-0.5 text-crema flex-shrink-0" />
 						<div>
-							<p class="text-gray-400 text-sm">Email</p>
+							<p class="text-crema/75 text-sm">Email</p>
 							<a
 								href="mailto:{contactInfo.email}"
-								class="text-white hover:text-primary transition-colors"
+								class="text-crema hover:underline rounded {focusRing}"
 							>
 								{contactInfo.email}
 							</a>
@@ -141,7 +145,7 @@
 		</div>
 
 		<!-- Separador -->
-		<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
+		<div class="border-t border-crema/20 mt-8 pt-8 text-center text-crema/75 text-sm">
 			<p>&copy; {currentYear} {contactInfo.businessName}. Todos los derechos reservados.</p>
 		</div>
 	</div>

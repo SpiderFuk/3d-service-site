@@ -78,7 +78,7 @@ One commit per section.
 - [x] Task 5.3: `FilamentColors.svelte`: layout/typography only; filament color values untouched (`materials`)
 - [x] Task 5.4: `Gallery3D.svelte` (`ui`)
 - [x] Task 5.5: `ContactWhatsApp.svelte` (`ui`)
-- [ ] Task 5.6: `Footer.svelte` final pass (tinta background, crema text, links/focus) (`layout`)
+- [x] Task 5.6: `Footer.svelte` final pass (tinta background, crema text, links/focus) (`layout`)
 
 ### Verification
 
