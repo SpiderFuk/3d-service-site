@@ -116,7 +116,7 @@ One commit per section.
 - [x] Task 8.2: Run `npm run check`, `npm run lint`, `npm run build`; fix issues
 - [x] Task 8.3: Grep for leftovers: `#3B82F6`, `bg-blue-`, `text-blue-`, `Inter`, `rounded-lg` on buttons, `[PRINTO]`, old logo paths; exclude `filamentColors.ts` and out-of-service semantics
 - [x] Task 8.4: Accessibility pass: contrast, focus visibility, 44px touch targets, no emojis, voseo copy
-- [ ] Task 8.5: Review screenshots with the user; open PR `rebrand/filamento` → `develop`
+- [~] Task 8.5: Review screenshots with the user; open PR `rebrand/filamento` → `develop`
 
 ### Verification
 

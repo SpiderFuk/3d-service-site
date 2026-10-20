@@ -4,17 +4,17 @@
   "type": "refactor",
   "status": "in_progress",
   "created": "2026-10-19T00:00:00Z",
-  "updated": "2026-10-20T03:00:00Z",
+  "updated": "2026-10-20T08:00:00Z",
   "phases": {
     "total": 8,
     "completed": 7
   },
   "tasks": {
     "total": 35,
-    "completed": 30
+    "completed": 34
   },
   "current_phase": 8,
-  "current_task": "8.1",
+  "current_task": "8.5",
   "commits": [
     "71603b5: docs: add Filamento brand kit and rebrand track (filamento-rebrand_20261019)",
     "3cedc1e: refactor(ui): apply Filamento color, font and radius tokens to Tailwind (filamento-rebrand_20261019)",
@@ -52,6 +52,20 @@
     "8658db2: feat(viewer): show an extruded 3D printo p as the viewer placeholder (filamento-rebrand_20261019)",
     "5619706: chore: mark Phase 7 complete (filamento-rebrand_20261019)",
     "5b63a30: fix(viewer): unmark example thumbnail when its model is no longer loaded (filamento-rebrand_20261019)",
-    "3511936: refactor(viewer): smooth the 3D printo p with a bevel and continuous extrusion (filamento-rebrand_20261019)"
+    "3511936: refactor(viewer): smooth the 3D printo p with a bevel and continuous extrusion (filamento-rebrand_20261019)",
+    "01c7427: chore: record Phase 7 follow-up commits (filamento-rebrand_20261019)",
+    "1fe8f3b: refactor(viewer): center the tomato extrusion behind the 3D p (filamento-rebrand_20261019)",
+    "7070996: refactor(viewer): match tomato extrusion depth to the cobalto piece (filamento-rebrand_20261019)",
+    "d1518d5: chore: add Playwright screenshot script for visual QA (filamento-rebrand_20261019)",
+    "3f15a49: feat(ui): respect prefers-reduced-motion in gallery and 3D autorotate (filamento-rebrand_20261019)",
+    "f60a4f9: chore: fix remaining lint errors without behavior changes (filamento-rebrand_20261019)",
+    "831b99a: fix(hero): keep \"en tus manos.\" together on its own line (filamento-rebrand_20261019)",
+    "d5f355b: docs: replace [PRINTO] placeholder with printo in project docs (filamento-rebrand_20261019)",
+    "2a9e863: fix(ui): use voseo and fix spelling in services copy (filamento-rebrand_20261019)",
+    "ef44039: fix(layout): give text links a 44px touch target (filamento-rebrand_20261019)",
+    "6057a68: fix(layout): use the mobile menu on tablet widths (filamento-rebrand_20261019)",
+    "3f2baa0: fix(ui): fit hero eyebrow and contact extrusion on mobile (filamento-rebrand_20261019)",
+    "06dc4b9: chore: run screenshot captures serially (filamento-rebrand_20261019)",
+    "2c6fb39: chore: capture each section on a fresh page (filamento-rebrand_20261019)"
   ]
 }
