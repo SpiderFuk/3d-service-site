@@ -45,8 +45,8 @@
 				</p>
 
 				<h1 class="text-[44px] sm:text-6xl lg:text-[72px] leading-[0.95] text-tinta">
-					Tu idea,
-					<span class="text-primary">en tus manos.</span>
+					Tu idea,<br />
+					<span class="text-primary whitespace-nowrap">en tus manos.</span>
 				</h1>
 
 				<p class="text-lg leading-relaxed text-text-secondary max-w-xl">
