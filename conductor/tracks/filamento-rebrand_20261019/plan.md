@@ -31,7 +31,7 @@ Tokens, fonts and base typography. No component changes.
 
 - [x] Task 2.1: `Navbar.svelte`: `printo-wordmark-cobalto.svg` (~36-40px tall, alt "printo"), remove GIF, "[PRINTO]" text and `onerror` fallback; nav behavior unchanged (`layout`)
 - [x] Task 2.2: `Footer.svelte`: `printo-wordmark-crema.svg` on tinta background, remove duplicate text name (`layout`)
-- [ ] Task 2.3: Favicons: `static/brand/favicon.svg`, `favicon.ico`, `logo/icons/favicon-180.png` as apple-touch-icon; update `src/app.html` links; replace `static/favicon.png` and `static/apple-touch-icon.png`
+- [x] Task 2.3: Favicons: `static/brand/favicon.svg`, `favicon.ico`, `logo/icons/favicon-180.png` as apple-touch-icon; update `src/app.html` links; replace `static/favicon.png` and `static/apple-touch-icon.png`
 - [ ] Task 2.4: Grep for references, then move old logo files from `static/images/` (`logo animado.gif/mp4`, `logo nombre *`, `logo.png`, `logo-with-no-bg.png`) to `static/images/_old-logos/`; confirm zero references remain
 - [ ] Task 2.5: `contactInfo.businessName` → `"printo"`; check usages (alt texts, copyright, WhatsApp message)
 
