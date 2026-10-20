@@ -59,14 +59,15 @@
 
 			<!-- CTA Button Desktop -->
 			<div class="hidden md:block">
-				<Button variant="whatsapp" size="md" onclick={handleCTA}>Cotizar Ahora</Button>
+				<Button variant="whatsapp" size="md" onclick={handleCTA}>Pedir presupuesto</Button>
 			</div>
 
 			<!-- Mobile Menu Button -->
 			<button
-				class="md:hidden p-2 text-text hover:text-primary transition-colors"
+				class="md:hidden w-11 h-11 flex items-center justify-center rounded-full text-text hover:text-primary transition-colors"
 				onclick={toggleMenu}
-				aria-label="Toggle menu"
+				aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+				aria-expanded={isMobileMenuOpen}
 			>
 				{#if isMobileMenuOpen}
 					<X size={24} />
@@ -90,7 +91,7 @@
 						</a>
 					{/each}
 					<div class="px-4 pt-2">
-						<Button variant="whatsapp" size="md" fullWidth onclick={handleCTA}>Cotizar Ahora</Button>
+						<Button variant="whatsapp" size="md" fullWidth onclick={handleCTA}>Pedir presupuesto</Button>
 					</div>
 				</div>
 			</div>
