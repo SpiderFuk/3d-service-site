@@ -18,32 +18,39 @@
 		<link rel="stylesheet" href="%sveltekit.assets%/brand/brand.css" />
 		<meta name="theme-color" content="#2B3CFF" />
 
-		<!-- SEO Meta Tags -->
+		<!-- SEO (en app.html porque la pagina usa ssr = false y los crawlers no ejecutan JS) -->
+		<title>printo | Impresión 3D en Montevideo y Las Piedras</title>
 		<meta
 			name="description"
-			content="Servicios profesionales de impresión 3D. Calidad, rapidez y atención personalizada."
+			content="Impresión 3D hecha en Uruguay. Mandanos tu archivo STL o 3MF, miralo en 3D y pedí presupuesto por WhatsApp. PLA, PETG, ABS y TPU en varios colores."
 		/>
-		<meta name="author" content="Impresiones 3D Pro" />
+		<meta name="keywords" content="impresión 3D, Uruguay, Montevideo, Las Piedras, PLA, PETG, ABS, TPU, prototipado" />
+		<meta name="author" content="printo" />
+		<link rel="canonical" href="https://printo.uy/" />
 
-		<!-- Open Graph / Facebook -->
+		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://tudominio.com/" />
-		<meta property="og:title" content="Impresiones 3D Pro - Servicio Profesional" />
+		<meta property="og:site_name" content="printo" />
+		<meta property="og:locale" content="es_UY" />
+		<meta property="og:url" content="https://printo.uy/" />
+		<meta property="og:title" content="printo | Tu idea, en tus manos." />
 		<meta
 			property="og:description"
-			content="Servicios profesionales de impresión 3D. Múltiples materiales y colores."
+			content="Impresión 3D hecha en Uruguay. Mandanos tu archivo y la imprimimos. Así de simple."
 		/>
-		<meta property="og:image" content="%sveltekit.assets%/og-image.png" />
+		<meta property="og:image" content="https://printo.uy/og-image.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="printo, impresión 3D hecha en Uruguay" />
 
 		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content="https://tudominio.com/" />
-		<meta property="twitter:title" content="Impresiones 3D Pro - Servicio Profesional" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="printo | Tu idea, en tus manos." />
 		<meta
-			property="twitter:description"
-			content="Servicios profesionales de impresión 3D. Múltiples materiales y colores."
+			name="twitter:description"
+			content="Impresión 3D hecha en Uruguay. Mandanos tu archivo y la imprimimos. Así de simple."
 		/>
-		<meta property="twitter:image" content="%sveltekit.assets%/og-image.png" />
+		<meta name="twitter:image" content="https://printo.uy/og-image.png" />
 
 		%sveltekit.head%
 	</head>

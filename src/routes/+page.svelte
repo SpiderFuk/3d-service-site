@@ -5,6 +5,8 @@
 	 * Las secciones se muestran/ocultan según la configuración de feature flags.
 	 * Si el flag sections-visibility está enabled, usa configuración de AppConfig.
 	 * Si no, usa src/lib/config/sections.ts como fallback.
+	 *
+	 * Titulo y meta tags viven en src/app.html (ssr = false: los crawlers no ejecutan JS).
 	 */
 
 	import Hero from '$lib/components/sections/Hero.svelte';
@@ -16,15 +18,6 @@
 	import { sectionsVisibilityFlag } from '$lib/stores/featureFlagsStore';
 	import { isSeccionVisible } from '$lib/utils/visibilityHelpers';
 </script>
-
-<svelte:head>
-	<title>Impresiones 3D Pro - Servicio Profesional de Impresión 3D</title>
-	<meta
-		name="description"
-		content="Servicios profesionales de impresión 3D. Calidad, rapidez y atención personalizada. Múltiples materiales y colores disponibles."
-	/>
-	<meta name="keywords" content="impresión 3D, PLA, PETG, ABS, TPU, prototipado, diseño 3D" />
-</svelte:head>
 
 {#if isSeccionVisible('hero', $sectionsVisibilityFlag)}
 	<Hero />

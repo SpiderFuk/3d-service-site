@@ -89,7 +89,7 @@ One commit per section.
 
 ### Tasks
 
-- [ ] Task 6.1: `src/app.html` and `src/routes/+page.svelte`: title "printo", real description in Spanish, `og:url` / canonical `https://printo.uy/`, remove "Impresiones 3D Pro" / `tudominio.com`
+- [x] Task 6.1: `src/app.html` and `src/routes/+page.svelte`: title "printo", real description in Spanish, `og:url` / canonical `https://printo.uy/`, remove "Impresiones 3D Pro" / `tudominio.com`
 - [ ] Task 6.2: New `static/og-image.png` 1200x630 built from brand assets
 - [ ] Task 6.3: `static/site.webmanifest` (name, short_name, theme/background colors, 192/512 icons) and link it in `app.html`
 
