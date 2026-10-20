@@ -25,7 +25,8 @@
 | --- | --- | --- |
 | Vite | 7.3 | Build tool and dev server |
 | PostCSS | 8.4 | CSS processing (with Autoprefixer) |
-| ESLint | 9.x | Code linting |
+| ESLint | 9.x | Code linting (flat config `eslint.config.js`: TypeScript + Svelte) |
+| Playwright | 1.x | Visual QA captures per section (`npm run screenshots`), social image (`npm run og-image`) |
 | svelte-check | 4.x | Svelte type checking |
 
 ## Infrastructure

@@ -13,11 +13,11 @@ Navigation hub for project context.
 
 ## Active Tracks
 
-- [ ] [Filamento Rebrand](./tracks/filamento-rebrand_20261019/index.md) — Refactor (34/35 tasks)
+- [x] [Filamento Rebrand](./tracks/filamento-rebrand_20261019/index.md) — Refactor (35/35 tasks, PR to `develop` pending)
 
 ## Archived Tracks
 
-- [x] [Codebase Audit & Cleanup](./tracks/_archive/codebase-audit_20260214/index.md) — Refactor (10/10 tasks)
+- [x] [Codebase Audit & Cleanup](./tracks/_archive/codebase-audit_20260214/index.md) — Refactor (12/12 tasks)
 
 ## Getting Started
 
