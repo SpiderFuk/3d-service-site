@@ -1,4 +1,4 @@
-# Tech Stack - [PRINTO]
+# Tech Stack - printo
 
 ## Languages
 

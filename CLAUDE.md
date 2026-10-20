@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **SPA (Single Page Application) for a 3D printing service** built with SvelteKit 5, TypeScript, Tailwind CSS, and Three.js. The main feature is an interactive 3D model viewer that allows users to visualize pre-loaded models or upload their own STL/3MF files for quotation via WhatsApp.
 
-**Business:** [PRINTO] - Montevideo | Las Piedras, Uruguay
+**Business:** printo - Montevideo | Las Piedras, Uruguay
 
 **Language:** All UI text and code comments are in Spanish.
 

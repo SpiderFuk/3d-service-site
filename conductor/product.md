@@ -1,12 +1,12 @@
-# Product Definition - [PRINTO]
+# Product Definition - printo
 
 ## Project Name
 
-**[PRINTO]**
+**printo**
 
 ## Description
 
-SPA for a 3D printing ([PRINTO]) service with interactive model viewer with WhatsApp quotation.
+SPA for a 3D printing (printo) service with interactive model viewer with WhatsApp quotation.
 
 ## Problem Statement
 
@@ -26,11 +26,11 @@ Small businesses needing prototypes or custom parts. They already have their own
 ## Key Goals
 
 1. **Showcase services and enable easy quotation** - Primary conversion funnel: browse services and models, then get a quote via WhatsApp
-2. **Build a modern, professional web presence** - Position [PRINTO] as a tech-forward 3D printing service in Montevideo / Las Piedras, Uruguay
+2. **Build a modern, professional web presence** - Position printo as a tech-forward 3D printing service in Montevideo / Las Piedras, Uruguay
 
 ## Business Context
 
-- **Business:** [PRINTO]
+- **Business:** printo
 - **Location:** Montevideo | Las Piedras, Uruguay
 - **Contact:** WhatsApp +598 96 341 462
 - **Website language:** Spanish

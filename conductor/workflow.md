@@ -1,4 +1,4 @@
-# Workflow - [PRINTO]
+# Workflow - printo
 
 ## TDD Policy
 

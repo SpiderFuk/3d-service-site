@@ -1,4 +1,4 @@
-# TypeScript / JavaScript Style Guide - [PRINTO]
+# TypeScript / JavaScript Style Guide - printo
 
 ## General
 

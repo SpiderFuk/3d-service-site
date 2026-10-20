@@ -1,4 +1,4 @@
-# Conductor - [PRINTO]
+# Conductor - printo
 
 Navigation hub for project context.
 
