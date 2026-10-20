@@ -442,7 +442,7 @@ debounce(func, wait)
 ```css
 .container         /* max-w-7xl */
 .transition-smooth /* transition-all duration-300 ease-in-out */
-.shadow-card       /* Custom card shadow */
+.shadow-extrude    /* Tomato extrusion (--extrude), one card type per view */
 .hide-scrollbar    /* Hides scrollbar but keeps functionality */
 ```
 

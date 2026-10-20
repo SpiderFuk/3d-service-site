@@ -5,12 +5,8 @@
 
 	import type { Color } from '$lib/config/filamentColors';
 
-	interface ColorConId extends Color {
-		id: string;
-	}
-
 	interface Props {
-		color: ColorConId;
+		color: Color;
 		selected?: boolean;
 		onclick?: () => void;
 		size?: 'sm' | 'md' | 'lg';

@@ -98,8 +98,9 @@ const dismissalTrigger = writable(0);
  * Controla cuándo mostrar el modal y el banner de out-of-service
  */
 export const outOfServiceUI = derived(
+	// dismissalTrigger solo esta para volver a calcular al cerrar el modal; su valor no se usa
 	[featureFlagsStore, dismissalTrigger],
-	([$flags, $trigger]) => {
+	([$flags]) => {
 		const flag = $flags.flags['out-of-service'] as OutOfServiceFlag | undefined;
 
 		// Guard SSR: localStorage solo disponible en browser

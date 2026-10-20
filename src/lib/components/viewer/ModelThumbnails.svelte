@@ -30,7 +30,6 @@
 		models.find((m) => m.id === selectedId && $modelStore.fileName === m.name)?.id ?? null
 	);
 	let loadedPreviews = $state<Record<string, Object3D>>({});
-	let isLoadingPreviews = $state(true);
 
 	// Precargar modelos para previsualizaciones
 	onMount(async () => {
@@ -66,7 +65,6 @@
 		});
 
 		loadedPreviews = newPreviews;
-		isLoadingPreviews = false;
 	});
 
 	async function loadModel(model: PreloadedModel) {

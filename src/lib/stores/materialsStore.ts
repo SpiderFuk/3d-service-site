@@ -15,7 +15,7 @@ const initialState: MaterialsState = {
 	isRemote: false
 };
 
-const { subscribe, set, update } = writable<MaterialsState>(initialState);
+const { subscribe, update } = writable<MaterialsState>(initialState);
 
 export const materialsStore = { subscribe };
 

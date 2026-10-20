@@ -19,6 +19,11 @@ export default ts.config(
 		rules: { 'no-undef': 'off' }
 	},
 	{
+		// SPA de una sola pagina: los enlaces son anclas (#seccion) o externos (wa.me, mailto, redes),
+		// no rutas de SvelteKit que necesiten resolve()
+		rules: { 'svelte/no-navigation-without-resolve': ['error', { ignoreLinks: true }] }
+	},
+	{
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
 		languageOptions: {
 			parserOptions: {

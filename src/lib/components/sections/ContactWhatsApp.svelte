@@ -78,18 +78,12 @@
 					<div class="flex-1">
 						<h3 class="text-lg text-text mb-3">Horarios de atención</h3>
 						<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-							<div>
-								<p class="text-sm font-medium text-text">Lunes a viernes</p>
-								<p class="text-sm text-text-secondary">9:00 - 18:00</p>
-							</div>
-							<div>
-								<p class="text-sm font-medium text-text">Sábados</p>
-								<p class="text-sm text-text-secondary">10:00 - 14:00</p>
-							</div>
-							<div>
-								<p class="text-sm font-medium text-text">Domingos</p>
-								<p class="text-sm text-text-secondary">Cerrado</p>
-							</div>
+							{#each businessHours as franja (franja.dias)}
+								<div>
+									<p class="text-sm font-medium text-text">{franja.dias}</p>
+									<p class="text-sm text-text-secondary">{franja.horario}</p>
+								</div>
+							{/each}
 						</div>
 					</div>
 				</div>

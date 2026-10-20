@@ -17,8 +17,8 @@ export const contactInfo = {
 	}
 };
 
-export const businessHours = {
-	weekdays: 'Lunes a Viernes: 9:00 - 18:00',
-	saturday: 'Sábados: 10:00 - 14:00',
-	sunday: 'Domingos: Cerrado'
-};
+export const businessHours = [
+	{ dias: 'Lunes a viernes', horario: '9:00 - 18:00' },
+	{ dias: 'Sábados', horario: '10:00 - 14:00' },
+	{ dias: 'Domingos', horario: 'Cerrado' }
+];

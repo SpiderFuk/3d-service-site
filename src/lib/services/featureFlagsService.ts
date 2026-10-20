@@ -142,7 +142,7 @@ function parseAPIResponse(data: unknown): FeatureFlag[] {
 				flags.push(flag);
 			}
 
-		} catch (error) {
+		} catch {
 			// Silently continue with the next flag if one fails
 		}
 	}
@@ -180,7 +180,7 @@ export async function fetchFeatureFlags(): Promise<FeatureFlag[]> {
 		const flags = parseAPIResponse(data);
 
 		return flags;
-	} catch (error) {
+	} catch {
 		// Silently return defaults on error (todo deshabilitado)
 		return getDefaultFlags();
 	}
