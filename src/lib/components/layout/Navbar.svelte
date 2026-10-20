@@ -13,7 +13,6 @@
 	import Button from '../ui/Button.svelte';
 
 	let isMobileMenuOpen = $derived($uiStore.isMobileMenuOpen);
-	let logoError = $state(false);
 
 	let menuItems = $derived(getVisibleNavItems($sectionsVisibilityFlag));
 
@@ -37,24 +36,12 @@
 	<div class="container mx-auto px-4">
 		<div class="flex items-center justify-between h-16">
 			<!-- Logo -->
-			<a href="#hero" class="flex items-center gap-3" onclick={(e) => handleNavClick(e, '#hero')}>
-				{#if !logoError}
-					<img
-						src="/images/logo animado.gif"
-						alt={contactInfo.businessName}
-						class="h-12 w-auto object-contain"
-						onerror={() => (logoError = true)}
-					/>
-				{:else}
-					<img
-						src="/images/logo nombre H recortado.png"
-						alt={contactInfo.businessName}
-						class="h-12 w-auto object-contain"
-					/>
-				{/if}
-				<span class="font-bold text-xl text-text hidden sm:block">
-					{contactInfo.businessName}
-				</span>
+			<a href="#hero" class="flex items-center" onclick={(e) => handleNavClick(e, '#hero')}>
+				<img
+					src="/brand/logo/svg/printo-wordmark-cobalto.svg"
+					alt={contactInfo.businessName}
+					class="h-9 sm:h-10 w-auto"
+				/>
 			</a>
 
 			<!-- Desktop Menu -->
