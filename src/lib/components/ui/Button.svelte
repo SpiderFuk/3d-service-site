@@ -1,10 +1,11 @@
 <script lang="ts">
 	/**
 	 * Componente Button reutilizable
+	 * Forma de pastilla, objetivo tactil minimo de 44px y foco visible (ver docs/brand.md)
 	 */
 	import type { Snippet } from 'svelte';
 
-	type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'whatsapp';
+	type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'whatsapp' | 'warm';
 	type ButtonSize = 'sm' | 'md' | 'lg';
 
 	interface Props {
@@ -32,23 +33,21 @@
 	}: Props = $props();
 
 	const baseClasses =
-		'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+		'inline-flex items-center justify-center min-h-11 font-semibold rounded-full border-2 transition-smooth focus:outline-none focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-tinta disabled:opacity-50 disabled:cursor-not-allowed';
 
+	// Texto: crema sobre cobalto/tinta, tinta sobre colores claros y de apoyo
 	const variantClasses = {
-		primary:
-			'bg-primary text-white hover:bg-blue-600 focus:ring-primary shadow-sm hover:shadow-md',
-		secondary:
-			'bg-gray-200 text-text hover:bg-gray-300 focus:ring-gray-400 shadow-sm hover:shadow-md',
-		outline:
-			'border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
-		whatsapp:
-			'bg-whatsapp text-white hover:bg-green-600 focus:ring-whatsapp shadow-sm hover:shadow-md'
+		primary: 'bg-primary border-primary text-crema hover:bg-tinta hover:border-tinta',
+		secondary: 'bg-crema border-tinta text-tinta hover:bg-white',
+		outline: 'bg-white border-tinta text-tinta hover:bg-crema',
+		whatsapp: 'bg-whatsapp border-whatsapp text-tinta hover:brightness-95',
+		warm: 'bg-mantequilla border-mantequilla text-tinta hover:brightness-95'
 	};
 
 	const sizeClasses = {
-		sm: 'px-3 py-1.5 text-sm gap-1.5',
-		md: 'px-4 py-2.5 text-base gap-2',
-		lg: 'px-6 py-3 text-lg gap-2.5'
+		sm: 'min-w-11 px-3 text-sm gap-1.5',
+		md: 'px-5 text-base gap-2',
+		lg: 'min-h-12 px-7 text-[17px] gap-2.5'
 	};
 
 	const fullWidthClass = $derived(fullWidth ? 'w-full' : '');
