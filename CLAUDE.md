@@ -325,7 +325,7 @@ getColoresDisponiblesByMaterial(id)    // Available colors only
 const contactInfo = {
   whatsappNumber: '59896341462',
   whatsappDisplayNumber: '+598 96 341 462',
-  businessName: '[PRINTO]',
+  businessName: 'printo',
   city: 'Montevideo | Las Piedras',
   email: 'hola@printo.uy',
   socialMedia: { instagram: 'https://www.instagram.com/printo.uy' }
