@@ -18,6 +18,9 @@
 		Wrench: Icons.Wrench
 	};
 
+	// Colores de apoyo para los iconos (icono en tinta encima)
+	const tileColors = ['bg-mantequilla', 'bg-menta', 'bg-tomate'];
+
 	// Filtrar servicios visibles con feature flag
 	const visibleServices = $derived(getVisibleServices($servicesVisibilityFlag));
 	const serviceCount = $derived(visibleServices.length);
@@ -28,24 +31,27 @@
 		: 'lg:grid-cols-2');
 </script>
 
-<section id="services" class="py-20 bg-background">
-	<div class="container mx-auto px-4">
+<section id="services" class="py-20 bg-white">
+	<div class="container mx-auto px-4 md:px-16">
 		<div class="text-center mb-12">
-			<h2 class="text-3xl md:text-4xl font-bold text-text mb-4">
-				Nuestros Servicios
-			</h2>
+			<p class="text-[13px] font-semibold uppercase tracking-[0.1em] text-text-secondary mb-3">
+				Servicios
+			</p>
+			<h2 class="text-3xl md:text-5xl text-text mb-4">Nuestros servicios</h2>
 			<p class="text-lg text-text-secondary max-w-2xl mx-auto">
 				Ofrecemos soluciones completas de impresión 3D adaptadas a tus necesidades
 			</p>
 		</div>
 
 		<div class="grid grid-cols-1 md:grid-cols-2 {gridCols} gap-6">
-			{#each visibleServices as service}
+			{#each visibleServices as service, i (service.id)}
 				{@const IconComponent = iconMap[service.icon]}
 				<Card padding="lg" hover={true}>
 					<div class="space-y-4">
-						<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-							<IconComponent size={24} class="text-primary" />
+						<div
+							class="w-12 h-12 {tileColors[i % tileColors.length]} rounded-brand flex items-center justify-center"
+						>
+							<IconComponent size={24} class="text-tinta" />
 						</div>
 
 						<div>
@@ -54,7 +60,7 @@
 						</div>
 
 						<ul class="space-y-2">
-							{#each service.features as feature}
+							{#each service.features as feature (feature)}
 								<li class="flex items-start gap-2 text-sm text-text-secondary">
 									<Check size={16} class="text-primary flex-shrink-0 mt-0.5" />
 									<span>{feature}</span>
