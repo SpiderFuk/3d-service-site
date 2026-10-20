@@ -32,9 +32,8 @@ const CURVA_SEGMENTOS = 96;
 // Radio de los empalmes donde el aro se junta con el palo
 const RADIO_EMPALME = 24;
 
-// contorno para que arranque por dentro de la pieza cobalto (sin superficies coincidentes)
-// Extrusion tomate: mismo contorno que la pieza cobalto, centrada detras de ella
-const PROFUNDIDAD_EXTRUSION = 120;
+// Extrusion tomate: mismo contorno y misma profundidad que la pieza cobalto, centrada detras de ella
+const PROFUNDIDAD_EXTRUSION = PROFUNDIDAD_FRENTE;
 
 // La p mide ~700 unidades; se escala para entrar en el rango de OrbitControls (distancia max 500)
 const ESCALA = 0.2;
