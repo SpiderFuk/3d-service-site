@@ -140,3 +140,8 @@ build/
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Playwright (capturas de QA)
+screenshots/
+test-results/
+playwright-report/

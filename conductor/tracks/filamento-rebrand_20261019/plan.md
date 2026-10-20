@@ -112,7 +112,7 @@ One commit per section.
 
 ### Tasks
 
-- [ ] Task 8.1: Add `@playwright/test` as devDependency and a screenshot script (e.g. `npm run screenshots`) capturing the page at 1440/768/390 against `npm run preview` (`chore`)
+- [x] Task 8.1: Add `@playwright/test` as devDependency and a screenshot script (e.g. `npm run screenshots`) capturing the page at 1440/768/390 against `npm run preview` (`chore`)
 - [ ] Task 8.2: Run `npm run check`, `npm run lint`, `npm run build`; fix issues
 - [ ] Task 8.3: Grep for leftovers: `#3B82F6`, `bg-blue-`, `text-blue-`, `Inter`, `rounded-lg` on buttons, `[PRINTO]`, old logo paths; exclude `filamentColors.ts` and out-of-service semantics
 - [ ] Task 8.4: Accessibility pass: contrast, focus visibility, 44px touch targets, no emojis, voseo copy

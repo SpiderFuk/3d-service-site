@@ -22,7 +22,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "eslint .",
-    "og-image": "node scripts/render-og-image.js"
+    "og-image": "node scripts/render-og-image.js",
+    "screenshots": "playwright test"
   },
   "dependencies": {
     "@sveltejs/vite-plugin-svelte-inspector": "^5.0.1",
