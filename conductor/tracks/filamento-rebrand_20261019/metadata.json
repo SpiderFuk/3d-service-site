@@ -4,7 +4,7 @@
   "type": "refactor",
   "status": "in_progress",
   "created": "2026-10-19T00:00:00Z",
-  "updated": "2026-10-20T02:15:00Z",
+  "updated": "2026-10-20T03:00:00Z",
   "phases": {
     "total": 8,
     "completed": 7
@@ -49,6 +49,9 @@
     "9aa9211: feat(ui): add printo social image rendered from an HTML template (filamento-rebrand_20261019)",
     "f4ae649: feat(ui): add site.webmanifest with printo icons and colors (filamento-rebrand_20261019)",
     "89f066b: chore: mark Phase 6 complete (filamento-rebrand_20261019)",
-    "8658db2: feat(viewer): show an extruded 3D printo p as the viewer placeholder (filamento-rebrand_20261019)"
+    "8658db2: feat(viewer): show an extruded 3D printo p as the viewer placeholder (filamento-rebrand_20261019)",
+    "5619706: chore: mark Phase 7 complete (filamento-rebrand_20261019)",
+    "5b63a30: fix(viewer): unmark example thumbnail when its model is no longer loaded (filamento-rebrand_20261019)",
+    "3511936: refactor(viewer): smooth the 3D printo p with a bevel and continuous extrusion (filamento-rebrand_20261019)"
   ]
 }
