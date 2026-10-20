@@ -8,7 +8,6 @@
 	import { AlertTriangle, X } from 'lucide-svelte';
 	import { outOfServiceUI, dismissOutOfServiceModal } from '$lib/stores/uiStore';
 	import Button from './Button.svelte';
-	import Card from './Card.svelte';
 
 	// Configuración reactiva desde el derived store
 	const config = $derived($outOfServiceUI.config);
@@ -41,11 +40,12 @@
 >
 	<!-- Modal Card -->
 	<div class="max-w-md w-full animate-fade-in">
-		<Card padding="lg" class="relative border-2 border-amber-300 bg-amber-50">
+		<!-- Colores ambar semanticos; solo radio y tipografia de marca -->
+		<div class="relative p-6 md:p-8 bg-amber-50 border-2 border-amber-300 rounded-brand-xl">
 			<!-- Botón cerrar -->
 			<button
 				onclick={handleDismiss}
-				class="absolute top-4 right-4 p-1 hover:bg-amber-100 rounded-lg transition-colors"
+				class="absolute top-3 right-3 w-11 h-11 flex items-center justify-center hover:bg-amber-100 rounded-full transition-colors"
 				aria-label="Cerrar"
 			>
 				<X size={20} class="text-amber-700" />
@@ -59,7 +59,7 @@
 				</div>
 
 				<!-- Título -->
-				<h2 id="modal-title" class="text-2xl font-bold text-amber-900">
+				<h2 id="modal-title" class="text-2xl font-extrabold text-amber-900">
 					{config.modal.title}
 				</h2>
 
@@ -73,7 +73,7 @@
 					{config.modal.buttonText}
 				</Button>
 			</div>
-		</Card>
+		</div>
 	</div>
 </div>
 

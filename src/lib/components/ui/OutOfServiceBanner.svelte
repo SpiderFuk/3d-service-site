@@ -41,7 +41,11 @@
 		aria-live="polite"
 	>
 		<div class="container mx-auto px-4 py-3">
-			<div class="flex items-center justify-center gap-3 relative">
+			<div
+				class="flex items-center justify-center gap-3 relative {config.banner.dismissible
+					? 'px-12'
+					: ''}"
+			>
 				<!-- Ícono -->
 				<IconComponent size={20} class="text-amber-600 flex-shrink-0" />
 
@@ -54,7 +58,7 @@
 				{#if config.banner.dismissible}
 					<button
 						onclick={handleDismiss}
-						class="absolute right-0 p-1 hover:bg-amber-200 rounded-lg transition-colors"
+						class="absolute right-0 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center hover:bg-amber-200 rounded-full transition-colors"
 						aria-label="Cerrar banner"
 					>
 						<X size={18} class="text-amber-700" />
