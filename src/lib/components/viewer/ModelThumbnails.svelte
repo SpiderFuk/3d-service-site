@@ -115,7 +115,6 @@
 			>
 				<Card
 					padding="sm"
-					shadow={true}
 					hover={true}
 					class="transition-all {selectedId === model.id
 						? 'ring-2 ring-primary'

@@ -42,7 +42,7 @@
 		<div class="grid grid-cols-1 md:grid-cols-2 {gridCols} gap-6">
 			{#each visibleServices as service}
 				{@const IconComponent = iconMap[service.icon]}
-				<Card padding="lg" shadow={true} hover={true}>
+				<Card padding="lg" hover={true}>
 					<div class="space-y-4">
 						<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
 							<IconComponent size={24} class="text-primary" />

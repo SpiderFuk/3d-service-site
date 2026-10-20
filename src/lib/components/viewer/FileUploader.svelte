@@ -90,7 +90,7 @@
 	}
 </script>
 
-<Card padding="md" shadow={true}>
+<Card padding="md">
 	{#if $modelStore.fileName}
 		<!-- Modelo cargado -->
 		<div class="flex items-center justify-between">

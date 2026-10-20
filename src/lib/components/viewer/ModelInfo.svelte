@@ -13,7 +13,7 @@
 </script>
 
 {#if modelInfo}
-	<Card padding="md" shadow={true}>
+	<Card padding="md">
 		<div class="space-y-4">
 			<div>
 				<h3 class="font-bold text-lg text-text mb-1">Información del Modelo</h3>

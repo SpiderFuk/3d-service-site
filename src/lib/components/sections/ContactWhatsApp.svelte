@@ -28,7 +28,7 @@
 		<div class="max-w-4xl mx-auto">
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 				<!-- Tarjeta WhatsApp -->
-				<Card padding="lg" shadow={true}>
+				<Card padding="lg">
 					<div class="flex items-start gap-4">
 						<div class="p-3 bg-whatsapp/10 rounded-lg">
 							<MessageCircle size={24} class="text-whatsapp" />
@@ -51,7 +51,7 @@
 				</Card>
 
 				<!-- Tarjeta Ubicación -->
-				<Card padding="lg" shadow={true}>
+				<Card padding="lg">
 					<div class="flex items-start gap-4">
 						<div class="p-3 bg-primary/10 rounded-lg">
 							<MapPin size={24} class="text-primary" />
@@ -68,7 +68,7 @@
 			</div>
 
 			<!-- Horarios -->
-			<Card padding="lg" shadow={true} class="mb-8">
+			<Card padding="lg" class="mb-8">
 				<div class="flex items-start gap-4">
 					<div class="p-3 bg-primary/10 rounded-lg">
 						<Clock size={24} class="text-primary" />

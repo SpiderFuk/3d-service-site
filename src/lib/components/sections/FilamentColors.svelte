@@ -43,7 +43,6 @@
 					{#each materiales as material}
 						<Card
 							padding="md"
-							shadow={true}
 							hover={true}
 							class="cursor-pointer transition-all {selectedMaterial === material.id
 								? 'ring-2 ring-primary'
@@ -84,7 +83,7 @@
 				<h3 class="text-2xl font-bold text-text mb-6">
 					Colores en {materialActual?.nombre ?? 'PLA'}
 				</h3>
-				<Card padding="lg" shadow={true}>
+				<Card padding="lg">
 					<div class="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-4">
 						{#each colores as color}
 							<ColorSwatch {color} size="lg" />

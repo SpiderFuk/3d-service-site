@@ -46,7 +46,7 @@ Shape language from `docs/brand.md`.
 ### Tasks
 
 - [x] Task 3.1: `Button.svelte`: `rounded-full`, min-height 44px, `font-semibold`; variants primary (cobalto/crema), outline (white, 2px tinta border), whatsapp (green with tinta text), new `warm` (mantequilla/tinta); visible focus ring (`ui`)
-- [ ] Task 3.2: `Card.svelte`: white, `rounded-brand-xl` (28px), 2px tinta border, no heavy shadow; hover translate; `--extrude` effect opt-in for a single card type only (`ui`)
+- [x] Task 3.2: `Card.svelte`: white, `rounded-brand-xl` (28px), 2px tinta border, no heavy shadow; hover translate; `--extrude` effect opt-in for a single card type only (`ui`)
 - [ ] Task 3.3: `ColorSwatch.svelte`: radius and fonts only (`ui`)
 - [ ] Task 3.4: `OutOfServiceBanner` / `OutOfServiceModal`: radius and fonts only, keep amber/red semantics (`ui`)
 
