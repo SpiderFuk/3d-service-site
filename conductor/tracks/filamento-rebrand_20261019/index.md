@@ -11,7 +11,7 @@
 ## Progress
 
 - Phases: 5/8 complete
-- Tasks: 24/34 complete
+- Tasks: 25/35 complete
 
 ## Quick Links
 

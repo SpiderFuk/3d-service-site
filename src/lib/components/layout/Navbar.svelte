@@ -32,8 +32,8 @@
 	}
 </script>
 
-<nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
-	<div class="container mx-auto px-4">
+<nav class="fixed top-0 left-0 right-0 bg-background border-b-2 border-tinta z-50">
+	<div class="container mx-auto px-4 md:px-16">
 		<div class="flex items-center justify-between h-16">
 			<!-- Logo -->
 			<a href="#hero" class="flex items-center" onclick={(e) => handleNavClick(e, '#hero')}>
@@ -45,11 +45,11 @@
 			</a>
 
 			<!-- Desktop Menu -->
-			<div class="hidden md:flex items-center gap-6">
-				{#each menuItems as item}
+			<div class="hidden md:flex items-center gap-1">
+				{#each menuItems as item (item.href)}
 					<a
 						href={item.href}
-						class="text-text-secondary hover:text-primary font-medium transition-colors"
+						class="px-4 py-2 rounded-full text-text-secondary hover:text-tinta hover:bg-white font-medium transition-colors"
 						onclick={(e) => handleNavClick(e, item.href)}
 					>
 						{item.label}
@@ -79,12 +79,12 @@
 
 		<!-- Mobile Menu -->
 		{#if isMobileMenuOpen}
-			<div class="md:hidden py-4 border-t border-gray-200">
+			<div class="md:hidden py-4 border-t-2 border-tinta">
 				<div class="flex flex-col gap-3">
-					{#each menuItems as item}
+					{#each menuItems as item (item.href)}
 						<a
 							href={item.href}
-							class="px-4 py-2 text-text-secondary hover:text-primary hover:bg-background-secondary rounded-lg font-medium transition-colors"
+							class="min-h-11 flex items-center px-4 text-text-secondary hover:text-tinta hover:bg-white rounded-full font-medium transition-colors"
 							onclick={(e) => handleNavClick(e, item.href)}
 						>
 							{item.label}

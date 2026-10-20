@@ -79,6 +79,7 @@ One commit per section.
 - [x] Task 5.4: `Gallery3D.svelte` (`ui`)
 - [x] Task 5.5: `ContactWhatsApp.svelte` (`ui`)
 - [x] Task 5.6: `Footer.svelte` final pass (tinta background, crema text, links/focus) (`layout`)
+- [x] Task 5.7: `Navbar.svelte` bar: crema background, 2px tinta bottom border instead of shadow, pill-shaped menu items (added on user request) (`layout`)
 
 ### Verification
 
