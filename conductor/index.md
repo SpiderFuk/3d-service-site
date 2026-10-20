@@ -13,7 +13,7 @@ Navigation hub for project context.
 
 ## Active Tracks
 
-- [ ] [Filamento Rebrand](./tracks/filamento-rebrand_20261019/index.md) — Refactor (25/35 tasks)
+- [ ] [Filamento Rebrand](./tracks/filamento-rebrand_20261019/index.md) — Refactor (28/35 tasks)
 
 ## Archived Tracks
 
