@@ -4,17 +4,17 @@
   "type": "refactor",
   "status": "in_progress",
   "created": "2026-10-19T00:00:00Z",
-  "updated": "2026-10-20T01:30:00Z",
+  "updated": "2026-10-20T02:15:00Z",
   "phases": {
     "total": 8,
-    "completed": 6
+    "completed": 7
   },
   "tasks": {
     "total": 35,
-    "completed": 28
+    "completed": 30
   },
-  "current_phase": 7,
-  "current_task": "7.1",
+  "current_phase": 8,
+  "current_task": "8.1",
   "commits": [
     "71603b5: docs: add Filamento brand kit and rebrand track (filamento-rebrand_20261019)",
     "3cedc1e: refactor(ui): apply Filamento color, font and radius tokens to Tailwind (filamento-rebrand_20261019)",
@@ -47,6 +47,8 @@
     "3102d65: refactor(layout): restyle navbar bar with crema and tinta border (filamento-rebrand_20261019)",
     "4e76c14: refactor(ui): update page title and social metadata for printo (filamento-rebrand_20261019)",
     "9aa9211: feat(ui): add printo social image rendered from an HTML template (filamento-rebrand_20261019)",
-    "f4ae649: feat(ui): add site.webmanifest with printo icons and colors (filamento-rebrand_20261019)"
+    "f4ae649: feat(ui): add site.webmanifest with printo icons and colors (filamento-rebrand_20261019)",
+    "89f066b: chore: mark Phase 6 complete (filamento-rebrand_20261019)",
+    "8658db2: feat(viewer): show an extruded 3D printo p as the viewer placeholder (filamento-rebrand_20261019)"
   ]
 }

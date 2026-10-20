@@ -10,8 +10,8 @@
 
 ## Progress
 
-- Phases: 6/8 complete
-- Tasks: 28/35 complete
+- Phases: 7/8 complete
+- Tasks: 30/35 complete
 
 ## Quick Links
 
