@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<!-- Plantilla de la imagen social (1200x630). Se renderiza con scripts/render-og-image.js -->
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap"
+		/>
+		<link rel="stylesheet" href="../static/brand/brand.css" />
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+			}
+			html,
+			body {
+				width: 1200px;
+				height: 630px;
+			}
+			body {
+				display: flex;
+				gap: 56px;
+				align-items: center;
+				padding: 64px;
+				overflow: hidden;
+			}
+			.texto {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				gap: 32px;
+			}
+			.wordmark {
+				width: 300px;
+				height: auto;
+			}
+			h1 {
+				font-family: var(--font-display);
+				font-weight: 800;
+				font-size: 88px;
+				line-height: 0.95;
+				letter-spacing: -0.04em;
+				color: var(--tinta);
+			}
+			h1 span {
+				color: var(--cobalto);
+			}
+			.pie {
+				display: flex;
+				align-items: center;
+				gap: 16px;
+			}
+			.tag {
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
+				background: var(--blanco);
+				border: 2px solid var(--tinta);
+				font-size: 18px;
+				padding: 12px 22px;
+			}
+			.punto {
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background: var(--tomate);
+			}
+			.url {
+				font: 600 20px/1 var(--font-sans);
+				color: var(--tinta-suave);
+			}
+			.bloque {
+				width: 440px;
+				height: 502px;
+				background: var(--cobalto);
+				border-radius: var(--radius-xl);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.bloque svg {
+				width: 340px;
+				height: 340px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="texto">
+			<img class="wordmark" src="../static/brand/logo/svg/printo-wordmark-cobalto.svg" alt="printo" />
+			<h1>Tu idea,<br /><span>en tus manos.</span></h1>
+			<div class="pie">
+				<span class="tag"><span class="punto"></span>Impresión 3D hecha en Uruguay</span>
+				<span class="url">printo.uy</span>
+			</div>
+		</div>
+		<div class="bloque">
+			<!-- Carrete: radios 146/116/86/56/26 en viewBox 300 (docs/brand.md) -->
+			<svg viewBox="0 0 300 300" aria-hidden="true">
+				<circle cx="150" cy="150" r="146" fill="var(--tomate)" />
+				<circle cx="150" cy="150" r="116" fill="var(--mantequilla)" />
+				<circle cx="150" cy="150" r="86" fill="var(--menta)" />
+				<circle cx="150" cy="150" r="56" fill="var(--crema)" />
+				<circle cx="150" cy="150" r="26" fill="var(--cobalto)" />
+			</svg>
+		</div>
+	</body>
+</html>
