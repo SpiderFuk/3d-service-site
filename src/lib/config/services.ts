@@ -23,7 +23,7 @@ export const services: Service[] = [
 		description: 'Impresión de alta calidad en diversos materiales y colores',
 		icon: 'Printer',
 		features: [
-			'Múltiples materiales (PLA, PETG y mas en el futuro!)',
+			'Múltiples materiales (PLA, PETG y más en el futuro)',
 			'Amplia gama de colores',
 			'Alta precisión y acabado',
 			'Tamaños desde miniatura hasta 25cm'
@@ -43,8 +43,8 @@ export const services: Service[] = [
 	// },
 	{
 		id: 'prototyping',
-		title: 'Prototipado Rápido',
-		description: 'Convierte tus ideas en prototipos físicos rápidamente',
+		title: 'Prototipado rápido',
+		description: 'Convertí tus ideas en prototipos físicos, rápido',
 		icon: 'Zap',
 		features: [
 			'Entrega rápida',
