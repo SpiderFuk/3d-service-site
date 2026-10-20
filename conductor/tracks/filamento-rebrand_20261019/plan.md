@@ -76,7 +76,7 @@ One commit per section.
 - [x] Task 5.1: `Services.svelte`: support-color icon tiles with tinta icons, `font-display` titles, alternating crema/white section backgrounds (`ui`)
 - [x] Task 5.2: `ModelViewer.svelte` and viewer components (`ViewerControls`, `ModelInfo`, `FileUploader`, `ModelThumbnails`, `ModelThumbnailPreview`); scene background `#FFF4E0` in `src/lib/three/sceneSetup.ts` (`viewer`)
 - [x] Task 5.3: `FilamentColors.svelte`: layout/typography only; filament color values untouched (`materials`)
-- [ ] Task 5.4: `Gallery3D.svelte` (`ui`)
+- [x] Task 5.4: `Gallery3D.svelte` (`ui`)
 - [ ] Task 5.5: `ContactWhatsApp.svelte` (`ui`)
 - [ ] Task 5.6: `Footer.svelte` final pass (tinta background, crema text, links/focus) (`layout`)
 

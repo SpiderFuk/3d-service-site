@@ -142,12 +142,13 @@
 	});
 </script>
 
-<section id="gallery" class="py-20 bg-background-secondary">
-	<div class="container mx-auto px-4">
+<section id="gallery" class="py-20 bg-background">
+	<div class="container mx-auto px-4 md:px-16">
 		<div class="text-center mb-12">
-			<h2 class="text-3xl md:text-4xl font-bold text-text mb-4">
-				Galería de Proyectos
-			</h2>
+			<p class="text-[13px] font-semibold uppercase tracking-[0.1em] text-text-secondary mb-3">
+				Galería
+			</p>
+			<h2 class="text-3xl md:text-5xl text-text mb-4">Galería de proyectos</h2>
 			<p class="text-lg text-text-secondary max-w-2xl mx-auto">
 				Algunos de nuestros trabajos más recientes
 			</p>
@@ -155,14 +156,6 @@
 	</div>
 
 	<div class="relative">
-		<!-- Gradientes en los bordes -->
-		<div
-			class="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-background-secondary to-transparent z-10 pointer-events-none"
-		></div>
-		<div
-			class="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background-secondary to-transparent z-10 pointer-events-none"
-		></div>
-
 		<!-- Contenedor: recorta el track y captura eventos de puntero -->
 		<div
 			class="overflow-hidden py-2"
@@ -180,34 +173,28 @@
 			<div bind:this={trackEl} class="flex gap-4 will-change-transform">
 			{#each displayItems as item, i (i)}
 				<div
-					class="flex-shrink-0 w-[280px] rounded-xl overflow-hidden shadow-card select-none"
+					class="flex-shrink-0 w-[280px] bg-white border-2 border-tinta rounded-brand-xl overflow-hidden select-none"
 				>
-					<div class="relative aspect-square">
+					<div class="aspect-square border-b-2 border-tinta">
 						<img
 							src={item.image}
 							alt={item.title}
 							class="w-full h-full object-cover pointer-events-none"
 							draggable="false"
 						/>
-						<div
-							class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-12"
+					</div>
+					<div class="p-4">
+						<span
+							class="inline-block px-3 py-1 bg-mantequilla text-tinta text-xs font-semibold rounded-full mb-2"
 						>
-							<span
-								class="inline-block px-2 py-0.5 bg-white/20 backdrop-blur-sm text-white text-xs font-medium rounded-full mb-1.5"
-							>
-								{item.category}
-							</span>
-							<h3
-								class="text-white font-semibold text-base leading-tight"
-							>
-								{item.title}
-							</h3>
-							<p
-								class="text-white/80 text-sm mt-1 leading-snug"
-							>
-								{item.description}
-							</p>
-						</div>
+							{item.category}
+						</span>
+						<h3 class="text-lg text-tinta leading-tight">
+							{item.title}
+						</h3>
+						<p class="text-text-secondary text-sm mt-1 leading-snug">
+							{item.description}
+						</p>
 					</div>
 				</div>
 			{/each}
