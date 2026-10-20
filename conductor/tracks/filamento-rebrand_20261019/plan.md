@@ -101,8 +101,8 @@ One commit per section.
 
 ### Tasks
 
-- [ ] Task 7.1: Decide with the user whether to do this phase
-- [ ] Task 7.2: Create an extruded "p" model from `printo-p-cobalto.svg` (Three.js `SVGLoader` + `ExtrudeGeometry` or exported OBJ) to replace `static/logo/logo.obj` as viewer placeholder (`viewer`)
+- [x] Task 7.1: Decide with the user whether to do this phase
+- [x] Task 7.2: Create an extruded "p" model from `printo-p-cobalto.svg` (Three.js `SVGLoader` + `ExtrudeGeometry` or exported OBJ) to replace `static/logo/logo.obj` as viewer placeholder (`viewer`)
 
 ### Verification
 

@@ -11,7 +11,7 @@ El logo actual vive en `static/brand/logo/` (ver `docs/brand.md`). No usar logos
 - `background.png` - Puede usarse como fondo en secciones
 - `imagen hero.png` - Imagen para la sección Hero
 - `Íconos de Servicios.png` - Referencia de iconos
-- `_old-logos/` - Logos anteriores al rebrand "Filamento" (cubo animado y variantes). Solo como archivo, sin referencias en el codigo
+- `_old-logos/` - Logos anteriores al rebrand "Filamento" (cubo animado, variantes y el cubo 3D en `3d/`). Solo como archivo, sin referencias en el codigo
 
 ## Cómo Usar las Imágenes
 
