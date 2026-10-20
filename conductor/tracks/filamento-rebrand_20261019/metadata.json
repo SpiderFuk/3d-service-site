@@ -4,17 +4,17 @@
   "type": "refactor",
   "status": "in_progress",
   "created": "2026-10-19T00:00:00Z",
-  "updated": "2026-10-19T22:15:00Z",
+  "updated": "2026-10-19T23:00:00Z",
   "phases": {
     "total": 8,
-    "completed": 2
+    "completed": 3
   },
   "tasks": {
     "total": 34,
-    "completed": 10
+    "completed": 14
   },
-  "current_phase": 3,
-  "current_task": "3.1",
+  "current_phase": 4,
+  "current_task": "4.1",
   "commits": [
     "71603b5: docs: add Filamento brand kit and rebrand track (filamento-rebrand_20261019)",
     "3cedc1e: refactor(ui): apply Filamento color, font and radius tokens to Tailwind (filamento-rebrand_20261019)",
@@ -27,6 +27,11 @@
     "98af9ff: refactor(layout): use crema SVG wordmark in footer (filamento-rebrand_20261019)",
     "7258f57: refactor(ui): replace favicons and apple-touch-icon with printo p (filamento-rebrand_20261019)",
     "ec27929: chore: archive old logo files in static/images/_old-logos (filamento-rebrand_20261019)",
-    "91b12a7: refactor(layout): rename businessName to printo (filamento-rebrand_20261019)"
+    "91b12a7: refactor(layout): rename businessName to printo (filamento-rebrand_20261019)",
+    "c79eee5: chore: mark Phase 2 complete (filamento-rebrand_20261019)",
+    "d192fdd: refactor(ui): restyle Button as brand pill with warm variant (filamento-rebrand_20261019)",
+    "3e32071: refactor(ui): restyle Card with tinta border and opt-in extrude (filamento-rebrand_20261019)",
+    "93b9a35: refactor(materials): align ColorSwatch border and focus with brand (filamento-rebrand_20261019)",
+    "616296b: refactor(ui): apply brand radius to out-of-service banner and modal (filamento-rebrand_20261019)"
   ]
 }
