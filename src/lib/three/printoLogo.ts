@@ -1,5 +1,5 @@
 /**
- * Logo 3D de printo: la p extruida en cobalto con una extrusion tomate detras,
+ * Logo 3D de printo: la p extruida en cobalto con una extrusion tomate centrada detras,
  * como una pieza recien impresa (ver docs/brand.md)
  *
  * Geometria tomada de static/brand/logo/svg/printo-p-cobalto.svg:
@@ -32,9 +32,9 @@ const CURVA_SEGMENTOS = 96;
 // Radio de los empalmes donde el aro se junta con el palo
 const RADIO_EMPALME = 24;
 
-// Extrusion tomate: largo hacia atras, corrimiento hacia abajo-derecha y retraccion del
 // contorno para que arranque por dentro de la pieza cobalto (sin superficies coincidentes)
-const EXTRUSION = { largo: 120, corrimiento: 70, retraccion: BISEL.tamano + 4 };
+// Extrusion tomate: mismo contorno que la pieza cobalto, centrada detras de ella
+const PROFUNDIDAD_EXTRUSION = 120;
 
 // La p mide ~700 unidades; se escala para entrar en el rango de OrbitControls (distancia max 500)
 const ESCALA = 0.2;
@@ -140,13 +140,12 @@ function sinPuntosRepetidos(contorno: Shape): Shape {
 	return limpio;
 }
 
-function extruir(contorno: Shape, profundidad: number, retraccion = 0): ExtrudeGeometry {
+function extruir(contorno: Shape, profundidad: number): ExtrudeGeometry {
 	return new ExtrudeGeometry(contorno, {
 		depth: profundidad,
 		bevelEnabled: true,
 		bevelSize: BISEL.tamano,
 		bevelThickness: BISEL.grosor,
-		bevelOffset: -retraccion,
 		bevelSegments: BISEL.segmentos,
 		curveSegments: CURVA_SEGMENTOS
 	});
@@ -199,21 +198,11 @@ export function createPrintoLogo(): Group {
 	const frente = extruir(contorno, PROFUNDIDAD_FRENTE);
 	suavizarLaterales(frente);
 
-	// Extrusion tomate continua: arranca dentro de la pieza cobalto (sin hueco entre biseles)
-	// y se corre hacia abajo-derecha a medida que va hacia atras
-	const extrusion = extruir(contorno, EXTRUSION.largo, EXTRUSION.retraccion);
-	const pendiente = EXTRUSION.corrimiento / EXTRUSION.largo;
-	const frenteExtrusion = EXTRUSION.largo + BISEL.grosor;
-	const posicion = extrusion.getAttribute('position');
-	for (let i = 0; i < posicion.count; i++) {
-		const atras = frenteExtrusion - posicion.getZ(i);
-		posicion.setXYZ(
-			i,
-			posicion.getX(i) + pendiente * atras,
-			posicion.getY(i) - pendiente * atras,
-			PROFUNDIDAD_FRENTE / 2 - atras
-		);
-	}
+	// Extrusion tomate: mismo contorno, recta hacia atras. Su cara frontal coincide con la
+	// trasera de la pieza cobalto (z = -BISEL.grosor); donde se juntan los biseles queda una
+	// ranura fina que separa los dos colores, como dos capas impresas
+	const extrusion = extruir(contorno, PROFUNDIDAD_EXTRUSION);
+	extrusion.translate(0, 0, -(PROFUNDIDAD_EXTRUSION + 2 * BISEL.grosor));
 	suavizarLaterales(extrusion);
 
 	// Un poco de emision para que los colores de marca no se apaguen con la iluminacion de la escena
