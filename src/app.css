@@ -40,6 +40,11 @@
 		outline-offset: 3px;
 	}
 
+	/* Destinos de foco programático (p. ej. <main> del skip link): sin anillo */
+	[tabindex='-1']:focus {
+		outline: none;
+	}
+
 	/* Dentro de fondos cobalto (Contacto): links crema, hover mantequilla, foco crema */
 	.on-cobalto a {
 		color: var(--color-crema);

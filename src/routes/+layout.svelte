@@ -1,13 +1,14 @@
 <script lang="ts">
 	/**
 	 * Layout principal de la aplicación
+	 *
+	 * El link "Saltar al contenido" va primero para ser el primer elemento con foco,
+	 * antes del banner de fuera de servicio. La página define <main id="contenido">.
 	 */
 
 	import type { Snippet } from 'svelte';
 	import { onMount, onDestroy } from 'svelte';
 	import '../app.css';
-	import Navbar from '$lib/components/layout/Navbar.svelte';
-	import Footer from '$lib/components/layout/Footer.svelte';
 	import OutOfServiceModal from '$lib/components/ui/OutOfServiceModal.svelte';
 	import OutOfServiceBanner from '$lib/components/ui/OutOfServiceBanner.svelte';
 	import { featureFlagsStore } from '$lib/stores/featureFlagsStore';
@@ -37,20 +38,36 @@
 	let showBanner = $derived($outOfServiceUI.showBanner);
 </script>
 
-<div class="min-h-screen flex flex-col">
-	<Navbar />
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-	{#if showBanner}
-		<OutOfServiceBanner />
-	{/if}
+{#if showBanner}
+	<OutOfServiceBanner />
+{/if}
 
-	<main class="flex-1">
-		{@render children?.()}
-	</main>
-
-	<Footer />
-</div>
+{@render children?.()}
 
 {#if showModal}
 	<OutOfServiceModal />
 {/if}
+
+<style>
+	.skip-link {
+		position: absolute;
+		left: 16px;
+		top: -80px;
+		z-index: 30;
+		display: inline-flex;
+		align-items: center;
+		height: var(--tap-min);
+		padding: 0 20px;
+		border-radius: var(--radius-pill);
+		background: var(--color-tinta);
+		color: var(--color-crema);
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.skip-link:focus {
+		top: 12px;
+	}
+</style>
