@@ -22,6 +22,94 @@
 		font-size: 15px;
 		line-height: 1.5;
 	}
+
+	/* Links: tinta subrayado, hover cobalto */
+	a {
+		color: var(--color-tinta);
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	a:hover {
+		color: var(--color-cobalto);
+	}
+
+	/* Anillo de foco: 3 px cobalto, separado 3 px */
+	:focus-visible {
+		outline: 3px solid var(--color-cobalto);
+		outline-offset: 3px;
+	}
+
+	/* Dentro de fondos cobalto (Contacto): links crema, hover mantequilla, foco crema */
+	.on-cobalto a {
+		color: var(--color-crema);
+	}
+
+	.on-cobalto a:hover {
+		color: var(--color-mantequilla);
+	}
+
+	.on-cobalto :focus-visible {
+		outline-color: var(--color-crema);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+	}
+}
+
+@layer components {
+	/* Hover de botones de acción: sube 2 px y gira -1.5° */
+	.cta {
+		transition: transform 0.15s ease;
+	}
+
+	.cta:hover {
+		transform: translateY(-2px) rotate(-1.5deg);
+	}
+
+	.cta:active {
+		transform: translateY(1px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.cta,
+		.cta:hover,
+		.cta:active {
+			transition: none;
+			transform: none;
+		}
+	}
+
+	/* Extrusión tomate: una por vista, solo en formas de bordes rectos */
+	.extrude {
+		box-shadow: var(--shadow-extrude);
+	}
+
+	.extrude-md {
+		box-shadow: var(--shadow-extrude-md);
+	}
+
+	.extrude-sm {
+		box-shadow: var(--shadow-extrude-sm);
+	}
+
+	/* Etiqueta sobre cada titular */
+	.eyebrow {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.2;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-tinta-suave);
+	}
+
+	.on-cobalto .eyebrow {
+		color: var(--color-crema);
+	}
 }
 
 @layer utilities {
