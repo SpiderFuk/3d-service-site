@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { horaMontevideo, horarioCorto, horarioFrase, horarioLargo, isOpenAt } from './hours';
 
 /** Instante a partir de una hora de Montevideo (UTC-3, sin horario de verano) */
@@ -55,21 +55,19 @@ describe('isOpenAt', () => {
 	});
 
 	describe('visitante en otra zona horaria', () => {
-		const tzOriginal = process.env.TZ;
-
 		afterEach(() => {
-			process.env.TZ = tzOriginal;
+			vi.unstubAllEnvs();
 		});
 
 		it('no depende del reloj local del visitante', () => {
 			// En Tokio, lunes 10:00 de Montevideo ya es lunes 22:00
-			process.env.TZ = 'Asia/Tokyo';
+			vi.stubEnv('TZ', 'Asia/Tokyo');
 			expect(isOpenAt(mvd(LUNES, '10:00'))).toBe(true);
 			// En Madrid, sábado 15:30 de Montevideo es sábado 19:30
-			process.env.TZ = 'Europe/Madrid';
+			vi.stubEnv('TZ', 'Europe/Madrid');
 			expect(isOpenAt(mvd(SABADO, '15:30'))).toBe(true);
-			// En Los Ángeles, lunes 09:00 de Montevideo es lunes 05:00 (y domingo en UTC-12)
-			process.env.TZ = 'America/Los_Angeles';
+			// En Los Ángeles, lunes 09:00 de Montevideo es lunes 05:00
+			vi.stubEnv('TZ', 'America/Los_Angeles');
 			expect(isOpenAt(mvd(LUNES, '09:00'))).toBe(false);
 		});
 	});
