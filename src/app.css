@@ -19,6 +19,8 @@
 
 	body {
 		@apply bg-crema font-sans text-tinta antialiased;
+		font-size: 15px;
+		line-height: 1.5;
 	}
 }
 
