@@ -3,7 +3,7 @@
 | Status | Track ID | Title | Created | Updated |
 | ------ | -------- | ----- | ------- | ------- |
 | [x] | codebase-audit_20260214 | Codebase Audit & Cleanup | 2026-02-14 | 2026-02-14 |
-| [~] | rebrand-foundation_20261026 | Rebrand · Design System Foundation & Single-Source Config | 2026-10-26 | 2026-10-26 |
+| [x] | rebrand-foundation_20261026 | Rebrand · Design System Foundation & Single-Source Config | 2026-10-26 | 2026-10-26 |
 | [ ] | rebrand-nav-hero_20261026 | Rebrand · Navigation & Hero | 2026-10-26 | 2026-10-26 |
 | [ ] | rebrand-story-sections_20261026 | Rebrand · Tres caminos, Trabajos & Cómo funciona | 2026-10-26 | 2026-10-26 |
 | [ ] | rebrand-materials-pricing_20261026 | Rebrand · Materiales y colores & Precio y plazos | 2026-10-26 | 2026-10-26 |

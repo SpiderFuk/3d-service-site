@@ -15,7 +15,8 @@
 | SvelteKit | 2.x | Application framework (static adapter, SPA) |
 | Tailwind CSS | 3.4 | Utility-first styling |
 | Three.js | 0.160+ | 3D model rendering and interaction |
-| Lucide Svelte | 0.460+ | Icon library |
+| Lucide Svelte | 0.460+ | Icons (only in the out-of-service modal/banner; to be removed) |
+| Bricolage Grotesque + Figtree | Google Fonts | Headlines / text (PRINTO Filamento) |
 | JSZip | 3.10+ | 3MF file parsing (ZIP extraction) |
 
 ## Build & Tooling
@@ -26,6 +27,7 @@
 | PostCSS | 8.4 | CSS processing (with Autoprefixer) |
 | ESLint | 9.x | Code linting |
 | svelte-check | 4.x | Svelte type checking |
+| Vitest | 5.x | Unit tests for utilities and stores (`npm run test`) |
 
 ## Infrastructure
 

@@ -3,7 +3,7 @@
 **Track ID:** rebrand-foundation_20261026
 **Spec:** [spec.md](./spec.md)
 **Created:** 2026-10-26
-**Status:** [~] In Progress
+**Status:** [x] Complete
 
 ## Overview
 
@@ -71,7 +71,7 @@ Tokens and fonts first, then the shared primitives every section uses, then the 
 - [x] All acceptance criteria met
   - Note: `src/lib/config/filamentColors.ts` still holds the old color list (only `ColorSwatch` imports its type); removal is scheduled in rebrand-cleanup-qa.
 - [x] Tests passing (29)
-- [ ] Documentation updated (if applicable)
+- [x] Documentation updated (if applicable)
 - [x] Ready for review
 
 ---

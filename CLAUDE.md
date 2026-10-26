@@ -14,12 +14,16 @@ This is a **SPA (Single Page Application) for a 3D printing service** built with
 
 - **Framework:** Svelte 5.x + SvelteKit 2.x (with Svelte 5 runes)
 - **Language:** TypeScript 5.x (strict mode)
-- **Styling:** Tailwind CSS 3.x
+- **Styling:** Tailwind CSS 3.x reading the PRINTO Filamento tokens (CSS custom properties)
+- **Fonts:** Bricolage Grotesque (700/800, headlines) + Figtree (400/500/600, text), Google Fonts
 - **3D Engine:** Three.js 0.160+
-- **Icons:** Lucide Svelte
+- **Icons:** none in the new design (no icons, no emojis). Lucide Svelte remains only in the out-of-service modal/banner until the cleanup track.
 - **Dependencies:** JSZip (for 3MF parsing)
+- **Testing:** Vitest (unit tests for pure utilities and stores)
 - **Deployment:** Static adapter (pre-rendered SPA)
 - **Feature Flags:** AWS AppConfig integration
+
+**Rebrand in progress:** the page is being rebuilt from `design/landing-v1/BUILD.md` (source of truth) and `design/landing-v1/landing-final.html` (visual reference), tracked in `conductor/tracks/rebrand-*`. Sections in `components/landing/` are placeholders until their track builds them.
 
 ## Development Commands
 
@@ -39,6 +43,9 @@ npm run preview
 # Type checking
 npm run check
 
+# Unit tests (Vitest)
+npm run test
+
 # Linting
 npm run lint
 ```
@@ -51,21 +58,23 @@ npm run lint
 src/
 ├── lib/
 │   ├── components/
-│   │   ├── layout/        # Navbar, Footer
-│   │   ├── sections/      # Hero, Services, FilamentColors, ModelViewer, Gallery3D, ContactWhatsApp
-│   │   ├── viewer/        # ThreeCanvas, ViewerControls, ModelInfo, FileUploader, ModelThumbnails, ModelThumbnailPreview
-│   │   └── ui/            # Button, Card, ColorSwatch, OutOfServiceModal, OutOfServiceBanner
-│   ├── config/            # Static configuration files
+│   │   ├── landing/       # Navegacion, Hero, TresCaminos, Trabajos, ComoFunciona, Materiales, Precios, Visor, Preguntas, Contacto, Pie
+│   │   ├── viewer/        # ThreeCanvas, ModelThumbnailPreview (old viewer, reused by the Visor track)
+│   │   └── ui/            # Section, SectionHeading, Button, Card, Tag, ColorSwatch, OutOfServiceModal, OutOfServiceBanner
+│   ├── config/            # Static configuration files (hours, contact, whatsappMessages, sections…)
 │   ├── loaders/           # 3D model loaders (Factory + Adapters)
-│   ├── stores/            # Svelte stores (modelStore, uiStore, featureFlagsStore)
-│   ├── services/          # External service integrations (AWS AppConfig)
+│   ├── stores/            # Svelte stores (hoursStore, materialsStore, uiStore, featureFlagsStore, modelStore)
+│   ├── services/          # External service integrations (AWS AppConfig, content JSON)
+│   ├── styles/            # tokens.css (design tokens, the only place with brand colors)
 │   ├── three/             # Three.js scene setup and utilities
 │   ├── types/             # TypeScript type definitions
 │   └── utils/             # Utility functions
 ├── routes/                # SvelteKit routes
 └── app.css                # Global styles
 static/
-├── images/                # Logo variants, hero image (13 files)
+├── brand/                 # printo wordmark (SVG)
+├── content/data/          # materials.json (filament stock list), gallery.json
+├── images/                # Old logo variants, hero image
 └── models/                # Preloaded 3D models (4 STL files)
 ```
 
@@ -137,17 +146,21 @@ interface SceneContext {
 
 Uses **Svelte stores** for global state:
 
-1. **`modelStore`** ([src/lib/stores/modelStore.ts](src/lib/stores/modelStore.ts)): 3D model state
+1. **`abiertoAhora`** ([src/lib/stores/hoursStore.ts](src/lib/stores/hoursStore.ts)): readable boolean, workshop open now (Montevideo time), rechecked every minute. Drives the hero headline and the Contacto pill.
+
+2. **`materialsStore`** ([src/lib/stores/materialsStore.ts](src/lib/stores/materialsStore.ts)): filament stock (`materials.pla`, `materials.petg`), `isLoading`, `isRemote`. Starts with the bundled `materials.json` and swaps in the fetched copy if it passes `esStockValido`.
+
+3. **`modelStore`** ([src/lib/stores/modelStore.ts](src/lib/stores/modelStore.ts)): 3D model state
    - `currentModel`, `modelInfo`, `isLoading`, `error`, `fileName`
    - Methods: `setModel()`, `clearModel()`, `setLoading()`, `setError()`
 
-2. **`uiStore`** ([src/lib/stores/uiStore.ts](src/lib/stores/uiStore.ts)): UI state
+4. **`uiStore`** ([src/lib/stores/uiStore.ts](src/lib/stores/uiStore.ts)): UI state
    - `isMobileMenuOpen`, `activeSection`, `showUploadModal`
    - Out-of-service state: `outOfServiceUI` derived store
 
-3. **`featureFlagsStore`** ([src/lib/stores/featureFlagsStore.ts](src/lib/stores/featureFlagsStore.ts)): Feature flags
+5. **`featureFlagsStore`** ([src/lib/stores/featureFlagsStore.ts](src/lib/stores/featureFlagsStore.ts)): Feature flags
    - Polling from AWS AppConfig (5-minute interval)
-   - Derived stores: `outOfServiceFlag`, `sectionsVisibilityFlag`, `servicesVisibilityFlag`, `materialsVisibilityFlag`
+   - Derived stores: `outOfServiceFlag`, `sectionsVisibilityFlag`, `servicesVisibilityFlag`
 
 ### Feature Flags System
 
@@ -161,8 +174,9 @@ The project uses **AWS AppConfig** for dynamic feature configuration:
 **Flag Types:**
 1. `out-of-service` - Disable site temporarily with modal/banner
 2. `sections-visibility` - Show/hide page sections
-3. `services-visibility` - Show/hide specific services
-4. `materials-visibility` - Show/hide materials
+3. `services-visibility` - Show/hide specific services (legacy, removed in the cleanup track)
+
+`sections-visibility` keys are the ones in `sections.ts` (`navegacion`, `hero`, `tresCaminos`, `trabajos`, `comoFunciona`, `materiales`, `precios`, `visor`, `preguntas`, `contacto`, `pie`). **The AppConfig profile must use these keys**; unknown or missing keys fall back to the defaults (visible).
 
 **Override Pattern** ([src/lib/utils/visibilityHelpers.ts](src/lib/utils/visibilityHelpers.ts)):
 - If flag enabled → Use AppConfig values (complete override)
@@ -287,56 +301,35 @@ dismissOutOfServiceModal(); // Stores in localStorage, shows banner
 
 ## Configuration Files
 
+### Single-source settings (owner edits these)
+
+Each lives in exactly one place; components derive from it.
+
+- **Opening hours:** [src/lib/config/hours.ts](src/lib/config/hours.ts), `{ week: [600, 1080], sat: [720, 960] }` (minutes, Montevideo time). Helpers in [src/lib/utils/hours.ts](src/lib/utils/hours.ts): `isOpenAt(date)`, `horarioLargo()`, `horarioCorto()`, `horarioFrase()`.
+- **WhatsApp number:** [src/lib/config/contact.ts](src/lib/config/contact.ts) (`whatsappNumber: '59896341462'`, shown as `096 341 462`), plus Instagram and email.
+- **Filament stock:** [static/content/data/materials.json](static/content/data/materials.json), PLA + PETG, Bambu Lab hex codes (`#RRGGBBAA` + `translucido` for translucent), `agotado` per color. Types in [src/lib/types/content.ts](src/lib/types/content.ts). `src/lib/config/filamentColors.ts` is an old leftover; do not edit it.
+
+### WhatsApp messages
+
+[src/lib/config/whatsappMessages.ts](src/lib/config/whatsappMessages.ts) holds one message per entry point (BUILD.md table); viewer messages are functions.
+
+```typescript
+import { mensajes } from '$lib/config/whatsappMessages';
+import { whatsappUrl } from '$lib/utils/whatsapp';
+
+whatsappUrl(mensajes.presupuesto);
+whatsappUrl(mensajes.visorArchivo(file.name));
+```
+
 ### Sections Configuration
 
-[src/lib/config/sections.ts](src/lib/config/sections.ts):
-
-```typescript
-const secciones = {
-  hero: { id: 'hero', nombre: 'Hero', habilitada: true },
-  services: { id: 'services', nombre: 'Servicios', habilitada: true },
-  modelViewer: { id: 'model-viewer', nombre: 'Visor de Modelos', habilitada: true },
-  filamentColors: { id: 'filament-colors', nombre: 'Colores de Filamento', habilitada: true },
-  gallery: { id: 'gallery', nombre: 'Galería de Proyectos', habilitada: false },
-  contact: { id: 'contact', nombre: 'Contacto WhatsApp', habilitada: true }
-}
-```
-
-### Filament Colors & Materials
-
-[src/lib/config/filamentColors.ts](src/lib/config/filamentColors.ts):
-
-```typescript
-// 4 materials: PLA, PETG, ABS, TPU
-// Each with availability and colors
-
-getMaterialesList()                    // All materials
-getMaterialesDisponibles()             // Available only
-getColoresByMaterial(materialId)       // Colors for material
-getColoresDisponiblesByMaterial(id)    // Available colors only
-```
-
-### Contact Information
-
-[src/lib/config/contact.ts](src/lib/config/contact.ts):
-
-```typescript
-const contactInfo = {
-  whatsappNumber: '59896341462',
-  whatsappDisplayNumber: '+598 96 341 462',
-  businessName: '[PRINTO]',
-  city: 'Montevideo | Las Piedras',
-  email: 'hola@printo.uy',
-  socialMedia: { instagram: 'https://www.instagram.com/printo.uy' }
-}
-```
+[src/lib/config/sections.ts](src/lib/config/sections.ts) lists the 11 sections in page order; `id` is the anchor (`inicio`, `que-imprimimos`, `trabajos`, `como-funciona`, `materiales`, `precios`, `visor`, `preguntas`, `contacto`). Menu items come from `getVisibleNavItems()` in `visibilityHelpers.ts`.
 
 ### Feature Flag Defaults
 
 - [src/lib/config/outOfServiceConfig.ts](src/lib/config/outOfServiceConfig.ts) - Modal/banner defaults
 - [src/lib/config/sectionsVisibilityDefaults.ts](src/lib/config/sectionsVisibilityDefaults.ts) - Section visibility
-- [src/lib/config/servicesVisibilityDefaults.ts](src/lib/config/servicesVisibilityDefaults.ts) - Service visibility
-- [src/lib/config/materialsVisibilityDefaults.ts](src/lib/config/materialsVisibilityDefaults.ts) - Material availability
+- [src/lib/config/servicesVisibilityDefaults.ts](src/lib/config/servicesVisibilityDefaults.ts) - Service visibility (legacy)
 
 ## Utility Functions
 
@@ -354,9 +347,6 @@ getVisibleNavItems(flag?)
 isServiceVisible(serviceId, flag?)
 getVisibleServices(flag?)
 
-// Materials
-isMaterialAvailable(materialId, flag?)
-getAvailableMaterials(flag?)
 ```
 
 ### File Validation
@@ -367,14 +357,7 @@ getAvailableMaterials(flag?)
 
 ### WhatsApp Integration
 
-[src/lib/utils/whatsapp.ts](src/lib/utils/whatsapp.ts):
-
-```typescript
-generateMessage({ modelInfo?, customMessage? })
-generateWhatsAppURL(options)
-openWhatsApp(options)
-copyMessageToClipboard(options)
-```
+[src/lib/utils/whatsapp.ts](src/lib/utils/whatsapp.ts): `whatsappUrl(message)` builds `https://wa.me/59896341462?text=…`. Open it with a link (`target="_blank" rel="noopener"`), e.g. `<Button href={whatsappUrl(mensajes.precios)}>`.
 
 ### Formatters
 
@@ -414,29 +397,28 @@ debounce(func, wait)
 
 ## Styling Guidelines
 
-### Design Tokens (Tailwind)
+### Design Tokens (PRINTO Filamento)
 
-**Colors:**
-- Primary: `#3B82F6` (blue)
-- WhatsApp: `#25D366` (green)
-- Background: `#FFFFFF`, secondary `#F8FAFC`
-- Text: `#1E293B`, secondary `#64748B`
+All brand values live in [src/lib/styles/tokens.css](src/lib/styles/tokens.css) (from `design/landing-v1/tokens.json`). **No hex colors anywhere else** (filament stock excepted). Tailwind maps them:
 
-**Typography:**
-- Font: Inter (weights: 400, 500, 600, 700)
+- **Colors:** `cobalto` #2B3CFF, `tomate` #FF5A47, `mantequilla` #FFD84D, `menta` #86E3C0, `crema` #FFF4E0 (page background), `blanco`, `tinta` #1B1B2F (text and all borders), `tinta-suave` #4A4A63. Never tomate/mantequilla/menta as text.
+- **Fonts:** `font-display` (Bricolage Grotesque), `font-sans` (Figtree, default).
+- **Radius:** `rounded-chip` 20, `rounded-card` 24, `rounded-tile` 28, `rounded-pill`.
+- **Borders:** `border` = 2 px tinta by default.
+- **Extrusion:** `.extrude` / `.extrude-md` / `.extrude-sm` (one per view, square-edged shapes only).
+- **Spacing:** `px-gutter` (64/16), `py-section` (96/32), `max-w-page` (1312), `min-h-tap` (44).
 
-**Responsive:**
-- Mobile-first approach
-- Breakpoints: `sm: 640px`, `md: 768px`, `lg: 1024px`, `xl: 1280px`
+### Breakpoints
 
-### Custom Utilities (app.css)
+Phone ≤959 px, small desktop 960–1199 px, desktop ≥1200 px. Tailwind screens: `xs` 360, `desk` 960, `wide` 1200, so `max-desk:` = phone, `desk:max-wide:` = small desktop, `max-xs:` = under 360 px. In component CSS use `@media (max-width: 959px)`.
 
-```css
-.container         /* max-w-7xl */
-.transition-smooth /* transition-all duration-300 ease-in-out */
-.shadow-card       /* Custom card shadow */
-.hide-scrollbar    /* Hides scrollbar but keeps functionality */
-```
+### Primitives and global styles
+
+BUILD.md rules: the cobalto `quote` button appears once at a time; the tomate extrusion is used once per view; no icons or emojis anywhere.
+
+
+- `ui/Section` (anchor, `scroll-margin-top`, padding; `contentClass` replaces the default stack layout), `ui/SectionHeading` (eyebrow + two-phrase headline, `size="lg" | "xl"`), `ui/Button` (`quote` cobalto only for "Pedir presupuesto", `ink` default, `butter` Contacto WhatsApp, `plain`), `ui/Tag`, `ui/Card` (`radius`, `fondo`).
+- `app.css`: focus ring (3 px cobalto, crema inside `.on-cobalto`), links (tinta, underline offset 4, hover cobalto), `.cta` hover (lift + rotate, off under reduced motion), `.eyebrow`.
 
 ## Common Patterns
 
@@ -484,7 +466,9 @@ const model = await loader.load(file);
 
 ## Testing Considerations
 
-When writing tests (not configured yet):
+Vitest runs `src/**/*.test.ts` in a Node environment (`npm run test`). Existing tests cover hours (incl. visitor time zones), `abiertoAhora`, WhatsApp URL encoding (checked against every link in `landing-final.html`) and the stock list.
+
+When writing tests:
 - Mock Three.js imports for unit tests
 - Use `@testing-library/svelte` for component tests
 - Mock `window.open` for WhatsApp link tests
