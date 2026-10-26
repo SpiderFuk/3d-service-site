@@ -2,6 +2,8 @@
 	/**
 	 * Eyebrow + titular en dos frases (la segunda en color de acento)
 	 *
+	 * Como en la referencia, solo size="xl" fuerza el salto de línea entre frases.
+	 *
 	 * size="lg": 56 px desktop / 36 px teléfono (titulares de sección)
 	 * size="xl": 72 px desktop / 44 px teléfono / 40 px bajo 360 px (Hero y Contacto)
 	 * Para otro tamaño en teléfono, definir --headline-size-phone en el contenedor.
@@ -34,7 +36,10 @@
 	<p class="eyebrow">{eyebrow}</p>
 {/if}
 <svelte:element this={`h${level}`} {id} class="headline headline-{size}">
-	{primera}<br /><span style:color="var(--color-{acento})">{segunda}</span>
+	<!-- xl corta la línea; lg deja que la segunda frase siga y se acomode (max-width 15em) -->
+	{primera}{#if size === 'xl'}<br />{:else}{' '}{/if}<span style:color="var(--color-{acento})"
+		>{segunda}</span
+	>
 </svelte:element>
 
 <style>

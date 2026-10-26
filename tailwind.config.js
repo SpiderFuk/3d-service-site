@@ -44,6 +44,10 @@ export default {
 			borderWidth: {
 				DEFAULT: 'var(--border-width)'
 			},
+			// Todos los bordes son tinta (preflight usa este valor por defecto)
+			borderColor: {
+				DEFAULT: 'var(--color-tinta)'
+			},
 			boxShadow: {
 				extrude: 'var(--shadow-extrude)',
 				'extrude-md': 'var(--shadow-extrude-md)',
