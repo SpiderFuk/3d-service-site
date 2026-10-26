@@ -14,6 +14,7 @@ Clean up the code first, then the head and docs, then run the full QA pass on th
 ### Tasks
 
 - [ ] Task 1.1: List components/configs/types/utils no longer imported (`grep` + `npm run check`) and delete them.
+  - Note: rebrand-foundation already deleted `components/layout/`, `components/sections/` and viewer/FileUploader, ModelInfo, ModelThumbnails, ViewerControls. Still to check: `config/filamentColors.ts`, `config/services.ts` + services-visibility flag, `modelStore`, `utils/scroll.ts`, `utils/formatters.ts`, `viewer/ModelThumbnailPreview.svelte`.
 - [ ] Task 1.2: Remove `lucide-svelte`; remove remaining emojis and old copy (e.g. "Impresiones 3D Pro").
 - [ ] Task 1.3: Retire `services-visibility` and `materials-visibility` (types, store derivations, helpers, defaults); keep unknown-flag tolerance.
 - [ ] Task 1.4: Remove unused static assets that only the old design used (old logos, `Íconos de Servicios.png`, `DiceTower.stl` if unused). Confirm the list with the owner before deleting files under `static/`.

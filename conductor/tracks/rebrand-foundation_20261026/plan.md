@@ -56,21 +56,23 @@ Tokens and fonts first, then the shared primitives every section uses, then the 
 
 ### Tasks
 
-- [ ] Task 4.1: Update `config/sections.ts` + `sectionsVisibilityDefaults.ts` to the new 11 sections (re-keyed ids).
-- [ ] Task 4.2: Create placeholder components under `components/landing/` (Navegacion, Hero, TresCaminos, Trabajos, ComoFunciona, Materiales, Precios, Visor, Preguntas, Contacto, Pie), each a `Section` with its id and an h2 stub (h1 in Hero).
-- [ ] Task 4.3: Rewrite `+page.svelte` to render them in order, keep visibility gating, add "Saltar al contenido" skip link targeting `<main id="contenido">`.
-- [ ] Task 4.4: Update `<svelte:head>` title/description to the new brand placeholder (final SEO in track 7).
+- [x] Task 4.1: Update `config/sections.ts` + `sectionsVisibilityDefaults.ts` to the new 11 sections (re-keyed ids).
+- [x] Task 4.2: Create placeholder components under `components/landing/` (Navegacion, Hero, TresCaminos, Trabajos, ComoFunciona, Materiales, Precios, Visor, Preguntas, Contacto, Pie), each a `Section` with its id and an h2 stub (h1 in Hero).
+- [x] Task 4.3: Rewrite `+page.svelte` to render them in order, keep visibility gating, add "Saltar al contenido" skip link targeting `<main id="contenido">`.
+  - Note: the skip link lives in `+layout.svelte` so it stays ahead of the out-of-service banner's button. Legacy `layout/`, `sections/` and old viewer UI (FileUploader, ModelInfo, ModelThumbnails, ViewerControls) deleted here with the owner's OK (pulled forward from rebrand-cleanup-qa).
+- [x] Task 4.4: Update `<svelte:head>` title/description to the new brand placeholder (final SEO in track 7).
 
 ### Verification
 
-- [ ] Every anchor (`#inicio` … `#contacto`, `#visor`, `#preguntas`) scrolls to its section; skip link is the first Tab stop; `npm run build` passes.
+- [x] Every anchor (`#inicio` … `#contacto`, `#visor`, `#preguntas`) scrolls to its section; skip link is the first Tab stop; `npm run build` passes.
 
 ## Final Verification
 
-- [ ] All acceptance criteria met
-- [ ] Tests passing
+- [x] All acceptance criteria met
+  - Note: `src/lib/config/filamentColors.ts` still holds the old color list (only `ColorSwatch` imports its type); removal is scheduled in rebrand-cleanup-qa.
+- [x] Tests passing (29)
 - [ ] Documentation updated (if applicable)
-- [ ] Ready for review
+- [x] Ready for review
 
 ---
 
