@@ -18,7 +18,7 @@
 	}
 
 	body {
-		@apply font-sans text-text bg-background antialiased;
+		@apply bg-crema font-sans text-tinta antialiased;
 	}
 }
 
