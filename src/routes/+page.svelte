@@ -23,12 +23,12 @@
 </script>
 
 <svelte:head>
-	<title>Impresiones 3D Pro - Servicio Profesional de Impresión 3D</title>
+	<!-- Provisorio: el SEO final (OG, JSON-LD) se hace en el track rebrand-cleanup-qa -->
+	<title>printo · Impresión 3D hecha en Uruguay</title>
 	<meta
 		name="description"
-		content="Servicios profesionales de impresión 3D. Calidad, rapidez y atención personalizada. Múltiples materiales y colores disponibles."
+		content="Mandanos una foto, un modelo que encontraste o tu archivo, y nosotros lo imprimimos. Impresión 3D en Montevideo y Las Piedras."
 	/>
-	<meta name="keywords" content="impresión 3D, PLA, PETG, ABS, TPU, prototipado, diseño 3D" />
 </svelte:head>
 
 {#if isSeccionVisible('navegacion', $sectionsVisibilityFlag)}
