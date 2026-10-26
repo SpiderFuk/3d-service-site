@@ -1,0 +1,59 @@
+/**
+ * PRINTO Filamento: tokens de diseño
+ *
+ * Único lugar con valores de color de la marca. Fuente: design/landing-v1/tokens.json
+ * y BUILD.md. Tailwind (tailwind.config.js) y los componentes leen estas variables;
+ * no escribir hex fuera de este archivo (salvo los colores de filamento del stock).
+ */
+
+:root {
+	/* Colores */
+	--color-cobalto: #2b3cff;
+	--color-tomate: #ff5a47;
+	--color-mantequilla: #ffd84d;
+	--color-menta: #86e3c0;
+	--color-crema: #fff4e0;
+	--color-blanco: #ffffff;
+	--color-tinta: #1b1b2f;
+	--color-tinta-suave: #4a4a63;
+
+	/* Tipografía */
+	--font-display: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif;
+	--font-sans: 'Figtree', system-ui, -apple-system, sans-serif;
+
+	/* Radios */
+	--radius-md: 20px;
+	--radius-lg: 24px;
+	--radius-xl: 28px;
+	--radius-pill: 999px;
+
+	/* Bordes: 2 px tinta en toda tarjeta, baldosa, botón y caja */
+	--border-width: 2px;
+	--border: var(--border-width) solid var(--color-tinta);
+
+	/* Extrusión tomate (una por vista, solo formas de bordes rectos) */
+	--shadow-extrude: 6px 6px 0 var(--color-tomate), 12px 12px 0 var(--color-tomate),
+		18px 18px 0 var(--color-tomate), 24px 24px 0 var(--color-tomate),
+		30px 30px 0 var(--color-tomate);
+	--shadow-extrude-md: 5px 5px 0 var(--color-tomate), 10px 10px 0 var(--color-tomate),
+		15px 15px 0 var(--color-tomate), 20px 20px 0 var(--color-tomate);
+	--shadow-extrude-sm: 3px 3px 0 var(--color-tomate), 6px 6px 0 var(--color-tomate),
+		9px 9px 0 var(--color-tomate), 12px 12px 0 var(--color-tomate);
+
+	/* Layout */
+	--page-max: 1312px;
+	--gutter: 64px;
+	--section-pad-y: 96px;
+	--section-gap: 20px;
+	--scroll-offset: 100px;
+	--tap-min: 44px;
+}
+
+/* Teléfono (hasta 959 px) */
+@media (max-width: 959px) {
+	:root {
+		--gutter: 16px;
+		--section-pad-y: 32px;
+		--section-gap: 12px;
+	}
+}
