@@ -13,7 +13,15 @@ Navigation hub for project context.
 
 ## Active Tracks
 
-_No active tracks._
+Rebrand to printo landing v1 (`design/landing-v1/`). Track 1 first; 2–6 in parallel; 7 last.
+
+- [ ] [Rebrand · Design System Foundation & Single-Source Config](./tracks/rebrand-foundation_20261026/index.md) — Feature (0/18 tasks)
+- [ ] [Rebrand · Navigation & Hero](./tracks/rebrand-nav-hero_20261026/index.md) — Feature (0/12 tasks)
+- [ ] [Rebrand · Tres caminos, Trabajos & Cómo funciona](./tracks/rebrand-story-sections_20261026/index.md) — Feature (0/12 tasks)
+- [ ] [Rebrand · Materiales y colores & Precio y plazos](./tracks/rebrand-materials-pricing_20261026/index.md) — Feature (0/10 tasks)
+- [ ] [Rebrand · Visor 3D](./tracks/rebrand-viewer_20261026/index.md) — Feature (0/14 tasks)
+- [ ] [Rebrand · Preguntas, Contacto & Pie](./tracks/rebrand-faq-contact-footer_20261026/index.md) — Feature (0/11 tasks)
+- [ ] [Rebrand · Legacy Cleanup, SEO & Launch QA](./tracks/rebrand-cleanup-qa_20261026/index.md) — Chore (0/13 tasks)
 
 ## Archived Tracks
 

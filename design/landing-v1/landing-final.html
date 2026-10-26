@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>printo · Impresión 3D hecha en Uruguay</title>
+<!-- Static design reference exported from the v1 canvas (board v1-11-Pie-Final). Not production code: interactive behavior is described in BUILD.md. -->
+
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+body{margin:0;background:#FFF4E0}
+a{color:#2B3CFF}a:hover{color:#1B1B2F}
+a:focus-visible,button:focus-visible{outline:3px solid #2B3CFF;outline-offset:3px}
+section[id]{scroll-margin-top:100px}
+.skip{position:absolute;left:16px;top:-80px;z-index:30}
+.skip:focus{top:12px}
+.cta{transition:transform .15s ease}
+.cta:hover{transform:translateY(-2px) rotate(-1.5deg)}
+.cta:active{transform:translateY(1px)}
+.nav-burger,.nav-pill,.nav-panel{display:none}
+.pill-in{animation:pillin .15s ease-out}
+@keyframes pillin{from{opacity:0}to{opacity:1}}
+@media (max-width:959px){
+.nav-links,.nav-cta{display:none!important}
+.nav-burger{display:flex}
+.nav-pill{display:inline-flex}
+.nav-panel{display:flex}
+.nav-bar{height:64px;padding:0 16px}
+.nav-logo{width:96px}
+}
+@media (max-width:359px){.pill-spool{display:none}}
+.hero{max-width:1312px;margin:0 auto;padding:72px 64px 104px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:56px 72px}
+.hero-text{flex:1 1 560px;min-width:0;display:flex;flex-direction:column;gap:28px}
+.hero-h1{margin:0;font-family:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;font-size:72px;line-height:.95;font-weight:800;letter-spacing:-.04em}
+.hero-art{flex:1 1 340px;min-width:0;max-width:440px;padding:0 30px 30px 0;box-sizing:border-box}
+.hero-spool{box-shadow:6px 6px 0 #FF5A47,12px 12px 0 #FF5A47,18px 18px 0 #FF5A47,24px 24px 0 #FF5A47,30px 30px 0 #FF5A47}
+.claims{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:560px}
+.claim{display:flex;flex-direction:column;gap:6px;padding:16px 18px;border-radius:20px;border:2px solid #1B1B2F}
+.claim strong{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:28px;line-height:1.05;font-weight:800;letter-spacing:-.02em}
+.claim span{font-size:14px;font-weight:500;line-height:1.3}
+@media (max-width:959px){
+.hero{padding:32px 16px 48px;gap:32px}
+.hero-text{gap:20px}
+.hero-h1{font-size:44px}
+.hero-cta{align-self:stretch!important;justify-content:center;height:56px!important}
+.hero-art{max-width:240px;padding:0 20px 20px 0}
+.hero-spool{box-shadow:4px 4px 0 #FF5A47,8px 8px 0 #FF5A47,12px 12px 0 #FF5A47,16px 16px 0 #FF5A47,20px 20px 0 #FF5A47}
+.claims{gap:8px}
+.claim{padding:12px 10px;border-radius:16px;gap:4px}
+.claim strong{font-size:20px}
+.claim span{font-size:12px}
+}
+@media (max-width:359px){.hero-h1{font-size:40px}}
+.caminos{max-width:1312px;margin:0 auto;padding:96px 64px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px}
+.headline{margin:0;max-width:15em;font-family:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;font-size:56px;line-height:.95;font-weight:800;letter-spacing:-.04em}
+.cards{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.card{background:#FFFFFF;border:2px solid #1B1B2F;border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.card-photo{aspect-ratio:4/3;border-bottom:2px solid #1B1B2F;display:flex;align-items:center;justify-content:center;color:#1B1B2F;font-size:14px;font-weight:600;text-align:center;padding:16px;box-sizing:border-box}
+.card-body{flex:1;padding:24px 24px 28px;display:flex;flex-direction:column;gap:12px}
+.card-title{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:30px;line-height:1.1;font-weight:700;letter-spacing:-.01em}
+.card-btn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 24px;border-radius:999px;background:#1B1B2F;color:#FFF4E0;border:2px solid #1B1B2F;font-size:17px;font-weight:600;line-height:1;text-decoration:none}
+.card-btn:hover{color:#FFF4E0}
+.trabajos{max-width:1312px;margin:0 auto;padding:96px 64px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px}
+.gal{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 24px;align-items:start}
+.feat{grid-column:span 2;grid-row:span 2;background:#FFFFFF;border:2px solid #1B1B2F;border-radius:28px;overflow:hidden;display:flex;flex-direction:column}
+.feat-photo{aspect-ratio:1/1;border-bottom:2px solid #1B1B2F;background:#FFF4E0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;box-sizing:border-box;color:#4A4A63;font-weight:600}
+.feat-body{padding:24px 28px 28px;display:flex;flex-direction:column;gap:10px}
+.piece-photo{aspect-ratio:1/1;border:2px solid #1B1B2F;border-radius:20px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;box-sizing:border-box;color:#4A4A63;font-size:14px;font-weight:600}
+.piece-title{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:20px;line-height:1.15;font-weight:700}
+@media (min-width:960px) and (max-width:1199px){.gal{grid-template-columns:repeat(4,minmax(0,1fr))}.feat{grid-column:1/-1;grid-row:auto;flex-direction:row}.feat-photo{flex:0 0 50%;border-bottom:0;border-right:2px solid #1B1B2F}}
+@media (max-width:959px){.trabajos{padding:32px 16px;gap:12px}.gal{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px;margin-top:8px}.feat{grid-column:1/-1;grid-row:auto;border-radius:24px}.feat-body{padding:16px 16px 20px}.piece-photo{border-radius:16px;font-size:11px;padding:8px}.piece-title{font-size:16px}.ig-link{order:3;justify-content:center;width:100%}.closing{flex-direction:column;align-items:stretch!important}.closing a{justify-content:center}}
+.funciona{max-width:1312px;margin:0 auto;padding:96px 64px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px}
+.pasos-wrap{margin-top:28px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.pasos{grid-column:1/4;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.paso{background:#FFFFFF;border:2px solid #1B1B2F;border-radius:24px;padding:28px 24px;display:flex;flex-direction:column;gap:14px}
+.paso-n{width:52px;height:52px;border-radius:50%;background:#2B3CFF;color:#FFF4E0;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:24px;font-weight:800;flex:none}
+.paso-t{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:26px;line-height:1.1;font-weight:700;letter-spacing:-.01em}
+.tuyo{background:#86E3C0;border:2px solid #1B1B2F;border-radius:24px;padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between;gap:20px}
+.tuyo-q{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:40px;line-height:.95;font-weight:800;letter-spacing:-.03em}
+@media (min-width:960px) and (max-width:1199px){.pasos-wrap{grid-template-columns:1fr}.pasos{grid-column:auto}.tuyo{flex-direction:row;align-items:center}}
+@media (max-width:959px){.funciona{padding:32px 16px;gap:12px}.pasos-wrap{grid-template-columns:1fr;margin-top:12px;gap:20px}.pasos{grid-column:auto;grid-template-columns:1fr;gap:20px}.paso{background:none;border:0;padding:0;flex-direction:row;align-items:flex-start;gap:14px}.paso-n{width:44px;height:44px;font-size:20px}.paso-t{font-size:21px}.tuyo{padding:20px 16px;gap:16px}.tuyo-q{font-size:32px}.tuyo a{justify-content:center}}
+.materiales{max-width:1312px;margin:0 auto;padding:96px 64px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px}
+.mats{margin-top:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.mat{background:#FFFFFF;border:2px solid #1B1B2F;border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:12px}
+.mat-h{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:30px;line-height:1.1;font-weight:700}
+.tagx{padding:6px 12px;border-radius:999px;background:#FFF4E0;border:2px solid #1B1B2F;font-size:14px;font-weight:600;line-height:1;white-space:nowrap}
+.sws{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:14px 6px}
+.sw{width:96px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:13px;font-weight:600;line-height:1.2}
+.sw-dot{position:relative;width:40px;height:40px;border-radius:50%;border:2px solid #1B1B2F;box-sizing:border-box;overflow:hidden}
+.extra{background:#FFFFFF;border:2px solid #1B1B2F;border-radius:24px;padding:24px 28px}
+.levels{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (min-width:960px) and (max-width:1199px){.mats{grid-template-columns:1fr}}
+@media (max-width:959px){.materiales{padding:32px 16px;gap:12px}.mats{grid-template-columns:1fr;margin-top:8px;gap:16px}.mat{padding:20px 16px}.mat-h{font-size:26px}.sw{width:64px;font-size:11px}.sw-dot{width:32px;height:32px}.extra{padding:20px 16px}.levels{grid-template-columns:1fr}}
+@media (min-width:960px) and (max-width:1099px){.cards{grid-template-columns:1fr}.card{flex-direction:row}.card-photo{flex:0 0 40%;aspect-ratio:auto;border-bottom:0;border-right:2px solid #1B1B2F}}
+@media (max-width:959px){.caminos{padding:32px 16px;gap:12px}.headline{font-size:36px}.cards{grid-template-columns:1fr;gap:14px;margin-top:8px}.card-photo{aspect-ratio:16/9}.card-body{padding:16px 16px 20px}.card-title{font-size:24px}.card-actions{flex-direction:column;align-items:stretch!important}.card-btn{height:52px}}
+
+
+.precios{max-width:1312px;margin:0 auto;padding:96px 64px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px}
+.pgrid{margin-top:28px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,.75fr);gap:24px;align-items:stretch}
+.pcard{min-width:0;background:#FFFFFF;border:2px solid #1B1B2F;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.pcard-h{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:28px;line-height:1.1;font-weight:700}
+.pcard-sub{margin:0;color:#4A4A63;font-size:15px}
+.facs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.facs-1{grid-template-columns:1fr}
+.fac{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border-radius:20px;background:#FFF4E0}
+.fac strong{font-size:16px}
+.fac span{font-size:14px;color:#4A4A63}
+.pside{display:flex;flex-direction:column;gap:16px}
+.pbox{flex:1;background:#FFFFFF;border:2px solid #1B1B2F;border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.pbox-head{display:flex;flex-direction:column;gap:4px}
+.pbox-k{margin:0;font-size:13px;font-weight:600;line-height:1.2;letter-spacing:.1em;text-transform:uppercase;color:#4A4A63}
+.pbox-v{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:28px;line-height:1;font-weight:800;letter-spacing:-.03em}
+.pbox-t{margin:0;color:#4A4A63;font-size:14px;text-wrap:pretty}
+.pclose{margin-top:8px;background:#FF5A47;border:2px solid #1B1B2F;border-radius:28px;padding:24px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 28px}
+.pclose-q{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:28px;line-height:1.1;font-weight:700;letter-spacing:-.01em}
+@media (min-width:960px) and (max-width:1199px){.pgrid{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}.pside{grid-column:1/-1;flex-direction:row}}
+@media (max-width:959px){.precios{padding:32px 16px;gap:12px}.pgrid{grid-template-columns:1fr;margin-top:4px;gap:12px}.pcard{border-radius:20px;padding:16px;gap:8px}.pcard-h{font-size:22px}.pcard-sub{font-size:14px}.facs{grid-template-columns:1fr;gap:6px}.fac{padding:8px 12px}.fac strong{font-size:15px}.pside{background:#FFFFFF;border:2px solid #1B1B2F;border-radius:20px;padding:14px 16px;gap:12px}.pbox{border:0;border-radius:0;padding:0;gap:2px}.pbox+.pbox{border-top:2px solid #FFF4E0;padding-top:12px}.pbox-head{flex-direction:row;align-items:baseline;gap:8px}.pbox-v{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:20px;line-height:1.1;letter-spacing:0}.pclose{border-radius:20px;padding:16px;flex-direction:column;align-items:stretch;gap:12px}.pclose-q{font-size:20px}.pclose a{justify-content:center;height:48px!important}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.visor{max-width:1312px;margin:0 auto;padding:96px 64px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-areas:"t s" "e s";column-gap:64px;row-gap:28px;align-content:center}
+.vtext{grid-area:t;align-self:end;display:flex;flex-direction:column;gap:20px}
+.vexw{grid-area:e;align-self:start;display:flex;flex-direction:column;gap:10px}
+.vtext,.vexw,.vstage{min-width:0}
+.vstage{grid-area:s;align-self:center;padding:0 20px 20px 0}
+.vex{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.vcard{width:100%;display:flex;flex-direction:column;gap:6px;padding:6px 6px 10px;border-radius:20px;background:#FFFFFF;border:2px solid #1B1B2F;cursor:pointer;font:inherit;color:#1B1B2F}
+.vcard:hover{background:#FFF4E0}
+.vcard-on{background:#FFD84D!important}
+.vthumb{display:block;aspect-ratio:1/1;border-radius:14px;background:#FFF4E0}
+.vcard-on .vthumb{background:#FFFFFF}
+.vname{padding:0 4px;font-size:13px;font-weight:600;line-height:1.2;text-align:center}
+.vframe{position:relative;background:#FFFFFF;border:2px solid #1B1B2F;border-radius:24px;box-shadow:5px 5px 0 #FF5A47,10px 10px 0 #FF5A47,15px 15px 0 #FF5A47,20px 20px 0 #FF5A47;aspect-ratio:4/3.3;display:flex;align-items:center;justify-content:center;touch-action:pan-y}
+.vframe:focus-visible{outline:3px solid #2B3CFF;outline-offset:4px}
+.vdrop{position:absolute;inset:16px;border:2px dashed #4A4A63;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:16px}
+.vpill{display:inline-flex;align-items:center;height:32px;padding:0 14px;border-radius:999px;background:#FFF4E0;border:2px solid #1B1B2F;font-size:13px;font-weight:600;white-space:nowrap}
+.vtl{position:absolute;left:20px;top:20px}
+.vbc{position:absolute;left:50%;bottom:20px;transform:translateX(-50%)}
+.vbig{width:min(56%,260px);height:auto}
+.vactions{margin-top:36px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.vbtn2{display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 24px;border-radius:999px;background:#FFFFFF;color:#1B1B2F;border:2px solid #1B1B2F;font:inherit;font-size:17px;font-weight:600;line-height:1;cursor:pointer}
+.hint-m{display:none}
+@media (min-width:960px) and (max-width:1199px){.visor{grid-template-columns:1fr;grid-template-areas:"t" "e" "s";row-gap:24px}.vstage{margin-top:12px}.vex{grid-template-columns:repeat(4,minmax(0,150px))}.vframe{aspect-ratio:16/9}}
+@media (max-width:959px){.visor{grid-template-columns:1fr;grid-template-areas:"t" "s" "e";padding:32px 16px;row-gap:16px}.vtext{gap:12px}.vstage{padding:0 12px 12px 0}.vframe{aspect-ratio:1/1;border-radius:20px;box-shadow:3px 3px 0 #FF5A47,6px 6px 0 #FF5A47,9px 9px 0 #FF5A47,12px 12px 0 #FF5A47}.vtl{left:12px;top:12px}.vbc{bottom:12px}.vpill{font-size:12px}.vdrag{display:none}.vex{display:flex;overflow-x:auto;margin-right:-16px;padding-right:16px}.vex li{flex:none;width:104px}.vactions{margin-top:20px;flex-direction:column;align-items:stretch;gap:8px}.vactions a,.vactions .vbtn2{justify-content:center}.vnote{text-align:center}.hint-d{display:none}.hint-m{display:inline-flex}}
+.preguntas{max-width:1312px;margin:0 auto;padding:96px 64px;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);column-gap:64px;row-gap:20px;align-items:start}
+.pq-title{position:sticky;top:100px;display:flex;flex-direction:column;gap:20px;min-width:0}
+.fqs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+.fq{background:#FFFFFF;border:2px solid #1B1B2F;border-radius:20px}
+.fq-on{background:#FFD84D}
+.fq-h{margin:0;font:inherit}
+.fq-b{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 22px;background:none;border:0;border-radius:18px;font:inherit;font-size:18px;font-weight:600;line-height:1.3;color:#1B1B2F;text-align:left;cursor:pointer}
+.fq-i{position:relative;flex:none;width:32px;height:32px;border-radius:50%;border:2px solid #1B1B2F;box-sizing:border-box;background:#FFFFFF}
+.fq-i span{position:absolute;left:50%;top:50%;width:14px;height:2.5px;border-radius:2px;background:#1B1B2F;transform:translate(-50%,-50%)}
+.fq-i .v{transform:translate(-50%,-50%) rotate(90deg)}
+.fq-on .fq-i{background:#1B1B2F}.fq-on .fq-i span{background:#FFF4E0}.fq-on .fq-i .v{display:none}
+.fq-a{display:none;padding:0 22px 20px}
+.fq-a p{margin:0;max-width:40em;font-size:16px}
+.fq-on .fq-a{display:block}
+.ask-link{display:inline-flex;align-items:center;min-height:44px;color:#1B1B2F;font-weight:600;text-decoration:underline;text-underline-offset:4px}
+.ask-link:hover{color:#2B3CFF}
+.ask-m{display:none}
+@media (min-width:960px) and (max-width:1199px){.preguntas{grid-template-columns:1fr}.pq-title{position:static}}
+@media (max-width:959px){.preguntas{grid-template-columns:1fr;padding:32px 16px;row-gap:16px}.pq-title{position:static;gap:12px}.ask-d{display:none}.ask-m{display:block;text-align:center}.fqs{gap:8px}.fq-b{padding:14px 16px;font-size:16px}.fq-i{width:28px;height:28px}.fq-i span{width:12px}.fq-a{padding:0 16px 16px}.fq-a p{font-size:14px}}
+.contacto{background:#2B3CFF;color:#FFF4E0;border-top:2px solid #1B1B2F}
+.contacto a:focus-visible{outline-color:#FFF4E0}
+.ct{max-width:1312px;margin:0 auto;padding:96px 64px;box-sizing:border-box;display:flex;flex-direction:column;gap:56px}
+.ct-top{display:flex;flex-wrap:wrap;gap:32px 64px;align-items:flex-end;justify-content:space-between}
+.ct-head{flex:1 1 560px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.ct-eye{margin:0;font-size:13px;font-weight:600;line-height:1.2;letter-spacing:.1em;text-transform:uppercase;color:#FFF4E0}
+.ct-h{margin:0;font-family:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;font-size:72px;line-height:.95;font-weight:800;letter-spacing:-.04em;color:#FFF4E0}
+.ct-act{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.ct-wa{display:inline-flex;align-items:center;justify-content:center;gap:12px;height:64px;padding:0 30px;border-radius:999px;background:#FFD84D;color:#1B1B2F;border:2px solid #1B1B2F;font-size:18px;font-weight:600;line-height:1;text-decoration:none;white-space:nowrap}
+.ct-wa:hover{color:#1B1B2F}
+.ct-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:#FFF4E0;color:#1B1B2F;border:2px solid #1B1B2F;font-size:14px;font-weight:600}
+.ct-dot{width:10px;height:10px;border-radius:50%;border:2px solid #1B1B2F}
+.ct-dl{margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
+.ct-dl div{min-width:0;display:flex;flex-direction:column;gap:8px;padding-top:18px;border-top:2px solid #FFF4E0}
+.ct-dl dt{font-size:13px;font-weight:600;line-height:1.2;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.ct-dl dd{margin:0;font-size:19px;font-weight:600;line-height:1.35}
+.ct-link{color:#FFF4E0;text-decoration:underline;text-underline-offset:4px}
+.ct-link:hover{color:#FFD84D}
+.hs,.hs-sr{display:none}
+@media (max-width:959px){.ct{padding:32px 16px 40px;gap:20px}.ct-top{gap:14px}.ct-head{gap:12px}.ct-h{font-size:40px}.ct-act{flex:1 1 100%;align-items:stretch;gap:12px}.ct-pill{align-self:flex-start}.ct-wa{display:flex;height:56px;font-size:17px}.ct-pill{font-size:13px}.ct-dl{grid-template-columns:1fr;gap:0}.ct-dl div{flex-direction:row;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 0;border-top:2px solid rgba(255,244,224,.35)}.ct-dl dd{font-size:14px;text-align:right}.hl{display:none}.hs{display:inline}.hs-sr{display:block}}
+.pie{max-width:1312px;margin:0 auto;padding:72px 64px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:36px}
+.pie-top{display:flex;flex-wrap:nowrap;align-items:flex-end;justify-content:space-between;gap:32px}
+.pie-logo{display:block;flex:0 0 68%;min-width:0}
+.pie-logo img{display:block;width:100%;height:auto}
+.pie-ph{margin:0;flex:1 1 auto;min-width:0;font-family:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;font-size:32px;font-weight:700;line-height:1.05;letter-spacing:-.01em;text-align:right}
+.pie-links{padding-top:24px;border-top:2px solid #1B1B2F;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 32px}
+.pie-row{display:flex;flex-wrap:wrap;gap:0 24px;font-size:16px}
+.pie-row a{display:inline-flex;align-items:center;min-height:44px;color:#1B1B2F;font-weight:600;text-decoration:underline;text-underline-offset:4px}
+.pie-row a:hover{color:#2B3CFF}
+.pie-legal{margin:0;font-size:14px;color:#4A4A63}
+@media (max-width:959px){.pie{padding:32px 16px 28px;gap:16px}.pie-top{gap:12px}.pie-logo{flex-basis:60%}.pie-ph{font-size:15px;line-height:1.15}.pie-links{padding-top:8px;flex-direction:column;gap:0}.pie-row{justify-content:center;gap:0 16px;font-size:14px}.pie-legal{font-size:12px;text-align:center}}
+@media (max-width:359px){.pie-ph{font-size:13px}}
+@media (prefers-reduced-motion: reduce){.cta,.cta:hover,.cta:active{transition:none;transform:none}.pill-in{animation:none}}
+</style>
+
+</head>
+<body>
+
+
+<div style="background: #FFF4E0; color: #1B1B2F; font-family: Figtree, system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.5; min-height: 100vh">
+<a class="skip" href="#contenido" style="display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; background: #1B1B2F; color: #FFF4E0; font-weight: 600; text-decoration: none">Saltar al contenido</a>
+<header style="position: sticky; top: 0; z-index: 20; background: #FFF4E0; border-bottom: 2px solid #1B1B2F">
+<nav aria-label="Principal" class="nav-bar" style="max-width: 1440px; margin: 0 auto; box-sizing: border-box; padding: 14px 64px; display: flex; align-items: center; justify-content: space-between; gap: 8px 28px">
+<a aria-label="printo, ir al inicio" href="#inicio" style="display: flex; align-items: center; min-height: 44px"><img alt="" class="nav-logo" src="assets/printo-wordmark-cobalto.svg" style="width: 112px; height: auto; display: block"/></a>
+<div class="nav-links" style="display: flex; align-items: center; gap: 4px 32px">
+
+<a aria-label="Qué imprimimos" href="#que-imprimimos" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; color: #1B1B2F; text-decoration: none; font-size: 15px; font-weight: 500;">Qué imprimimos</a>
+<a aria-label="Trabajos" href="#trabajos" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; color: #1B1B2F; text-decoration: none; font-size: 15px; font-weight: 500;">Trabajos</a>
+<a aria-label="Precios y plazos" href="#precios" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; color: #1B1B2F; text-decoration: none; font-size: 15px; font-weight: 500;">Precios</a>
+<a aria-label="Contacto" href="#contacto" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; color: #1B1B2F; text-decoration: none; font-size: 15px; font-weight: 500;">Contacto</a>
+
+</div>
+<div class="nav-cta" style="display: flex; justify-content: flex-end; min-width: 236px"></div>
+<div style="display: flex; align-items: center; gap: 8px">
+
+<button aria-controls="menu-movil" aria-expanded="false" aria-label="Abrir menú" class="nav-burger" id="menu-boton" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid #1B1B2F; align-items: center; justify-content: center; padding: 0; cursor: pointer; background: #FFFFFF;" type="button">
+<span style="display: flex; flex-direction: column; gap: 4px"><span style="width: 18px; height: 2px; border-radius: 2px; background: #1B1B2F"></span><span style="width: 18px; height: 2px; border-radius: 2px; background: #1B1B2F"></span><span style="width: 18px; height: 2px; border-radius: 2px; background: #1B1B2F"></span></span>
+
+</button>
+</div>
+</nav>
+
+</header>
+<main id="contenido">
+<section aria-labelledby="hero-titulo" class="hero" id="inicio">
+<div class="hero-text">
+<p style="margin: 0; align-self: flex-start; display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 999px; background: #FFFFFF; border: 2px solid #1B1B2F; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Impresión 3D hecha en Uruguay</p>
+<h1 class="hero-h1" id="hero-titulo">Capa por capa,<br/><span style="color: #2B3CFF">tu idea toma forma.</span></h1>
+<p style="margin: 0; max-width: 30em; font-size: 18px; line-height: 1.55; color: #4A4A63">Mandanos una foto, un modelo que encontraste o tu archivo, y nosotros lo imprimimos.</p>
+<a aria-label="Pedir presupuesto por WhatsApp" class="cta hero-cta" href="https://wa.me/59896341462?text=Hola%20printo%2C%20quiero%20pedir%20un%20presupuesto." id="hero-cta" rel="noopener" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 12px; height: 60px; padding: 0 32px 0 22px; border-radius: 999px; background: #2B3CFF; color: #FFF4E0; border: 2px solid #1B1B2F; font-size: 18px; font-weight: 600; line-height: 1; text-decoration: none" target="_blank"><span aria-hidden="true" style="flex: none; position: relative; width: 26px; height: 26px; border-radius: 50%; background: #FF5A47; border: 2px solid #1B1B2F; box-sizing: border-box"><span style="position: absolute; inset: 3px; border-radius: 50%; background: #FFD84D"></span><span style="position: absolute; inset: 7px; border-radius: 50%; background: #86E3C0"></span></span>Pedir presupuesto</a>
+<ul aria-label="printo en datos" class="claims">
+<li class="claim" style="background: #FFD84D"><strong>24 a 48 h</strong><span>en la mayoría de los pedidos</span></li>
+<li class="claim" style="background: #86E3C0"><strong>Hasta 25 cm</strong><span>de alto, ancho y largo</span></li>
+<li class="claim" style="background: #FF5A47"><strong>Hasta 4 colores</strong><span>en una misma pieza</span></li>
+</ul>
+</div>
+<div class="hero-art">
+<div aria-hidden="true" class="hero-spool" style="position: relative; aspect-ratio: 1 / 1; background: #2B3CFF; border: 2px solid #1B1B2F"><div style="position: absolute; inset: 12%; border-radius: 50%; background: #FF5A47; border: 2px solid #1B1B2F"></div><div style="position: absolute; inset: 21%; border-radius: 50%; background: #FFD84D; border: 2px solid #1B1B2F"></div><div style="position: absolute; inset: 30%; border-radius: 50%; background: #86E3C0; border: 2px solid #1B1B2F"></div><div style="position: absolute; inset: 38%; border-radius: 50%; background: #FFF4E0; border: 2px solid #1B1B2F"></div><div style="position: absolute; inset: 45%; border-radius: 50%; background: #2B3CFF; border: 2px solid #1B1B2F"></div></div>
+</div>
+</section>
+<section aria-labelledby="caminos-titulo" class="caminos" id="que-imprimimos">
+<p style="margin: 0; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Qué imprimimos</p>
+<h2 class="headline" id="caminos-titulo">Una foto, una idea o un archivo. <span style="color: #2B3CFF">Elegí por dónde empezar.</span></h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #4A4A63">Cada camino te lleva a WhatsApp con el mensaje listo.</p>
+<ul class="cards">
+<li class="card">
+<div aria-label="Cuadro en relieve en blanco y negro, sobre su soporte" class="card-photo" role="img" style="background: #FFD84D">[Foto: cuadro en relieve con su soporte]</div>
+<div class="card-body">
+<h3 class="card-title">Tengo una imagen</h3>
+<p style="margin: 0; color: #4A4A63">Mandanos una foto y la convertimos en un cuadro en relieve en blanco y negro, con su soporte.</p>
+<p style="margin: 0; padding: 10px 14px; border-radius: 16px; background: #FFF4E0; font-size: 14px; font-weight: 500">Revisamos cada foto y te decimos si se puede imprimir.</p>
+<div class="card-actions" style="margin-top: auto; padding-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px">
+<a aria-label="Mandar mi foto por WhatsApp" class="cta card-btn" href="https://wa.me/59896341462?text=Hola%20printo%2C%20quiero%20un%20cuadro%20en%20relieve%20con%20una%20foto." rel="noopener" target="_blank">Mandar mi foto</a>
+</div>
+</div>
+</li>
+<li class="card">
+<div aria-label="Pieza impresa a partir de un modelo encontrado online" class="card-photo" role="img" style="background: #86E3C0">[Foto: pieza impresa de un modelo encontrado online]</div>
+<div class="card-body">
+<h3 class="card-title">Tengo una idea</h3>
+<p style="margin: 0; color: #4A4A63">Contanos qué buscás y te ayudamos a encontrar el modelo en MakerWorld, Printables o Thingiverse. ¿Ya encontraste uno? Mandanos el link.</p>
+<div class="card-actions" style="margin-top: auto; padding-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px">
+<a aria-label="Contar mi idea por WhatsApp" class="cta card-btn" href="https://wa.me/59896341462?text=Hola%20printo%2C%20busco%20imprimir%20algo%20y%20necesito%20ayuda%20para%20encontrar%20el%20modelo." rel="noopener" target="_blank">Contar mi idea</a>
+</div>
+</div>
+</li>
+<li class="card">
+<div aria-label="Pieza técnica impresa en 3D" class="card-photo" role="img" style="background: #FF5A47">[Foto: pieza técnica o prototipo]</div>
+<div class="card-body">
+<h3 class="card-title">Tengo un archivo</h3>
+<p style="margin: 0; color: #4A4A63">Mandanos tu STL o 3MF y lo imprimimos en PLA o PETG.</p>
+<a href="#visor" style="display: inline-flex; align-items: center; justify-content: flex-start; min-height: 44px; color: #1B1B2F; font-weight: 600; text-underline-offset: 4px; text-decoration: underline; align-self: flex-start">Ver tu modelo en 3D</a><div class="card-actions" style="margin-top: auto; padding-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px">
+<a aria-label="Mandar mi archivo por WhatsApp" class="cta card-btn" href="https://wa.me/59896341462?text=Hola%20printo%2C%20tengo%20un%20archivo%20para%20imprimir." rel="noopener" target="_blank">Mandar mi archivo</a>
+</div>
+</div>
+</li>
+</ul>
+</section>
+<section aria-labelledby="trabajos-titulo" class="trabajos" id="trabajos">
+<p style="margin: 0; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Trabajos</p>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 48px">
+<div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 20px">
+<h2 class="headline" id="trabajos-titulo">Cada cuadro, <span style="color: #2B3CFF">una historia.</span></h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #4A4A63">Cuadros en relieve que ya salieron del taller.</p>
+</div>
+<a aria-label="Ver más trabajos en Instagram" class="ig-link" href="https://www.instagram.com/printo.uy" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; color: #2B3CFF; font-weight: 600; font-size: 17px; text-underline-offset: 4px" target="_blank">Ver más en Instagram</a>
+</div>
+<ul class="gal">
+<li class="feat">
+<div aria-label="Cuadro en relieve de un panel de manga" class="feat-photo" role="img">[Foto destacada: panel de manga]</div>
+<div class="feat-body">
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #FFD84D; border: 2px solid #1B1B2F; font-size: 14px; font-weight: 600; line-height: 1">Colección</span>
+<h3 style="margin: 0; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 30px; line-height: 1.1; font-weight: 700; letter-spacing: -0.01em">Tu panel de manga favorito</h3>
+<p style="margin: 0; font-size: 17px; line-height: 1.5">El momento que cambió toda la historia, ahora en relieve.</p>
+<p style="margin: 0; color: #4A4A63">[Para quién fue y qué tenía de especial, en dos líneas.]</p>
+</div>
+</li>
+
+<li style="display: flex; flex-direction: column; gap: 10px">
+<div aria-label="Cuadro en relieve de una pareja" class="piece-photo" role="img">[Foto: pareja]</div>
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #FFFFFF; border: 2px solid #1B1B2F; font-size: 14px; font-weight: 600; line-height: 1">Momentos</span>
+<h3 class="piece-title">Juntos para siempre</h3>
+</li>
+<li style="display: flex; flex-direction: column; gap: 10px">
+<div aria-label="Cuadro en relieve de una ilustración" class="piece-photo" role="img">[Foto: escena ilustrada]</div>
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #FFFFFF; border: 2px solid #1B1B2F; font-size: 14px; font-weight: 600; line-height: 1">Ilustración</span>
+<h3 class="piece-title">Tu escena favorita</h3>
+</li>
+<li style="display: flex; flex-direction: column; gap: 10px">
+<div aria-label="Cuadro en relieve de una mascota" class="piece-photo" role="img">[Foto: mascota]</div>
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #FFFFFF; border: 2px solid #1B1B2F; font-size: 14px; font-weight: 600; line-height: 1">Mascotas</span>
+<h3 class="piece-title">Tu compañero peludo</h3>
+</li>
+<li style="display: flex; flex-direction: column; gap: 10px">
+<div aria-label="Cuadro en relieve de [motivo]" class="piece-photo" role="img">[Foto: pieza 5]</div>
+<span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #FFFFFF; border: 2px solid #1B1B2F; font-size: 14px; font-weight: 600; line-height: 1">[Categoría]</span>
+<h3 class="piece-title">[Título]</h3>
+</li>
+
+</ul>
+<div class="closing" style="margin-top: 28px; background: #FFD84D; border: 2px solid #1B1B2F; border-radius: 28px; padding: 28px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 28px">
+<p style="margin: 0; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 30px; line-height: 1.1; font-weight: 700; letter-spacing: -0.01em">¿Querés el tuyo? Mandanos la foto.</p>
+<a aria-label="Quiero el mío, mandar una foto por WhatsApp" class="cta card-btn" href="https://wa.me/59896341462?text=Hola%20printo%2C%20quiero%20un%20cuadro%20en%20relieve%20con%20una%20foto." rel="noopener" style="height: 52px; padding: 0 28px" target="_blank">Quiero el mío</a>
+</div>
+</section>
+<section aria-labelledby="funciona-titulo" class="funciona" id="como-funciona">
+<p style="margin: 0; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Cómo funciona</p>
+<h2 class="headline" id="funciona-titulo">Más simple, <span style="color: #2B3CFF">imposible.</span></h2>
+<div class="pasos-wrap">
+<ol class="pasos">
+<li class="paso"><span aria-hidden="true" class="paso-n">1</span><div style="display: flex; flex-direction: column; gap: 8px"><h3 class="paso-t">Mandanos lo que tenés</h3><p style="margin: 0; color: #4A4A63">Una foto, el link de un modelo o tu archivo STL o 3MF, por WhatsApp.</p></div></li>
+<li class="paso"><span aria-hidden="true" class="paso-n">2</span><div style="display: flex; flex-direction: column; gap: 8px"><h3 class="paso-t">Te pasamos el precio</h3><p style="margin: 0; color: #4A4A63">En minutos, en horario de atención. Material, color y plazo, todo claro antes de empezar.</p></div></li>
+<li class="paso"><span aria-hidden="true" class="paso-n">3</span><div style="display: flex; flex-direction: column; gap: 8px"><h3 class="paso-t">Lo imprimimos</h3><p style="margin: 0; color: #4A4A63">En 24 a 48 horas en la mayoría de los pedidos. Lo retirás en Montevideo o Las Piedras, coordinando antes.</p></div></li>
+</ol>
+<div class="tuyo">
+<p class="tuyo-q">¿Lo imprimimos?</p>
+<a aria-label="Sí, escribamos por WhatsApp" class="cta card-btn" href="https://wa.me/59896341462?text=Hola%20printo%2C%20quiero%20pedir%20un%20presupuesto." rel="noopener" style="align-self: flex-start; height: 52px; padding: 0 26px" target="_blank">Sí, escribamos</a>
+</div>
+</div>
+</section>
+<section aria-labelledby="materiales-titulo" class="materiales" id="materiales">
+<p style="margin: 0; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Materiales y colores</p>
+<h2 class="headline" id="materiales-titulo">Cada pieza, <span style="color: #2B3CFF">con el material justo.</span></h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #4A4A63">Contanos para qué es la pieza y elegimos el material que mejor le va.</p>
+<div class="mats"><article class="mat">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><h3 class="mat-h">PLA</h3><span class="tagx" style="background: #86E3C0">Disponible</span></div>
+<p style="margin: 0; font-size: 18px; font-weight: 600">El todoterreno.</p>
+<p style="margin: 0; color: #4A4A63">Fácil de imprimir y con muy buena terminación. Ideal para figuras, decoración y regalos.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span class="tagx">Buena terminación</span><span class="tagx">Rígido</span><span class="tagx">Bajo olor</span></div>
+<p style="margin: 8px 0 0; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Colores</p>
+<ul aria-label="Colores en PLA" class="sws">
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #000000;"></span></span><span>Negro</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #FFFFFF;"></span></span><span>Blanco</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #C12E1F;"></span></span><span>Rojo</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #0086D6;"></span></span><span>Cyan</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #8E9089;"></span></span><span>Gris</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #F4EE2A;"></span></span><span>Amarillo</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #F7E6DE;"></span></span><span>Beige</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #A6A9AA;"></span></span><span>Plateado</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: rgba(184,205,233,.6);"></span></span><span>Azul hielo translúcido</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #0A2989; opacity: 0.35;"></span><span style="position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: #1B1B2F; transform: rotate(45deg)"></span></span><span>Azul</span><span class="tagx" style="background: #FFFFFF">Agotado</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #00AE42; opacity: 0.35;"></span><span style="position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: #1B1B2F; transform: rotate(45deg)"></span></span><span>Verde</span><span class="tagx" style="background: #FFFFFF">Agotado</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #5E43B7; opacity: 0.35;"></span><span style="position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: #1B1B2F; transform: rotate(45deg)"></span></span><span>Violeta</span><span class="tagx" style="background: #FFFFFF">Agotado</span></li>
+</ul>
+</article><article class="mat">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><h3 class="mat-h">PETG</h3><span class="tagx" style="background: #86E3C0">Disponible</span></div>
+<p style="margin: 0; font-size: 18px; font-weight: 600">El resistente.</p>
+<p style="margin: 0; color: #4A4A63">Aguanta golpes, algo de flexión y más calor que el PLA. Para piezas que se usan todos los días.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span class="tagx">Resiste golpes</span><span class="tagx">Algo flexible</span><span class="tagx">Aguanta más calor</span></div>
+<p style="margin: 8px 0 0; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Colores</p>
+<ul aria-label="Colores en PETG" class="sws">
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #002E96;"></span></span><span>Azul</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: rgba(142,142,142,.55);"></span></span><span>Gris translúcido</span></li>
+<li class="sw"><span aria-hidden="true" class="sw-dot"><span style="position: absolute; inset: 0; border-radius: 50%; background: #000000; opacity: 0.35;"></span><span style="position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: #1B1B2F; transform: rotate(45deg)"></span></span><span>Negro</span><span class="tagx" style="background: #FFFFFF">Agotado</span></li>
+</ul>
+</article></div>
+<p style="margin: 0; color: #4A4A63">Los agotados vuelven a entrar. Preguntanos por WhatsApp.</p>
+<div class="extra" style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px"><div aria-hidden="true" style="display: flex; padding-left: 8px"><span style="width: 34px; height: 34px; border-radius: 50%; border: 2px solid #1B1B2F; background: #2B3CFF; margin-left: -8px"></span><span style="width: 34px; height: 34px; border-radius: 50%; border: 2px solid #1B1B2F; background: #FF5A47; margin-left: -8px"></span><span style="width: 34px; height: 34px; border-radius: 50%; border: 2px solid #1B1B2F; background: #FFD84D; margin-left: -8px"></span><span style="width: 34px; height: 34px; border-radius: 50%; border: 2px solid #1B1B2F; background: #86E3C0; margin-left: -8px"></span></div><h3 style="margin: 0; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 30px; line-height: 1.1; font-weight: 700">Hasta 4 colores en una misma pieza.</h3><p style="margin: 0; color: #4A4A63">Sin pintar: los colores salen así de la impresora.</p></div>
+<div class="extra" style="display: flex; flex-direction: column; gap: 14px"><h3 style="margin: 0; font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 30px; line-height: 1.1; font-weight: 700">¿Cuánto detalle necesitás?</h3><ul class="levels"><li style="min-width: 0; display: flex; gap: 14px; align-items: flex-start; padding: 14px; border-radius: 18px; background: #FFF4E0"><span aria-hidden="true" style="flex: none; width: 56px; height: 56px; border-radius: 14px; border: 2px solid #1B1B2F; background: #FFFFFF; box-sizing: border-box; padding: 6px; display: flex; flex-direction: column; justify-content: flex-end; gap: 3px"><span style="height: 2px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 2px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 2px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 2px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 2px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 2px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 2px; border-radius: 3px; background: #2B3CFF"></span></span><div style="display: flex; flex-direction: column; gap: 4px"><strong style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 20px; line-height: 1.1">Muy detallado</strong><span style="font-size: 14px; color: #4A4A63">Miniaturas, figuras chicas y textos pequeños. Lleva más tiempo.</span></div></li><li style="min-width: 0; display: flex; gap: 14px; align-items: flex-start; padding: 14px; border-radius: 18px; background: #FFF4E0"><span aria-hidden="true" style="flex: none; width: 56px; height: 56px; border-radius: 14px; border: 2px solid #1B1B2F; background: #FFFFFF; box-sizing: border-box; padding: 6px; display: flex; flex-direction: column; justify-content: flex-end; gap: 3px"><span style="height: 5px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 5px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 5px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 5px; border-radius: 3px; background: #2B3CFF"></span></span><div style="display: flex; flex-direction: column; gap: 4px"><strong style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 20px; line-height: 1.1">Normal</strong><span style="font-size: 14px; color: #4A4A63">La mayoría de las piezas: buen detalle, buen tiempo.</span></div></li><li style="min-width: 0; display: flex; gap: 14px; align-items: flex-start; padding: 14px; border-radius: 18px; background: #FFF4E0"><span aria-hidden="true" style="flex: none; width: 56px; height: 56px; border-radius: 14px; border: 2px solid #1B1B2F; background: #FFFFFF; box-sizing: border-box; padding: 6px; display: flex; flex-direction: column; justify-content: flex-end; gap: 3px"><span style="height: 12px; border-radius: 3px; background: #2B3CFF"></span><span style="height: 12px; border-radius: 3px; background: #2B3CFF"></span></span><div style="display: flex; flex-direction: column; gap: 4px"><strong style="font-family: 'Bricolage Grotesque', system-ui, sans-serif; font-size: 20px; line-height: 1.1">Grande y rápido</strong><span style="font-size: 14px; color: #4A4A63">Piezas grandes y robustas, en menos tiempo. Menos detalle fino.</span></div></li></ul><p style="margin: 0; color: #4A4A63">Te recomendamos uno cuando nos mandás lo que tenés.</p></div>
+<p style="margin: 0; padding: 14px 18px; border-radius: 18px; background: #FFFFFF; border: 2px solid #1B1B2F; font-weight: 500">Los cuadros en relieve son en blanco y negro, y vienen con su soporte.</p>
+</section>
+<section aria-labelledby="precios-titulo" class="precios" id="precios">
+<p style="margin: 0; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Precio y plazos</p>
+<h2 class="headline" id="precios-titulo">Cada pieza, <span style="color: #2B3CFF">su precio.</span></h2>
+<div class="pgrid">
+<article class="pcard"><h3 class="pcard-h">Piezas</h3><p class="pcard-sub">Lo que mueve el precio:</p><ul class="facs"><li class="fac"><strong>Tamaño</strong><span>Cuanto más grande, más material lleva.</span></li><li class="fac"><strong>Material</strong><span>PLA y PETG tienen distinto costo.</span></li><li class="fac"><strong>Detalle</strong><span>Acabado fino o normal, vos elegís.</span></li><li class="fac"><strong>Colores</strong><span>Una pieza multicolor suma al precio.</span></li><li class="fac"><strong>Cantidad</strong><span>Varias piezas iguales.</span></li></ul></article>
+<article class="pcard"><h3 class="pcard-h">Cuadros en relieve</h3><p class="pcard-sub">En blanco y negro. Lo que mueve el precio:</p><ul class="facs facs-1"><li class="fac"><strong>Tamaño</strong><span>El que vos quieras: el precio va con la medida.</span></li><li class="fac"><strong>Copias</strong><span>La primera incluye preparar la foto; las copias, solo la impresión.</span></li><li class="fac"><strong>Soporte</strong><span>Siempre incluido, sin costo extra.</span></li></ul></article>
+<div class="pside">
+<div class="pbox"><div class="pbox-head"><h3 class="pbox-k">Plazo</h3><p class="pbox-v">24 a 48 h</p></div><p class="pbox-t">En la mayoría de los pedidos. Piezas grandes, multicolor o en cantidad: te decimos el plazo junto con el precio.</p></div>
+<div class="pbox"><div class="pbox-head"><h3 class="pbox-k">Entrega</h3><p class="pbox-v">Retiro o envío</p></div><p class="pbox-t">Retirás en Montevideo o Las Piedras, o te lo enviamos a tu casa. El día, la hora y el envío los coordinamos por WhatsApp.</p></div>
+</div>
+</div>
+<div class="pclose"><p class="pclose-q">¿Tenés algo en mente? Preguntanos.</p><a aria-label="Pedir el precio por WhatsApp" class="cta card-btn" href="https://wa.me/59896341462?text=Hola%20printo%2C%20quiero%20saber%20cu%C3%A1nto%20sale%20imprimir%20algo." rel="noopener" style="height: 52px; padding: 0 28px" target="_blank">Pedir el precio</a></div>
+</section>
+<section aria-labelledby="visor-titulo" class="visor" id="visor">
+<div class="vtext">
+<p style="margin: 0; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Visor 3D</p>
+<h2 class="headline" id="visor-titulo">Antes de imprimirla, <span style="color: #2B3CFF">dale una vuelta.</span></h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #4A4A63">Abrí tu STL o 3MF acá y giralo para verlo por todos lados. No se sube a ningún lado hasta que nos lo mandes.</p>
+</div>
+<div class="vexw">
+<p style="margin: 0; font-weight: 600">¿No tenés un archivo a mano? Probá con uno de estos:</p>
+<ul aria-label="Modelos de ejemplo" class="vex"><li><button aria-label="Cargar el ejemplo Santa borracho" aria-pressed="false" class="vcard" type="button"><span class="vthumb"><svg aria-hidden="true" height="100%" viewbox="0 0 100 100" width="100%"><ellipse cx="50" cy="84" fill="#FFF4E0" rx="34" ry="7" stroke="#1B1B2F" stroke-width="2"></ellipse><path d="M34 84 C 30 66, 34 54, 50 52 C 66 54, 70 66, 66 84 Z" fill="#2B3CFF" stroke="#1B1B2F" stroke-linejoin="round" stroke-width="2.5"></path><circle cx="50" cy="42" fill="#2B3CFF" r="11" stroke="#1B1B2F" stroke-linejoin="round" stroke-width="2.5"></circle><path d="M38 36 L 52 14 L 63 36 Z" fill="#2B3CFF" stroke="#1B1B2F" stroke-linejoin="round" stroke-width="2.5"></path><circle cx="52" cy="13" fill="#FFFFFF" r="4" stroke="#1B1B2F" stroke-width="2"></circle></svg></span><span class="vname">Santa borracho</span></button></li><li><button aria-label="Cargar el ejemplo Miniatura" aria-pressed="false" class="vcard" type="button"><span class="vthumb"><svg aria-hidden="true" height="100%" viewbox="0 0 100 100" width="100%"><ellipse cx="50" cy="84" fill="#FFF4E0" rx="34" ry="7" stroke="#1B1B2F" stroke-width="2"></ellipse><path d="M40 84 L 42 60 L 58 60 L 60 84 Z" fill="#2B3CFF" stroke="#1B1B2F" stroke-linejoin="round" stroke-width="2.5"></path><path d="M36 64 L 64 64 L 60 50 L 40 50 Z" fill="#2B3CFF" stroke="#1B1B2F" stroke-linejoin="round" stroke-width="2.5"></path><circle cx="50" cy="38" fill="#2B3CFF" r="10" stroke="#1B1B2F" stroke-linejoin="round" stroke-width="2.5"></circle><path d="M30 46 L 36 28" stroke="#1B1B2F" stroke-linecap="round" stroke-width="3"></path></svg></span><span class="vname">Miniatura</span></button></li><li><button aria-label="Cargar el ejemplo Jarrón" aria-pressed="false" class="vcard" type="button"><span class="vthumb"><svg aria-hidden="true" height="100%" viewbox="0 0 100 100" width="100%"><ellipse cx="50" cy="84" fill="#FFF4E0" rx="34" ry="7" stroke="#1B1B2F" stroke-width="2"></ellipse><path d="M40 84 C 26 74, 24 58, 32 48 C 38 40, 44 36, 44 28 L 40 20 L 60 20 L 56 28 C 56 36, 62 40, 68 48 C 76 58, 74 74, 60 84 Z" fill="#2B3CFF" stroke="#1B1B2F" stroke-linejoin="round" stroke-width="2.5"></path></svg></span><span class="vname">Jarrón</span></button></li><li><button aria-label="Cargar el ejemplo Cuadro en relieve" aria-pressed="false" class="vcard" type="button"><span class="vthumb"><svg aria-hidden="true" height="100%" viewbox="0 0 100 100" width="100%"><ellipse cx="50" cy="84" fill="#FFF4E0" rx="34" ry="7" stroke="#1B1B2F" stroke-width="2"></ellipse><path d="M58 80 L 66 50" stroke="#1B1B2F" stroke-linecap="round" stroke-width="3"></path><rect fill="#FFFFFF" height="58" rx="4" stroke="#1B1B2F" stroke-width="2.5" width="44" x="26" y="18"></rect><path d="M30 70 L 42 48 L 50 58 L 56 46 L 66 70 Z" fill="#8E9089" stroke="#1B1B2F" stroke-linejoin="round" stroke-width="2"></path><circle cx="56" cy="30" fill="#4A4A63" r="5"></circle></svg></span><span class="vname">Cuadro en relieve</span></button></li></ul>
+</div>
+<div class="vstage">
+<div aria-label="Visor 3D. Elegí un archivo o un ejemplo." class="vframe" role="group" tabindex="0">
+<div class="vdrop"><strong class="vdrag" style="font-size: 17px">Arrastrá tu archivo acá</strong><button class="cta card-btn" style="cursor: pointer; font-family: inherit" type="button">Elegir archivo</button><span style="font-size: 14px; color: #4A4A63">STL o 3MF, hasta 50 MB</span></div>
+
+</div>
+
+<p aria-live="polite" class="sr"></p>
+</div>
+</section>
+<section aria-labelledby="preguntas-titulo" class="preguntas" id="preguntas">
+<div class="pq-title">
+<p style="margin: 0; font-size: 13px; font-weight: 600; line-height: 1.2; letter-spacing: 0.1em; text-transform: uppercase; color: #4A4A63">Preguntas</p>
+<h2 class="headline" id="preguntas-titulo">Antes de escribirnos, <span style="color: #2B3CFF">capaz ya está acá.</span></h2>
+<p class="ask-d" style="margin: 8px 0 0; font-size: 17px">¿Otra pregunta? <a aria-label="Preguntanos por WhatsApp" class="ask-link" href="https://wa.me/59896341462?text=Hola%20printo%2C%20tengo%20una%20pregunta." rel="noopener" target="_blank">Preguntanos por WhatsApp</a></p>
+</div>
+<ul class="fqs"><li class="fq fq-on"><h3 class="fq-h"><button aria-controls="fqa0" aria-expanded="true" class="fq-b" id="fqb0" type="button"><span>¿Qué archivo te mando?</span><span aria-hidden="true" class="fq-i"><span></span><span class="v"></span></span></button></h3><div aria-labelledby="fqb0" class="fq-a" id="fqa0" role="region"><p>STL o 3MF. Si no tenés uno, mandanos una foto o el link de un modelo de MakerWorld, Printables o Thingiverse y te ayudamos a encontrarlo.</p></div></li><li class="fq"><h3 class="fq-h"><button aria-controls="fqa1" aria-expanded="false" class="fq-b" id="fqb1" type="button"><span>¿Hacen el diseño o el modelo 3D?</span><span aria-hidden="true" class="fq-i"><span></span><span class="v"></span></span></button></h3><div aria-labelledby="fqb1" class="fq-a" id="fqa1" role="region"><p>No modelamos desde cero. Te ayudamos a encontrar un modelo que ya exista, o imprimimos el tuyo.</p></div></li><li class="fq"><h3 class="fq-h"><button aria-controls="fqa2" aria-expanded="false" class="fq-b" id="fqb2" type="button"><span>¿Qué tan grande puede ser?</span><span aria-hidden="true" class="fq-i"><span></span><span class="v"></span></span></button></h3><div aria-labelledby="fqb2" class="fq-a" id="fqa2" role="region"><p>Hasta 25 cm de alto, ancho y largo.</p></div></li><li class="fq"><h3 class="fq-h"><button aria-controls="fqa3" aria-expanded="false" class="fq-b" id="fqb3" type="button"><span>¿Cuántos colores puede tener?</span><span aria-hidden="true" class="fq-i"><span></span><span class="v"></span></span></button></h3><div aria-labelledby="fqb3" class="fq-a" id="fqa3" role="region"><p>Hasta 4 colores en una misma pieza. Los cuadros en relieve son en blanco y negro.</p></div></li><li class="fq"><h3 class="fq-h"><button aria-controls="fqa4" aria-expanded="false" class="fq-b" id="fqb4" type="button"><span>¿Cuánto demora?</span><span aria-hidden="true" class="fq-i"><span></span><span class="v"></span></span></button></h3><div aria-labelledby="fqb4" class="fq-a" id="fqa4" role="region"><p>24 a 48 h en la mayoría de los pedidos. Si es grande, multicolor o en cantidad, te decimos el plazo junto con el precio.</p></div></li><li class="fq"><h3 class="fq-h"><button aria-controls="fqa5" aria-expanded="false" class="fq-b" id="fqb5" type="button"><span>¿Cómo lo recibo?</span><span aria-hidden="true" class="fq-i"><span></span><span class="v"></span></span></button></h3><div aria-labelledby="fqb5" class="fq-a" id="fqa5" role="region"><p>Lo retirás en Montevideo o Las Piedras, o coordinamos el envío por WhatsApp.</p></div></li><li class="fq"><h3 class="fq-h"><button aria-controls="fqa6" aria-expanded="false" class="fq-b" id="fqb6" type="button"><span>¿Cómo pago?</span><span aria-hidden="true" class="fq-i"><span></span><span class="v"></span></span></button></h3><div aria-labelledby="fqb6" class="fq-a" id="fqa6" role="region"><p>En efectivo o por transferencia bancaria.</p></div></li><li class="fq"><h3 class="fq-h"><button aria-controls="fqa7" aria-expanded="false" class="fq-b" id="fqb7" type="button"><span>¿Cuándo me responden?</span><span aria-hidden="true" class="fq-i"><span></span><span class="v"></span></span></button></h3><div aria-labelledby="fqb7" class="fq-a" id="fqa7" role="region"><p>En minutos, en horario de atención: lunes a viernes de 10 a 18 y sábados de 12 a 16.</p></div></li></ul>
+<p class="ask-m" style="margin: 0; font-size: 15px">¿Otra pregunta? <a aria-label="Preguntanos por WhatsApp" class="ask-link" href="https://wa.me/59896341462?text=Hola%20printo%2C%20tengo%20una%20pregunta." rel="noopener" target="_blank">Preguntanos por WhatsApp</a></p>
+</section>
+<section aria-labelledby="contacto-titulo" class="contacto" id="contacto">
+<div class="ct">
+<div class="ct-top">
+<div class="ct-head"><p class="ct-eye">Contacto</p><h2 class="ct-h" id="contacto-titulo">Tu próxima pieza<br/><span style="color: #FFD84D">empieza con un hola.</span></h2></div>
+<div class="ct-act">
+<a aria-label="Escribinos por WhatsApp al 096 341 462" class="cta ct-wa" href="https://wa.me/59896341462?text=Hola%20printo%2C%20quiero%20hacer%20un%20pedido." rel="noopener" target="_blank">WhatsApp <span style="font-weight: 500; color: #4A4A63">096 341 462</span></a>
+<span class="ct-pill"><span aria-hidden="true" class="ct-dot" style="background: #86E3C0"></span>Taller abierto ahora</span>
+
+</div>
+</div>
+<dl class="ct-dl">
+<div><dt>Instagram</dt><dd><a class="ct-link" href="https://www.instagram.com/printo.uy" rel="noopener" target="_blank">@printo.uy</a></dd></div>
+<div><dt>Email</dt><dd><a class="ct-link" href="mailto:hola@printo.uy">hola@printo.uy</a></dd></div>
+<div><dt>Horario</dt><dd><span class="hl">Lunes a viernes 10 a 18<br/>Sábados 12 a 16</span><span aria-hidden="true" class="hs">L a V 10 a 18 · S 12 a 16</span><span class="sr hs-sr">lunes a viernes de 10 a 18 y sábados de 12 a 16</span></dd></div>
+<div><dt>Dónde</dt><dd>Montevideo y Las Piedras</dd></div>
+</dl>
+</div>
+</section>
+</main>
+<footer class="pie">
+<div class="pie-top"><a aria-label="printo, volver al inicio" class="pie-logo" href="#inicio"><img alt="" src="assets/printo-wordmark-cobalto.svg"/></a><p class="pie-ph">Impresión 3D hecha en Uruguay.</p></div>
+<div class="pie-links">
+<nav aria-label="Pie" class="pie-row"><a href="#que-imprimimos">Qué imprimimos</a><a href="#trabajos">Trabajos</a><a href="#precios">Precios</a><a href="#contacto">Contacto</a></nav>
+<div class="pie-row"><a href="https://wa.me/59896341462?text=Hola%20printo%2C%20quiero%20hacer%20un%20pedido." rel="noopener" target="_blank">WhatsApp</a><a href="https://www.instagram.com/printo.uy" rel="noopener" target="_blank">Instagram</a><a href="mailto:hola@printo.uy">hola@printo.uy</a></div>
+</div>
+<p class="pie-legal">© 2026 printo · Montevideo y Las Piedras, Uruguay</p>
+</footer>
+
+</div>
+
+</body>
+</html>
