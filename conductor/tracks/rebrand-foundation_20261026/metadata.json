@@ -4,22 +4,29 @@
   "type": "feature",
   "status": "in_progress",
   "created": "2026-10-26T00:00:00Z",
-  "updated": "2026-10-26T13:00:00Z",
-  "current_phase": 2,
-  "current_task": "2.1",
+  "updated": "2026-10-26T15:00:00Z",
+  "current_phase": 3,
+  "current_task": "3.1",
   "phases": {
     "total": 4,
-    "completed": 1
+    "completed": 2
   },
   "tasks": {
     "total": 18,
-    "completed": 4
+    "completed": 9
   },
   "commits": [
     "5d8e196: chore(brand): add printo cobalto wordmark SVG (rebrand-foundation_20261026)",
     "77af7ce: chore(brand): add PRINTO Filamento tokens.json from design canvas (rebrand-foundation_20261026)",
     "98bf217: feat(ui): add PRINTO Filamento design tokens as CSS custom properties (rebrand-foundation_20261026)",
     "db48c24: feat(ui): map Tailwind theme to brand tokens and add 360/960/1200 breakpoints (rebrand-foundation_20261026)",
-    "5c0ce78: feat(ui): load Bricolage Grotesque and Figtree, crema page background (rebrand-foundation_20261026)"
+    "5c0ce78: feat(ui): load Bricolage Grotesque and Figtree, crema page background (rebrand-foundation_20261026)",
+    "5751196: chore: mark phase 1 complete (rebrand-foundation_20261026)",
+    "1007cea: feat(ui): add global focus ring, link, cta hover and extrusion styles (rebrand-foundation_20261026)",
+    "981455b: feat(ui): add Section shell with anchor offset and page padding (rebrand-foundation_20261026)",
+    "1e4f826: feat(ui): add SectionHeading with eyebrow and two-phrase headline (rebrand-foundation_20261026)",
+    "3045f0a: feat(ui): rewrite Button as brand pill with quote/ink/butter/plain variants (rebrand-foundation_20261026)",
+    "17c43a5: feat(ui): add Tag pill and rewrite Card with brand border and radius tiers (rebrand-foundation_20261026)",
+    "16b3cdd: fix(ui): match reference headline wrapping and default borders to tinta (rebrand-foundation_20261026)"
   ]
 }

@@ -27,15 +27,15 @@ Tokens and fonts first, then the shared primitives every section uses, then the 
 
 ### Tasks
 
-- [ ] Task 2.1: Global base styles in `app.css`: focus ring (+ crema variant via a `.on-cobalto` scope), links (tinta, underline offset 4 px, hover cobalto), `.cta` hover with `prefers-reduced-motion` guard, `.extrude` / `.extrude-sm`.
-- [ ] Task 2.2: `ui/Section.svelte`: section shell (id, `aria-labelledby`, padding 96/32 px, side padding 64/16 px, `scroll-margin-top: 100px`).
-- [ ] Task 2.3: `ui/SectionHeading.svelte`: eyebrow + two-line headline (56/36 px, 800, -0.04em, lh 0.95, second line cobalto), `size="xl"` for 72 px (hero/contacto), configurable heading level and second-line color.
-- [ ] Task 2.4: Rewrite `ui/Button.svelte` as variants `quote` (cobalto), `ink` (tinta/crema), `butter` (mantequilla); accepts `href` (renders `<a target="_blank" rel="noopener">` for WhatsApp) or button mode; 44 px min target.
-- [ ] Task 2.5: `ui/Tag.svelte` (pill, color prop) and rewrite `ui/Card.svelte` (2 px tinta border, radius tier prop, background color prop).
+- [x] Task 2.1: Global base styles in `app.css`: focus ring (+ crema variant via a `.on-cobalto` scope), links (tinta, underline offset 4 px, hover cobalto), `.cta` hover with `prefers-reduced-motion` guard, `.extrude` / `.extrude-sm`.
+- [x] Task 2.2: `ui/Section.svelte`: section shell (id, `aria-labelledby`, padding 96/32 px, side padding 64/16 px, `scroll-margin-top: 100px`).
+- [x] Task 2.3: `ui/SectionHeading.svelte`: eyebrow + two-line headline (56/36 px, 800, -0.04em, lh 0.95, second line cobalto), `size="xl"` for 72 px (hero/contacto), configurable heading level and second-line color.
+- [x] Task 2.4: Rewrite `ui/Button.svelte` as variants `quote` (cobalto), `ink` (tinta/crema), `butter` (mantequilla); accepts `href` (renders `<a target="_blank" rel="noopener">` for WhatsApp) or button mode; 44 px min target.
+- [x] Task 2.5: `ui/Tag.svelte` (pill, color prop) and rewrite `ui/Card.svelte` (2 px tinta border, radius tier prop, background color prop).
 
 ### Verification
 
-- [ ] A temporary primitives route or story page matches the reference HTML at 1440 px and 375 px; keyboard focus ring is visible on every primitive.
+- [x] A temporary primitives route or story page matches the reference HTML at 1440 px and 375 px; keyboard focus ring is visible on every primitive.
 
 ## Phase 3: Single-Source Settings
 
