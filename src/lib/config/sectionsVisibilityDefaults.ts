@@ -4,22 +4,23 @@
  *
  * IMPORTANTE: Este archivo solo provee fallbacks.
  * Cuando el flag está enabled=true en AppConfig, estos valores son REEMPLAZADOS.
+ * Las claves son las de src/lib/config/sections.ts.
  */
 
-export interface SectionsVisibilityConfig {
-	hero: boolean;
-	services: boolean;
-	modelViewer: boolean;
-	filamentColors: boolean;
-	gallery: boolean;
-	contact: boolean;
-}
+import type { SeccionKey } from './sections';
+
+export type SectionsVisibilityConfig = Record<SeccionKey, boolean>;
 
 export const sectionsVisibilityDefaults: SectionsVisibilityConfig = {
+	navegacion: true,
 	hero: true,
-	services: true,
-	modelViewer: true,
-	filamentColors: true,
-	gallery: true,
-	contact: true
+	tresCaminos: true,
+	trabajos: true,
+	comoFunciona: true,
+	materiales: true,
+	precios: true,
+	visor: true,
+	preguntas: true,
+	contacto: true,
+	pie: true
 };

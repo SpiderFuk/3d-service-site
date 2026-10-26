@@ -11,6 +11,8 @@
  * @template T - El nombre único del flag (e.g., 'out-of-service')
  * @template C - El tipo de configuración específica del flag
  */
+import type { SeccionKey } from '$lib/config/sections';
+
 export interface BaseFeatureFlag<T extends string, C = unknown> {
 	/** Nombre único del flag */
 	type: T;
@@ -44,14 +46,8 @@ export interface OutOfServiceFlag extends BaseFeatureFlag<'out-of-service'> {
  * Controla qué secciones de la página están visibles
  */
 export interface SectionsVisibilityFlag extends BaseFeatureFlag<'sections-visibility'> {
-	config?: {
-		hero?: boolean;
-		services?: boolean;
-		modelViewer?: boolean;
-		filamentColors?: boolean;
-		gallery?: boolean;
-		contact?: boolean;
-	};
+	/** Claves de src/lib/config/sections.ts */
+	config?: Partial<Record<SeccionKey, boolean>>;
 }
 
 /**

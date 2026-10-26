@@ -31,50 +31,82 @@ export interface SeccionConfig {
 // ============================================
 
 export const secciones = {
+	navegacion: {
+		id: 'navegacion',
+		nombre: 'Navegación',
+		habilitada: true,
+		descripcion: 'Barra fija con el logo, el menú y "Pedir presupuesto"'
+	},
 	hero: {
-		id: 'hero',
+		id: 'inicio',
 		nombre: 'Hero',
 		habilitada: true,
-		descripcion: 'Banner principal con título y llamada a la acción'
+		descripcion: 'Titular según el horario, botón de presupuesto y datos clave'
 	},
-	services: {
-		id: 'services',
-		nombre: 'Servicios',
+	tresCaminos: {
+		id: 'que-imprimimos',
+		nombre: 'Tres caminos',
 		habilitada: true,
-		descripcion: 'Listado de servicios ofrecidos'
+		descripcion: 'Imagen, idea o archivo: cada camino lleva a WhatsApp'
 	},
-	modelViewer: {
-		id: 'model-viewer',
-		nombre: 'Visor de Modelos',
+	trabajos: {
+		id: 'trabajos',
+		nombre: 'Trabajos',
 		habilitada: true,
-		descripcion: 'Visor 3D interactivo para subir y visualizar modelos'
+		descripcion: 'Galería de cuadros en relieve'
 	},
-	filamentColors: {
-		id: 'filament-colors',
-		nombre: 'Colores de Filamento',
+	comoFunciona: {
+		id: 'como-funciona',
+		nombre: 'Cómo funciona',
 		habilitada: true,
-		descripcion: 'Selector de materiales y colores disponibles'
+		descripcion: 'Tres pasos y la tarjeta "¿Lo imprimimos?"'
 	},
-	gallery: {
-		id: 'gallery',
-		nombre: 'Galería de Proyectos',
+	materiales: {
+		id: 'materiales',
+		nombre: 'Materiales y colores',
 		habilitada: true,
-		descripcion: 'Galería con trabajos realizados'
+		descripcion: 'PLA y PETG con los colores en stock'
 	},
-	contact: {
-		id: 'contact',
-		nombre: 'Contacto WhatsApp',
+	precios: {
+		id: 'precios',
+		nombre: 'Precio y plazos',
 		habilitada: true,
-		descripcion: 'Sección de contacto con enlace a WhatsApp'
+		descripcion: 'Qué mueve el precio, plazo y entrega'
+	},
+	visor: {
+		id: 'visor',
+		nombre: 'Visor 3D',
+		habilitada: true,
+		descripcion: 'Visor para abrir un STL o 3MF en el navegador'
+	},
+	preguntas: {
+		id: 'preguntas',
+		nombre: 'Preguntas',
+		habilitada: true,
+		descripcion: 'Preguntas frecuentes'
+	},
+	contacto: {
+		id: 'contacto',
+		nombre: 'Contacto',
+		habilitada: true,
+		descripcion: 'WhatsApp, horario y canales'
+	},
+	pie: {
+		id: 'pie',
+		nombre: 'Pie',
+		habilitada: true,
+		descripcion: 'Logo, menú, canales y línea legal'
 	}
 } as const satisfies Record<string, SeccionConfig>;
+
+export type SeccionKey = keyof typeof secciones;
 
 // ============================================
 // FUNCIONES HELPER
 // ============================================
 
 /** Verifica si una sección está habilitada */
-export function isSeccionHabilitada(seccionKey: keyof typeof secciones): boolean {
+export function isSeccionHabilitada(seccionKey: SeccionKey): boolean {
 	return secciones[seccionKey].habilitada;
 }
 

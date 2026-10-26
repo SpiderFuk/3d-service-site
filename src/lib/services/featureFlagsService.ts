@@ -16,6 +16,7 @@ import type {
 } from '$lib/types/featureFlags';
 import { outOfServiceDefaults } from '$lib/config/outOfServiceConfig';
 import { sectionsVisibilityDefaults } from '$lib/config/sectionsVisibilityDefaults';
+import type { SeccionKey } from '$lib/config/sections';
 import { servicesVisibilityDefaults } from '$lib/config/servicesVisibilityDefaults';
 
 /**
@@ -108,16 +109,14 @@ function parseAPIResponse(data: unknown): FeatureFlag[] {
 				const flag: SectionsVisibilityFlag = {
 					type: 'sections-visibility',
 					enabled,
-					config: {
-						hero: (rawFlag.hero as boolean) ?? sectionsVisibilityDefaults.hero,
-						services: (rawFlag.services as boolean) ?? sectionsVisibilityDefaults.services,
-						modelViewer:
-							(rawFlag.modelViewer as boolean) ?? sectionsVisibilityDefaults.modelViewer,
-						filamentColors:
-							(rawFlag.filamentColors as boolean) ?? sectionsVisibilityDefaults.filamentColors,
-						gallery: (rawFlag.gallery as boolean) ?? sectionsVisibilityDefaults.gallery,
-						contact: (rawFlag.contact as boolean) ?? sectionsVisibilityDefaults.contact
-					}
+					config: Object.fromEntries(
+						(Object.keys(sectionsVisibilityDefaults) as SeccionKey[]).map((seccion) => [
+							seccion,
+							typeof rawFlag[seccion] === 'boolean'
+								? (rawFlag[seccion] as boolean)
+								: sectionsVisibilityDefaults[seccion]
+						])
+					)
 				};
 
 				flags.push(flag);
