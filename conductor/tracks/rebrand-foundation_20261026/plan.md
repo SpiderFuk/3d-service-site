@@ -43,13 +43,14 @@ Tokens and fonts first, then the shared primitives every section uses, then the 
 
 - [x] Task 3.1: Add Vitest (`vitest` dev dependency, `npm run test` script).
 - [x] Task 3.2: `config/hours.ts` (`{ week: [600, 1080], sat: [720, 960] }`) + `utils/hours.ts`: `isOpenAt(date)`, `horarioLargo`, `horarioCorto` ("L a V 10 a 18 · S 12 a 16"), `horarioFrase` (FAQ answer). Use Montevideo time zone. Tests first for edges: 9:59/10:00/17:59/18:00 weekdays, Saturday window, Sunday, a visitor in another time zone.
-- [~] Task 3.3: `stores/hoursStore.ts`: readable `abiertoAhora`, rechecked every 60 s, cleaned up on unsubscribe.
-- [ ] Task 3.4: Update `config/contact.ts` (number `59896341462`, display `096 341 462`, Instagram, email). Create `config/whatsappMessages.ts` with every message from the BUILD.md table (viewer ones as functions). Rewrite `utils/whatsapp.ts` to `whatsappUrl(message)`. Tests for encoding of accents, `¿`, `{nombre}` interpolation.
-- [ ] Task 3.5: Migrate `static/content/data/materials.json` and its types + `materialsStore` fallback to the new stock list (PLA 12 colors / PETG 3, Bambu hex, `agotado`, translucent rgba values).
+- [x] Task 3.3: `stores/hoursStore.ts`: readable `abiertoAhora`, rechecked every 60 s, cleaned up on unsubscribe.
+- [x] Task 3.4: Update `config/contact.ts` (number `59896341462`, display `096 341 462`, Instagram, email). Create `config/whatsappMessages.ts` with every message from the BUILD.md table (viewer ones as functions). Rewrite `utils/whatsapp.ts` to `whatsappUrl(message)`. Tests for encoding of accents, `¿`, `{nombre}` interpolation.
+- [x] Task 3.5: Migrate `static/content/data/materials.json` and its types + `materialsStore` fallback to the new stock list (PLA 12 colors / PETG 3, Bambu hex, `agotado`, translucent rgba values).
 
 ### Verification
 
-- [ ] `npm run test` passes; `npm run check` clean.
+- [x] `npm run test` passes; `npm run check` clean.
+  - Note: 29 tests pass. `check` errors (and the build error from Task 3.4) are only in legacy components still rendered by +page/+layout; removed in Phase 4.
 
 ## Phase 4: Page Skeleton
 

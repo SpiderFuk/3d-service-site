@@ -4,16 +4,16 @@
   "type": "feature",
   "status": "in_progress",
   "created": "2026-10-26T00:00:00Z",
-  "updated": "2026-10-26T15:00:00Z",
-  "current_phase": 3,
-  "current_task": "3.1",
+  "updated": "2026-10-26T17:00:00Z",
+  "current_phase": 4,
+  "current_task": "4.1",
   "phases": {
     "total": 4,
-    "completed": 2
+    "completed": 3
   },
   "tasks": {
     "total": 18,
-    "completed": 9
+    "completed": 14
   },
   "commits": [
     "5d8e196: chore(brand): add printo cobalto wordmark SVG (rebrand-foundation_20261026)",
@@ -27,6 +27,13 @@
     "1e4f826: feat(ui): add SectionHeading with eyebrow and two-phrase headline (rebrand-foundation_20261026)",
     "3045f0a: feat(ui): rewrite Button as brand pill with quote/ink/butter/plain variants (rebrand-foundation_20261026)",
     "17c43a5: feat(ui): add Tag pill and rewrite Card with brand border and radius tiers (rebrand-foundation_20261026)",
-    "16b3cdd: fix(ui): match reference headline wrapping and default borders to tinta (rebrand-foundation_20261026)"
+    "16b3cdd: fix(ui): match reference headline wrapping and default borders to tinta (rebrand-foundation_20261026)",
+    "39b2af2: chore: mark phase 2 complete (rebrand-foundation_20261026)",
+    "b7376c5: chore: add Vitest for utility unit tests (rebrand-foundation_20261026)",
+    "3d25b0f: feat(hours): store opening hours once with Montevideo-time open/closed and text helpers (rebrand-foundation_20261026)",
+    "5030a8a: test(hours): stub visitor time zone with vi.stubEnv (rebrand-foundation_20261026)",
+    "d61bd99: feat(hours): add abiertoAhora store rechecked every minute (rebrand-foundation_20261026)",
+    "b89ac13: feat(contact): single WhatsApp number, message catalog and whatsappUrl helper (rebrand-foundation_20261026)",
+    "6fac7b5: feat(materials): migrate stock list to Bambu Lab hex codes with agotado flag (rebrand-foundation_20261026)"
   ]
 }
