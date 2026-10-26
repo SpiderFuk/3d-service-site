@@ -1,40 +1,53 @@
 <script lang="ts">
 	/**
-	 * Componente Card reutilizable
+	 * Tarjeta de la marca: borde 2 px tinta y radio por nivel
+	 *
+	 * radius: chip 20 px (baldosas chicas), card 24 px (tarjetas), tile 28 px (baldosas grandes)
 	 */
 	import type { Snippet } from 'svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
 
-	interface Props {
-		padding?: 'none' | 'sm' | 'md' | 'lg';
-		shadow?: boolean;
-		hover?: boolean;
-		class?: string;
+	interface Props extends HTMLAttributes<HTMLElement> {
+		as?: 'div' | 'li' | 'article';
+		radius?: 'chip' | 'card' | 'tile';
+		fondo?: 'blanco' | 'crema' | 'mantequilla' | 'menta' | 'tomate';
 		children?: Snippet;
 	}
 
 	let {
-		padding = 'md',
-		shadow = true,
-		hover = false,
+		as = 'div',
+		radius = 'card',
+		fondo = 'blanco',
 		class: className = '',
-		children
+		children,
+		...rest
 	}: Props = $props();
-
-	const baseClasses = 'bg-white rounded-lg';
-
-	const paddingClasses = {
-		none: '',
-		sm: 'p-3',
-		md: 'p-4 md:p-6',
-		lg: 'p-6 md:p-8'
-	};
-
-	const shadowClass = $derived(shadow ? 'shadow-md' : '');
-	const hoverClass = $derived(hover ? 'hover:shadow-xl transition-shadow duration-300' : '');
-
-	const classes = $derived(`${baseClasses} ${paddingClasses[padding]} ${shadowClass} ${hoverClass} ${className}`);
 </script>
 
-<div class={classes}>
+<svelte:element
+	this={as}
+	class="card card-{radius} {className}"
+	style:background="var(--color-{fondo})"
+	{...rest}
+>
 	{@render children?.()}
-</div>
+</svelte:element>
+
+<style>
+	.card {
+		border: var(--border);
+		color: var(--color-tinta);
+	}
+
+	.card-chip {
+		border-radius: var(--radius-md);
+	}
+
+	.card-card {
+		border-radius: var(--radius-lg);
+	}
+
+	.card-tile {
+		border-radius: var(--radius-xl);
+	}
+</style>

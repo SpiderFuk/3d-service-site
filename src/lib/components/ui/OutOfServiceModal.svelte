@@ -41,7 +41,7 @@
 >
 	<!-- Modal Card -->
 	<div class="max-w-md w-full animate-fade-in">
-		<Card padding="lg" class="relative border-2 border-amber-300 bg-amber-50">
+		<Card class="relative p-6 md:p-8">
 			<!-- Botón cerrar -->
 			<button
 				onclick={handleDismiss}
