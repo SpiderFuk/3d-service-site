@@ -69,7 +69,7 @@
 				</p>
 
 				<!-- Botón -->
-				<Button variant="primary" size="lg" fullWidth onclick={handleDismiss}>
+				<Button variant="ink" size="lg" full onclick={handleDismiss}>
 					{config.modal.buttonText}
 				</Button>
 			</div>
