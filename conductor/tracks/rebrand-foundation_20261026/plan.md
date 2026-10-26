@@ -13,9 +13,9 @@ Tokens and fonts first, then the shared primitives every section uses, then the 
 
 ### Tasks
 
-- [~] Task 1.1: Get `tokens.json` and `printo-wordmark-cobalto.svg` into `design/landing-v1/` (blocker; see spec). Copy the wordmark to `static/brand/`.
-  - Note: wordmark copied from `D:\[PRINTO]\logo\svg`. `tokens.json` is not on the canvas export or the D: drive; tokens come from the BUILD.md fallback (colors) and the reference HTML (extrusion).
-- [ ] Task 1.2: Create `src/lib/styles/tokens.css` with colors, font families, radius scale (20/24/28/pill), border width, extrusion shadows (large and small), section padding and gutters as custom properties.
+- [x] Task 1.1: Get `tokens.json` and `printo-wordmark-cobalto.svg` into `design/landing-v1/` (blocker; see spec). Copy the wordmark to `static/brand/`.
+  - Note: wordmark copied from `D:\[PRINTO]\logo\svg`; `tokens.json` exported from the design canvas (`project/ds/printo-filamento/tokens.json`).
+- [~] Task 1.2: Create `src/lib/styles/tokens.css` with colors, font families, radius scale (20/24/28/pill), border width, extrusion shadows (large and small), section padding and gutters as custom properties.
 - [ ] Task 1.3: Update `tailwind.config.js`: remove old `primary`/`whatsapp`/Inter, map the brand colors and fonts to the variables, add `screens` for 960 px and 1200 px plus a `<360` variant.
 - [ ] Task 1.4: Load Bricolage Grotesque + Figtree in `src/app.html` (preconnect + `display=swap`, the same URL as the reference HTML); set body crema background, tinta text, Figtree base.
 
