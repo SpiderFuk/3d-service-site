@@ -1,66 +1,63 @@
-import { writable, derived } from 'svelte/store';
-import { materiales as localMaterials, type Material } from '$lib/config/filamentColors';
+/**
+ * Stock de filamento (materiales y colores)
+ *
+ * Único lugar: static/content/data/materials.json. Se incluye en el bundle para
+ * mostrarlo al instante y se vuelve a pedir en runtime por si cambió después del deploy.
+ */
+
+import { writable } from 'svelte/store';
 import { fetchContent } from '$lib/services/contentService';
-import type { MaterialsContent } from '$lib/types/content';
+import type { MaterialsContent, MaterialStock } from '$lib/types/content';
+import stockLocal from '../../../static/content/data/materials.json';
+
+const local: MaterialsContent = stockLocal;
 
 interface MaterialsState {
-	materials: Record<string, Material>;
+	materials: MaterialsContent['materials'];
 	isLoading: boolean;
 	isRemote: boolean;
 }
 
-const initialState: MaterialsState = {
-	materials: localMaterials,
+const { subscribe, update } = writable<MaterialsState>({
+	materials: local.materials,
 	isLoading: true,
 	isRemote: false
-};
-
-const { subscribe, set, update } = writable<MaterialsState>(initialState);
+});
 
 export const materialsStore = { subscribe };
 
-export async function loadMaterials(): Promise<void> {
-	const fallback: MaterialsContent = {
-		materials: localMaterials,
-		updatedAt: ''
-	};
+function esMaterialValido(m: unknown): m is MaterialStock {
+	if (typeof m !== 'object' || m === null) return false;
+	const { nombre, disponible, colores } = m as Record<string, unknown>;
+	return (
+		typeof nombre === 'string' &&
+		typeof disponible === 'boolean' &&
+		Array.isArray(colores) &&
+		colores.every(
+			(c) =>
+				typeof c?.id === 'string' &&
+				typeof c?.nombre === 'string' &&
+				typeof c?.hex === 'string' &&
+				typeof c?.agotado === 'boolean'
+		)
+	);
+}
 
-	const content = await fetchContent<MaterialsContent>('materials', fallback);
-	const isRemote = content.updatedAt !== '';
+/** Valida el JSON (puede venir de otra versión o del futuro admin) antes de usarlo */
+export function esStockValido(data: unknown): data is MaterialsContent {
+	if (typeof data !== 'object' || data === null) return false;
+	const materials = (data as { materials?: Record<string, unknown> }).materials;
+	return !!materials && esMaterialValido(materials.pla) && esMaterialValido(materials.petg);
+}
+
+export async function loadMaterials(): Promise<void> {
+	const content = await fetchContent<unknown>('materials', local);
+	const isRemote = content !== local && esStockValido(content);
 
 	update((state) => ({
 		...state,
-		materials: content.materials,
+		materials: isRemote ? (content as MaterialsContent).materials : local.materials,
 		isLoading: false,
 		isRemote
 	}));
-}
-
-export const availableMaterials = derived(materialsStore, ($store) =>
-	Object.entries($store.materials)
-		.filter(([, material]) => material.disponible)
-		.map(([id, material]) => ({ id, ...material }))
-);
-
-export const materialsCount = derived(availableMaterials, ($materials) => $materials.length);
-
-export const colorsCount = derived(availableMaterials, ($materials) => {
-	const uniqueColors = new Set<string>();
-	$materials.forEach((material) => {
-		Object.entries(material.colores).forEach(([colorId, color]) => {
-			if (color.disponible) {
-				uniqueColors.add(colorId);
-			}
-		});
-	});
-	return uniqueColors.size;
-});
-
-export function getColoresForMaterial(
-	materials: Record<string, Material>,
-	materialId: string
-): Array<{ id: string; nombre: string; hex: string; disponible: boolean }> {
-	const material = materials[materialId];
-	if (!material) return [];
-	return Object.entries(material.colores).map(([id, color]) => ({ id, ...color }));
 }
