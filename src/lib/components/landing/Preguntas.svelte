@@ -9,17 +9,27 @@
 	 * Acordeón: cada pregunta es un botón dentro de un h3 con aria-expanded y
 	 * aria-controls. Se pueden abrir varias a la vez; la primera empieza abierta.
 	 * Las respuestas cerradas quedan en el HTML con `hidden`.
+	 *
+	 * El JSON-LD FAQPage sale de la misma lista (config/faq.ts) que el acordeón.
 	 */
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
 	import { preguntasFrecuentes } from '$lib/config/faq';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
+	import { faqJsonLdScript } from '$lib/utils/faqJsonLd';
 
 	const urlPregunta = whatsappUrl(mensajes.preguntas);
 
+	const jsonLd = faqJsonLdScript(preguntasFrecuentes);
+
 	let abiertas = $state(preguntasFrecuentes.map((_, i) => i === 0));
 </script>
+
+<svelte:head>
+	<!-- JSON-LD FAQPage: JSON propio, con "<" escapado (ver utils/faqJsonLd.ts) -->
+	{@html jsonLd}
+</svelte:head>
 
 <!-- El link aparece dos veces (desktop y teléfono); solo una se muestra por vez -->
 {#snippet otraPregunta(clase: string)}

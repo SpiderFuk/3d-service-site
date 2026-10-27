@@ -16,7 +16,7 @@ FAQ with its structured data, then Contacto (hours-driven pill), then the footer
 - [x] Task 1.1: `config/faq.ts` with the eight Q&As (answer 8 from hours helper).
 - [x] Task 1.2: Two-column layout in `landing/Preguntas.svelte` with sticky title column on desktop; link placement per breakpoint.
 - [x] Task 1.3: Accordion rows: h3 > button with `aria-expanded`/`aria-controls`, multiple open, first open, mantequilla open row, CSS plus/minus circle.
-- [ ] Task 1.4: FAQPage JSON-LD in `<svelte:head>` generated from the same data.
+- [x] Task 1.4: FAQPage JSON-LD in `<svelte:head>` generated from the same data.
 
 ### Verification
 
