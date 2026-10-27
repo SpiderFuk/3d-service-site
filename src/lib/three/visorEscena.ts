@@ -7,8 +7,15 @@
  * permanente: si nada cambia, no se dibuja nada.
  *
  * Luces y cámara como sceneSetup.ts (ambiente 0.6, direccional 0.8, relleno 0.3;
- * FOV 50). Se mantienen la corrección de orientación y el ajuste de distancia
- * de la cámara del visor anterior (ThreeCanvas).
+ * FOV 50). Se mantiene la corrección de orientación del visor anterior (ThreeCanvas).
+ *
+ * Encuadre: todos los modelos ocupan lo mismo del marco, sean altos, chatos o
+ * redondos. La cámara se aleja lo justo para que el cilindro que barre el modelo
+ * al girar ocupe el 75 % (FOCO) del alto o del ancho del marco, y se recalcula si
+ * cambia la proporción del marco.
+ *
+ * Al aparecer, el modelo entra con medio giro corto y un leve crecimiento
+ * (sin animación con prefers-reduced-motion; el primer giro de la persona la corta).
  */
 
 import {
@@ -70,6 +77,77 @@ export function liberarObjeto(objeto: Object3D): void {
 	materiales.forEach((m) => m.dispose());
 }
 
+/** Parte del alto y del ancho del marco que ocupa el modelo (el resto queda de aire) */
+export const FOCO = 0.75;
+
+/** Dirección de la cámara desde el centro: vista frontal-superior inclinada */
+export const DIRECCION_CAMARA = new Vector3(0.3, 0.5, 1).normalize();
+
+/** Entrada del modelo: duración y giro inicial (radianes) */
+const ENTRADA_MS = 700;
+const ENTRADA_GIRO = -0.6;
+
+/**
+ * Cilindro vertical que contiene al modelo en cualquier giro: radio desde el eje Y
+ * y alturas mínima y máxima. Se mide sobre los vértices (no la caja), así un jarrón
+ * redondo no queda más chico que una pieza cuadrada.
+ */
+export interface Cilindro {
+	radio: number;
+	yMin: number;
+	yMax: number;
+}
+
+export function medirCilindro(objeto: Object3D): Cilindro {
+	objeto.updateMatrixWorld(true);
+	const v = new Vector3();
+	let radio2 = 0;
+	let yMin = Infinity;
+	let yMax = -Infinity;
+	objeto.traverse((hijo) => {
+		if (!(hijo instanceof Mesh)) return;
+		const pos = hijo.geometry?.getAttribute('position');
+		if (!pos) return;
+		for (let i = 0; i < pos.count; i++) {
+			v.fromBufferAttribute(pos, i).applyMatrix4(hijo.matrixWorld);
+			radio2 = Math.max(radio2, v.x * v.x + v.z * v.z);
+			yMin = Math.min(yMin, v.y);
+			yMax = Math.max(yMax, v.y);
+		}
+	});
+	return { radio: Math.sqrt(radio2), yMin, yMax };
+}
+
+/**
+ * Distancia de la cámara (sobre DIRECCION_CAMARA, mirando al origen) para que el
+ * cilindro entre en el FOCO del marco, en alto y en ancho. Para cada punto p de los bordes del cilindro:
+ * |x| ≤ FOCO·tan(fovH/2)·prof y |y| ≤ FOCO·tan(fovV/2)·prof, con prof = d − p·dir.
+ */
+export function distanciaEncuadre(cilindro: Cilindro, fovGrados: number, aspecto: number): number {
+	const tanV = Math.tan((fovGrados * Math.PI) / 360) * FOCO;
+	const tanH = tanV * aspecto;
+	const adelante = DIRECCION_CAMARA.clone().negate();
+	const derecha = new Vector3().crossVectors(adelante, new Vector3(0, 1, 0)).normalize();
+	const arriba = new Vector3().crossVectors(derecha, adelante);
+
+	const p = new Vector3();
+	let distancia = 0;
+	const PASOS = 48;
+	for (let i = 0; i < PASOS; i++) {
+		const a = (i / PASOS) * Math.PI * 2;
+		for (const y of [cilindro.yMin, cilindro.yMax]) {
+			p.set(Math.cos(a) * cilindro.radio, y, Math.sin(a) * cilindro.radio);
+			const haciaCamara = p.dot(DIRECCION_CAMARA);
+			distancia = Math.max(
+				distancia,
+				haciaCamara + Math.abs(p.dot(derecha)) / tanH,
+				haciaCamara + Math.abs(p.dot(arriba)) / tanV
+			);
+		}
+	}
+	return distancia;
+}
+
 /** Color cobalto leído del token CSS (tokens.css es el único lugar con el hex) */
 function colorCobalto(elemento: HTMLElement): string | undefined {
 	const valor = getComputedStyle(elemento).getPropertyValue('--color-cobalto').trim();
@@ -103,6 +181,15 @@ export function crearVisorEscena({ contenedor, teclado, ongiro }: OpcionesVisor)
 	const pivote = new Group();
 	scene.add(pivote);
 	let modelo: Object3D | null = null;
+	let cilindro: Cilindro | null = null;
+
+	const movimientoReducido = window.matchMedia('(prefers-reduced-motion: reduce)');
+	let cuadroEntrada = 0;
+	function cortarEntrada() {
+		cancelAnimationFrame(cuadroEntrada);
+		cuadroEntrada = 0;
+		pivote.scale.setScalar(1);
+	}
 
 	// Render a pedido: como mucho un cuadro por frame
 	let cuadroPendiente = 0;
@@ -121,6 +208,7 @@ export function crearVisorEscena({ contenedor, teclado, ongiro }: OpcionesVisor)
 		camera.aspect = ancho / alto;
 		camera.updateProjectionMatrix();
 		renderer.setSize(ancho, alto);
+		if (cilindro) ajustarCamara();
 		pedirRender();
 	}
 
@@ -128,27 +216,40 @@ export function crearVisorEscena({ contenedor, teclado, ongiro }: OpcionesVisor)
 	observadorTamano.observe(contenedor);
 	ajustarTamano();
 
-	/** Cámara a una distancia que deja ver todo el modelo (diagonal de la caja × 1.5) */
-	function ajustarCamara(objeto: Object3D) {
-		const caja = new Box3().setFromObject(objeto);
-		const tamano = caja.getSize(new Vector3());
-		const diagonal = Math.sqrt(tamano.x ** 2 + tamano.y ** 2 + tamano.z ** 2);
-		const fov = camera.fov * (Math.PI / 180);
-		const distancia = (diagonal / (2 * Math.tan(fov / 2))) * 1.5;
-
-		// Vista frontal-superior inclinada, como el visor anterior
-		camera.position.set(distancia * 0.3, distancia * 0.5, distancia);
+	/** Cámara a la distancia de encuadre del modelo actual, con la proporción actual del marco */
+	function ajustarCamara() {
+		if (!cilindro) return;
+		const distancia = distanciaEncuadre(cilindro, camera.fov, camera.aspect);
+		camera.position.copy(DIRECCION_CAMARA).multiplyScalar(distancia);
 		camera.near = Math.max(0.1, distancia / 100);
 		camera.far = Math.max(2000, distancia * 10);
 		camera.updateProjectionMatrix();
 		camera.lookAt(0, 0, 0);
 	}
 
+	/** Medio giro corto y crecimiento leve hasta quedar quieto de frente */
+	function animarEntrada() {
+		cortarEntrada();
+		if (movimientoReducido.matches) return;
+		const inicio = performance.now();
+		const paso = (ahora: number) => {
+			const t = Math.min(1, (ahora - inicio) / ENTRADA_MS);
+			const suave = 1 - (1 - t) ** 3;
+			pivote.rotation.y = ENTRADA_GIRO * (1 - suave);
+			pivote.scale.setScalar(0.92 + 0.08 * suave);
+			renderer.render(scene, camera);
+			cuadroEntrada = t < 1 ? requestAnimationFrame(paso) : 0;
+		};
+		cuadroEntrada = requestAnimationFrame(paso);
+	}
+
 	function limpiar() {
+		cortarEntrada();
 		if (!modelo) return;
 		pivote.remove(modelo);
 		liberarObjeto(modelo);
 		modelo = null;
+		cilindro = null;
 		pedirRender();
 	}
 
@@ -184,11 +285,14 @@ export function crearVisorEscena({ contenedor, teclado, ongiro }: OpcionesVisor)
 		objeto.updateMatrixWorld(true);
 
 		modelo = objeto;
-		ajustarCamara(pivote);
+		cilindro = medirCilindro(pivote);
+		ajustarCamara();
 		pedirRender();
+		animarEntrada();
 	}
 
 	function girar(angulo: number) {
+		cortarEntrada();
 		pivote.rotation.y = angulo;
 		pedirRender();
 	}

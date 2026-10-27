@@ -23,18 +23,18 @@ Clean up the code first, then the head and docs, then run the full QA pass on th
 
 - [ ] `npm run check`, `npm run lint`, `npm run build` pass; bundle analyzer shows no Lucide.
 
-## Phase 2: Out-of-Service UI, Head & Docs
+## Phase 2: Head & Docs
 
 ### Tasks
 
-- [ ] Task 2.1: Restyle `OutOfServiceModal` and `OutOfServiceBanner` with the new tokens; check banner + sticky bar stacking at all breakpoints.
+- [x] Task 2.1: ~~Restyle `OutOfServiceModal` and `OutOfServiceBanner`~~. Dropped: the out-of-service modal, banner and flag were removed on 2026-10-27 (review issue 1, branch `fix/review-issues`).
 - [ ] Task 2.2: `<svelte:head>`: title, description, OG/Twitter, `theme-color`, canonical; new favicons/OG image from the logo set.
 - [ ] Task 2.3: Update CLAUDE.md (design tokens, sections, single-source settings, viewer behavior, removed flags).
 - [ ] Task 2.4: Update `conductor/product.md`, `product-guidelines.md`, `tech-stack.md` (fonts, no Lucide, Vitest).
 
 ### Verification
 
-- [ ] Toggle the out-of-service flag via `window.__featureFlags`; share-preview check of OG tags.
+- [ ] Share-preview check of OG tags.
 
 ## Phase 3: Launch QA
 

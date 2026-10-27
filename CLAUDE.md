@@ -17,7 +17,7 @@ This is a **SPA (Single Page Application) for a 3D printing service** built with
 - **Styling:** Tailwind CSS 3.x reading the PRINTO Filamento tokens (CSS custom properties)
 - **Fonts:** Bricolage Grotesque (700/800, headlines) + Figtree (400/500/600, text), Google Fonts
 - **3D Engine:** Three.js 0.160+
-- **Icons:** none in the new design (no icons, no emojis). Lucide Svelte remains only in the out-of-service modal/banner until the cleanup track.
+- **Icons:** none in the new design (no icons, no emojis). `lucide-svelte` is still a dependency (only the legacy `config/services.ts` imports it) until the cleanup track.
 - **Dependencies:** JSZip (for 3MF parsing)
 - **Testing:** Vitest (unit tests for pure utilities and stores)
 - **Deployment:** Static adapter (pre-rendered SPA)
@@ -60,7 +60,7 @@ src/
 │   ├── components/
 │   │   ├── landing/       # Navegacion, Hero, TresCaminos, Trabajos, ComoFunciona, Materiales, Precios, Visor, Preguntas, Contacto, Pie
 │   │   ├── viewer/        # ThreeCanvas, ModelThumbnailPreview (old viewer, reused by the Visor track)
-│   │   └── ui/            # Section, SectionHeading, Button, Card, Tag, ColorSwatch, OutOfServiceModal, OutOfServiceBanner
+│   │   └── ui/            # Section, SectionHeading, Button, Card, Tag, ColorSwatch
 │   ├── config/            # Static configuration files (hours, contact, whatsappMessages, sections…)
 │   ├── loaders/           # 3D model loaders (Factory + Adapters)
 │   ├── stores/            # Svelte stores (hoursStore, materialsStore, uiStore, featureFlagsStore, modelStore)
@@ -156,11 +156,11 @@ Uses **Svelte stores** for global state:
 
 4. **`uiStore`** ([src/lib/stores/uiStore.ts](src/lib/stores/uiStore.ts)): UI state
    - `isMobileMenuOpen`, `activeSection`, `showUploadModal`
-   - Out-of-service state: `outOfServiceUI` derived store
+   - `heroCtaVisible`: whether the hero "Pedir presupuesto" is on screen (the bar shows its own only when false)
 
 5. **`featureFlagsStore`** ([src/lib/stores/featureFlagsStore.ts](src/lib/stores/featureFlagsStore.ts)): Feature flags
    - Polling from AWS AppConfig (5-minute interval)
-   - Derived stores: `outOfServiceFlag`, `sectionsVisibilityFlag`, `servicesVisibilityFlag`
+   - Derived stores: `sectionsVisibilityFlag`, `servicesVisibilityFlag`
 
 ### Feature Flags System
 
@@ -172,9 +172,10 @@ The project uses **AWS AppConfig** for dynamic feature configuration:
 - Graceful degradation: Returns empty array on failure
 
 **Flag Types:**
-1. `out-of-service` - Disable site temporarily with modal/banner
-2. `sections-visibility` - Show/hide page sections
-3. `services-visibility` - Show/hide specific services (legacy, removed in the cleanup track)
+1. `sections-visibility` - Show/hide page sections
+2. `services-visibility` - Show/hide specific services (legacy, removed in the cleanup track)
+
+The `out-of-service` flag (modal + banner) was removed; if AppConfig still returns it, the parser ignores it like any unknown key.
 
 `sections-visibility` keys are the ones in `sections.ts` (`navegacion`, `hero`, `tresCaminos`, `trabajos`, `comoFunciona`, `materiales`, `precios`, `visor`, `preguntas`, `contacto`, `pie`). **The AppConfig profile must use these keys**; unknown or missing keys fall back to the defaults (visible).
 
@@ -194,7 +195,6 @@ const navItems = getVisibleNavItems($sectionsVisibilityFlag);
 **Development Helpers** (available in DEV mode via browser console):
 ```javascript
 window.__featureFlags.forceRefresh()      // Trigger immediate refresh
-window.__featureFlags.resetDismissal()    // Reset out-of-service modal dismissal
 window.__featureFlags.startPolling(ms)    // Start custom polling interval
 ```
 
@@ -282,23 +282,6 @@ export const prerender = true;
 </script>
 ```
 
-### 7. Out-of-Service Modal Dismissal
-
-Modal dismissal persists in localStorage and shows banner instead:
-
-```typescript
-import { outOfServiceUI, dismissOutOfServiceModal } from '$lib/stores/uiStore';
-
-// Show modal when: flag enabled AND not dismissed
-$: if ($outOfServiceUI.showModal) { /* show modal */ }
-
-// Show banner when: flag enabled AND dismissed
-$: if ($outOfServiceUI.showBanner) { /* show banner */ }
-
-// Dismiss modal
-dismissOutOfServiceModal(); // Stores in localStorage, shows banner
-```
-
 ## Configuration Files
 
 ### Single-source settings (owner edits these)
@@ -328,7 +311,6 @@ whatsappUrl(mensajes.visorArchivo(file.name));
 
 ### Feature Flag Defaults
 
-- [src/lib/config/outOfServiceConfig.ts](src/lib/config/outOfServiceConfig.ts) - Modal/banner defaults
 - [src/lib/config/sectionsVisibilityDefaults.ts](src/lib/config/sectionsVisibilityDefaults.ts) - Section visibility
 - [src/lib/config/servicesVisibilityDefaults.ts](src/lib/config/servicesVisibilityDefaults.ts) - Service visibility (legacy)
 
@@ -408,6 +390,7 @@ All brand values live in [src/lib/styles/tokens.css](src/lib/styles/tokens.css) 
 - **Borders:** `border` = 2 px tinta by default.
 - **Extrusion:** `.extrude` / `.extrude-md` / `.extrude-sm` (one per view, square-edged shapes only).
 - **Spacing:** `px-gutter` (64/16), `py-section` (96/32), `max-w-page` (1312), `min-h-tap` (44).
+- **Sticky bar and anchors:** `--header-height` (74/66, the bar's own height), `--anchor-gap` (32/16) and `--scroll-offset` (their sum). `ui/Section` sets `scroll-margin-top` to `--scroll-offset` minus its top padding, so every anchor lands with its content `--anchor-gap` below the bar; `--section-scroll-margin` overrides it (Hero uses it to go back to the top).
 
 ### Breakpoints
 

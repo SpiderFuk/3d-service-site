@@ -68,7 +68,7 @@ Monday to Friday 10:00 to 18:00, Saturday 12:00 to 16:00, Sunday closed, Montevi
 
 ## Sections, in order
 
-Anchors used by the menu: `#inicio`, `#que-imprimimos`, `#trabajos`, `#precios`, `#contacto` (plus `#visor`, `#preguntas`). Each anchored section has `scroll-margin-top: 100px` so the sticky bar does not cover its title. A "Saltar al contenido" skip link is the first focusable element.
+Anchors used by the menu: `#inicio`, `#que-imprimimos`, `#trabajos`, `#precios`, `#contacto` (plus `#visor`, `#preguntas`). Each anchored section's scroll margin comes from the bar height (`--header-height`, 74 px desktop / 66 px phone) minus its top padding, so its content lands 32 px (phone 16 px) below the bar. A "Saltar al contenido" skip link is the first focusable element.
 
 ### 01 Navegación (sticky bar)
 
@@ -92,7 +92,7 @@ Anchors used by the menu: `#inicio`, `#que-imprimimos`, `#trabajos`, `#precios`,
 
 - Eyebrow "Qué imprimimos". Headline "Una foto, una idea o un archivo." / "Elegí por dónde empezar." Line "Cada camino te lleva a WhatsApp con el mensaje listo."
 - Three cards (photo on top, 4:3; phone 16:9, stacked). Under 1100 px desktop the cards go photo-left.
-  1. Mantequilla photo, "Tengo una imagen": "Mandanos una foto y la convertimos en un cuadro en relieve en blanco y negro, con su soporte." Note box: "Revisamos cada foto y te decimos si se puede imprimir." Button "Mandar mi foto".
+  1. Mantequilla photo, "Tengo una imagen": "Mandanos una foto y la convertimos en un cuadro en relieve, con su soporte." Note box: "Revisamos cada foto y te decimos si se puede imprimir." Button "Mandar mi foto".
   2. Menta photo, "Tengo una idea": "Contanos qué buscás y te ayudamos a encontrar el modelo en MakerWorld, Printables o Thingiverse. ¿Ya encontraste uno? Mandanos el link." Button "Contar mi idea".
   3. Tomate photo, "Tengo un archivo": "Mandanos tu STL o 3MF y lo imprimimos en PLA o PETG." Link "Ver tu modelo en 3D" (tinta, underlined, to `#visor`). Button "Mandar mi archivo".
 - Photos are placeholders until the owner provides them.
@@ -132,7 +132,6 @@ Anchors used by the menu: `#inicio`, `#que-imprimimos`, `#trabajos`, `#precios`,
 - "Los agotados vuelven a entrar. Preguntanos por WhatsApp."
 - Multicolor box: four overlapping dots (cobalto, tomate, mantequilla, menta), "Hasta 4 colores en una misma pieza." and "Sin pintar: los colores salen así de la impresora."
 - Detail box: "¿Cuánto detalle necesitás?" with three levels (small layer-lines square for each): "Muy detallado" (Miniaturas, figuras chicas y textos pequeños. Lleva más tiempo.), "Normal" (La mayoría de las piezas: buen detalle, buen tiempo.), "Grande y rápido" (Piezas grandes y robustas, en menos tiempo. Menos detalle fino.). Under it: "Te recomendamos uno cuando nos mandás lo que tenés."
-- Note: "Los cuadros en relieve son en blanco y negro, y vienen con su soporte."
 - No nozzle sizes or other technical terms anywhere on the page.
 
 ### 07 Precio y plazos (`#precios`)
@@ -140,7 +139,7 @@ Anchors used by the menu: `#inicio`, `#que-imprimimos`, `#trabajos`, `#precios`,
 - Eyebrow "Precio y plazos". Headline "Cada pieza," / "su precio." No prices and no minimum price.
 - Desktop grid: three columns (1.35fr, 1fr, 0.75fr), equal heights.
   - "Piezas" card. "Lo que mueve el precio:" then five chips (crema, 20 px radius) in two columns: Tamaño (Cuanto más grande, más material lleva.), Material (PLA y PETG tienen distinto costo.), Detalle (Acabado fino o normal, vos elegís.), Colores (Una pieza multicolor suma al precio.), Cantidad (Varias piezas iguales.).
-  - "Cuadros en relieve" card. "En blanco y negro. Lo que mueve el precio:" then Tamaño (El que vos quieras: el precio va con la medida.), Copias (La primera incluye preparar la foto; las copias, solo la impresión.), Soporte (Siempre incluido, sin costo extra.).
+  - "Cuadros en relieve" card. "Lo que mueve el precio:" then Tamaño (El que vos quieras: el precio va con la medida.), Copias (La primera incluye preparar la foto; las copias, solo la impresión.), Soporte (Siempre incluido, sin costo extra.).
   - Two stacked boxes, together as tall as the cards, text vertically centered: "Plazo" / "24 a 48 h" / "En la mayoría de los pedidos. Piezas grandes, multicolor o en cantidad: te decimos el plazo junto con el precio." and "Entrega" / "Retiro o envío" / "Retirás en Montevideo o Las Piedras, o te lo enviamos a tu casa. El día, la hora y el envío los coordinamos por WhatsApp."
 - 960 to 1199 px: the two cards side by side, Plazo and Entrega in a row below. Phone: one column; Plazo and Entrega merged into one compact box with two rows; texts 14 px.
 - Closing strip (tomate): "¿Tenés algo en mente? Preguntanos." with tinta button "Pedir el precio".
@@ -166,13 +165,13 @@ Not in the menu; reached from "Ver tu modelo en 3D".
 
 ### 09 Preguntas (`#preguntas`)
 
-- Eyebrow "Preguntas". Headline "Antes de escribirnos," / "capaz ya está acá." Under it: "¿Otra pregunta? Preguntanos por WhatsApp" (link). On the phone the link goes after the questions.
-- Desktop: title column on the left stays in place while the questions scroll (sticky, top 100 px). 960 to 1199 px and phone: title on top, not sticky.
+- Eyebrow "Preguntas". Headline "Lo que más" / "nos preguntan." Under it: "¿Otra pregunta? Preguntanos por WhatsApp" (link). On the phone the link goes after the questions.
+- Desktop: title column on the left stays in place while the questions scroll (sticky, top `--scroll-offset`: bar height + 32 px). 960 to 1199 px and phone: title on top, not sticky.
 - Eight questions, each a real button inside an h3, `aria-expanded`, opening its answer below. Several can be open at once; the first starts open. Open row: mantequilla, circle turns tinta with a minus (drawn bars). Closed answers stay in the HTML (hidden), and the page includes FAQPage structured data (JSON-LD) with all eight.
   1. ¿Qué archivo te mando? · STL o 3MF. Si no tenés uno, mandanos una foto o el link de un modelo de MakerWorld, Printables o Thingiverse y te ayudamos a encontrarlo.
   2. ¿Hacen el diseño o el modelo 3D? · No modelamos desde cero. Te ayudamos a encontrar un modelo que ya exista, o imprimimos el tuyo.
   3. ¿Qué tan grande puede ser? · Hasta 25 cm de alto, ancho y largo.
-  4. ¿Cuántos colores puede tener? · Hasta 4 colores en una misma pieza. Los cuadros en relieve son en blanco y negro.
+  4. ¿Cuántos colores puede tener? · Hasta 4 colores en una misma pieza.
   5. ¿Cuánto demora? · 24 a 48 h en la mayoría de los pedidos. Si es grande, multicolor o en cantidad, te decimos el plazo junto con el precio.
   6. ¿Cómo lo recibo? · Lo retirás en Montevideo o Las Piedras, o coordinamos el envío por WhatsApp.
   7. ¿Cómo pago? · En efectivo o por transferencia bancaria.

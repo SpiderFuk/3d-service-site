@@ -6,6 +6,9 @@
 	 * Layout: desktop texto + ejemplos a la izquierda y visor a la derecha;
 	 * 960 a 1199 px todo en una columna (texto, ejemplos, visor);
 	 * teléfono texto, visor y después los ejemplos.
+	 *
+	 * Animaciones (ninguna con prefers-reduced-motion): las acciones de abajo del marco
+	 * aparecen al cambiar de estado. El cambio de modelo se anima en Marco y en la escena.
 	 */
 	import { onDestroy, onMount, tick } from 'svelte';
 	import Section from '$lib/components/ui/Section.svelte';
@@ -358,6 +361,20 @@
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 12px;
+		animation: aparecer 0.3s ease-out;
+	}
+
+	@keyframes aparecer {
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.vactions {
+			animation: none;
+		}
 	}
 
 	.vnote {

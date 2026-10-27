@@ -4,6 +4,10 @@
 	 *
 	 * La elegida queda en mantequilla con aria-pressed="true". En el teléfono
 	 * la fila se desliza de costado.
+	 *
+	 * Respuesta al tocar: con hover la tarjeta sube y el dibujo crece y se inclina;
+	 * al apretar baja; al elegirla el dibujo da un salto. Sin movimiento con
+	 * prefers-reduced-motion (los colores cambian igual).
 	 */
 	import { ejemplosVisor, type EjemploId } from '$lib/config/visorEjemplos';
 	import MiniaturaEjemplo from './MiniaturaEjemplo.svelte';
@@ -56,10 +60,52 @@
 		color: var(--color-tinta);
 		font: inherit;
 		cursor: pointer;
+		transition:
+			background-color 0.15s ease,
+			transform 0.15s ease;
 	}
 
 	.vcard:hover {
 		background: var(--color-crema);
+		transform: translateY(-2px);
+	}
+
+	.vcard:active {
+		transform: translateY(1px) scale(0.98);
+		transition-duration: 0.05s;
+	}
+
+	.vthumb :global(svg) {
+		transition: transform 0.25s cubic-bezier(0.3, 0.7, 0.2, 1);
+	}
+
+	.vcard:hover .vthumb :global(svg) {
+		transform: scale(1.08) rotate(-3deg);
+	}
+
+	.vcard-on .vthumb :global(svg) {
+		animation: salto 0.4s cubic-bezier(0.3, 0.7, 0.2, 1);
+	}
+
+	@keyframes salto {
+		40% {
+			transform: translateY(-8%) scale(1.06);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.vcard,
+		.vcard:hover,
+		.vcard:active,
+		.vthumb :global(svg),
+		.vcard:hover .vthumb :global(svg) {
+			transition: none;
+			transform: none;
+		}
+
+		.vcard-on .vthumb :global(svg) {
+			animation: none;
+		}
 	}
 
 	.vcard.vcard-on {
@@ -72,6 +118,7 @@
 		border-radius: 14px;
 		background: var(--color-crema);
 		overflow: hidden;
+		transition: background-color 0.15s ease;
 	}
 
 	.vcard-on .vthumb {

@@ -5,6 +5,10 @@
 	 * El fondo ocupa todo el ancho; el contenido se limita a --page-max.
 	 * - Padding vertical distinto: definir --section-pt / --section-pb en la sección.
 	 * - Layout distinto (grid, columnas): pasar contentClass, que reemplaza la pila por defecto.
+	 *
+	 * Anclas: el margen de scroll descuenta el padding de arriba, así el contenido (no el
+	 * borde de la sección) queda a --anchor-gap de la barra en todas las secciones.
+	 * --section-scroll-margin lo reemplaza (el Hero lo usa para volver al tope de la página).
 	 */
 	import type { Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
@@ -35,7 +39,10 @@
 
 <style>
 	.section {
-		scroll-margin-top: var(--scroll-offset);
+		scroll-margin-top: var(
+			--section-scroll-margin,
+			calc(var(--scroll-offset) - var(--section-pt, var(--section-pad-y)))
+		);
 	}
 
 	.section-content {

@@ -30,7 +30,7 @@
 				alt: 'Cuadro en relieve en blanco y negro, sobre su soporte'
 			}}
 			titulo="Tengo una imagen"
-			texto="Mandanos una foto y la convertimos en un cuadro en relieve en blanco y negro, con su soporte."
+			texto="Mandanos una foto y la convertimos en un cuadro en relieve, con su soporte."
 			nota="Revisamos cada foto y te decimos si se puede imprimir."
 			boton="Mandar mi foto"
 			mensaje="caminosFoto"

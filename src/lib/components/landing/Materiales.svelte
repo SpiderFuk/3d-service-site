@@ -134,8 +134,6 @@
 		</ul>
 		<p class="nota">Te recomendamos uno cuando nos mandás lo que tenés.</p>
 	</Card>
-
-	<p class="relieve">Los cuadros en relieve son en blanco y negro, y vienen con su soporte.</p>
 </Section>
 
 <style>
@@ -278,14 +276,6 @@
 	.nivel-desc {
 		font-size: 14px;
 		color: var(--color-tinta-suave);
-	}
-
-	.relieve {
-		padding: 14px 18px;
-		border-radius: var(--radius-md);
-		border: var(--border);
-		background: var(--color-blanco);
-		font-weight: 500;
 	}
 
 	/* Desktop chico: una tarjeta por fila (como la referencia) */
