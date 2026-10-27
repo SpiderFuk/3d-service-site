@@ -8,7 +8,7 @@
 | [x] | rebrand-story-sections_20261026 | Rebrand · Tres caminos, Trabajos & Cómo funciona | 2026-10-26 | 2026-10-27 |
 | [x] | rebrand-materials-pricing_20261026 | Rebrand · Materiales y colores & Precio y plazos | 2026-10-26 | 2026-10-27 |
 | [x] | rebrand-viewer_20261026 | Rebrand · Visor 3D | 2026-10-26 | 2026-10-27 |
-| [ ] | rebrand-faq-contact-footer_20261026 | Rebrand · Preguntas, Contacto & Pie | 2026-10-26 | 2026-10-26 |
+| [x] | rebrand-faq-contact-footer_20261026 | Rebrand · Preguntas, Contacto & Pie | 2026-10-26 | 2026-10-27 |
 | [ ] | rebrand-cleanup-qa_20261026 | Rebrand · Legacy Cleanup, SEO & Launch QA | 2026-10-26 | 2026-10-26 |
 
 <!-- Tracks registered by /conductor:new-track -->
