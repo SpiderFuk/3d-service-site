@@ -9,6 +9,13 @@
 	 */
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
+	import Ejemplos from './visor/Ejemplos.svelte';
+	import { viewerState } from '$lib/stores/viewerState';
+	import type { EjemploId } from '$lib/config/visorEjemplos';
+
+	function elegirEjemplo(id: EjemploId) {
+		viewerState.abrirEjemplo(id);
+	}
 </script>
 
 <Section id="visor" contentClass="">
@@ -28,6 +35,7 @@
 
 		<div class="vexw">
 			<p class="vex-intro">¿No tenés un archivo a mano? Probá con uno de estos:</p>
+			<Ejemplos seleccionado={$viewerState.ejemplo} onelegir={elegirEjemplo} />
 		</div>
 
 		<div class="vstage"></div>
