@@ -16,22 +16,39 @@ export function scrollToSection(sectionId: string): void {
 }
 
 /**
- * Obtiene la sección activa según el scroll
+ * Franja de detección de la sección actual: una línea al 30 % del alto de la ventana,
+ * por debajo de la barra fija (la sección que la cruza es la actual).
  */
-export function getActiveSection(sections: string[]): string | null {
-	const scrollPosition = window.scrollY + window.innerHeight / 3;
+const FRANJA_SECCION_ACTUAL = '-30% 0px -69% 0px';
 
-	for (const sectionId of sections) {
-		const element = document.getElementById(sectionId);
-		if (element) {
-			const { offsetTop, offsetHeight } = element;
-			if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-				return sectionId;
+/**
+ * Observa las secciones y avisa cuál está en vista (reemplaza el cálculo por scroll).
+ *
+ * Si ninguna cruza la franja (p. ej. con el pie en vista) se mantiene la última.
+ * Devuelve la función que desconecta el observer.
+ */
+export function observarSeccionActual(
+	secciones: HTMLElement[],
+	alCambiar: (id: string) => void
+): () => void {
+	const enFranja = new Set<string>();
+
+	const observer = new IntersectionObserver(
+		(entradas) => {
+			for (const entrada of entradas) {
+				if (entrada.isIntersecting) enFranja.add(entrada.target.id);
+				else enFranja.delete(entrada.target.id);
 			}
-		}
-	}
 
-	return null;
+			// En orden del documento, la última que cruza la franja
+			const actual = secciones.filter((s) => enFranja.has(s.id)).pop();
+			if (actual) alCambiar(actual.id);
+		},
+		{ rootMargin: FRANJA_SECCION_ACTUAL }
+	);
+
+	secciones.forEach((s) => observer.observe(s));
+	return () => observer.disconnect();
 }
 
 /**

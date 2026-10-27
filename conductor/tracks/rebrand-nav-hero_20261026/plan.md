@@ -13,11 +13,11 @@ Hero first, since the bar's quote button depends on the hero button's visibility
 
 ### Tasks
 
-- [ ] Task 1.1: Hero layout in `landing/Hero.svelte` (text column + art) for the three breakpoints, h1 with the hours-driven headline (72/44/40 px).
-- [ ] Task 1.2: Eyebrow tag, copy line, cobalto quote button with inline spool shape (full width on phone).
-- [ ] Task 1.3: Three claim tiles (mantequilla/menta/tomate, 20 px radius, 2 px border) with exact copy.
-- [ ] Task 1.4: Spool art (cobalto square, four rings, cobalto center) as inline SVG with tomate extrusion, `aria-hidden`.
-- [ ] Task 1.5: `heroCtaVisible` store fed by an IntersectionObserver on the hero button (disconnect on destroy).
+- [x] Task 1.1: Hero layout in `landing/Hero.svelte` (text column + art) for the three breakpoints, h1 with the hours-driven headline (72/44/40 px).
+- [x] Task 1.2: Eyebrow tag, copy line, cobalto quote button with inline spool shape (full width on phone).
+- [x] Task 1.3: Three claim tiles (mantequilla/menta/tomate, 20 px radius, 2 px border) with exact copy.
+- [x] Task 1.4: Spool art (cobalto square, four rings, cobalto center) as inline SVG with tomate extrusion, `aria-hidden`.
+- [x] Task 1.5: `heroCtaVisible` store fed by an IntersectionObserver on the hero button (disconnect on destroy).
 
 ### Verification
 
@@ -27,9 +27,9 @@ Hero first, since the bar's quote button depends on the hero button's visibility
 
 ### Tasks
 
-- [ ] Task 2.1: Rewrite `landing/Navegacion.svelte` → sticky bar with wordmark SVG (112 px, `#inicio`) and four links.
-- [ ] Task 2.2: Section observer for the current link (weight 600, 4 px cobalto bar, `aria-current="location"`); replace the old scroll helpers.
-- [ ] Task 2.3: Cobalto "Pedir presupuesto" shown only when `heroCtaVisible` is false (animated in; no animation under reduced motion).
+- [x] Task 2.1: Rewrite `landing/Navegacion.svelte` → sticky bar with wordmark SVG (112 px, `#inicio`) and four links.
+- [x] Task 2.2: Section observer for the current link (weight 600, 4 px cobalto bar, `aria-current="location"`); replace the old scroll helpers.
+- [x] Task 2.3: Cobalto "Pedir presupuesto" shown only when `heroCtaVisible` is false (animated in; no animation under reduced motion).
 
 ### Verification
 
@@ -39,10 +39,10 @@ Hero first, since the bar's quote button depends on the hero button's visibility
 
 ### Tasks
 
-- [ ] Task 3.1: 64 px phone bar: wordmark 96 px, "Presupuesto" pill (same rule), round CSS-drawn menu button with `aria-expanded`/`aria-controls`.
-- [ ] Task 3.2: Menu panel: 56 px rows (current mantequilla), Instagram, hola@printo.uy, full-width "Pedir presupuesto".
-- [ ] Task 3.3: Focus management (first link on open, menu button on close), Escape closes, close on link tap and on resize >959 px, body scroll lock.
-- [ ] Task 3.4: Make sure desktop links/button are hidden on phone through CSS only (no inline `display`).
+- [x] Task 3.1: 64 px phone bar: wordmark 96 px, "Presupuesto" pill (same rule), round CSS-drawn menu button with `aria-expanded`/`aria-controls`.
+- [x] Task 3.2: Menu panel: 56 px rows (current mantequilla), Instagram, hola@printo.uy, full-width "Pedir presupuesto".
+- [x] Task 3.3: Focus management (first link on open, menu button on close), Escape closes, close on link tap and on resize >959 px, body scroll lock.
+- [x] Task 3.4: Make sure desktop links/button are hidden on phone through CSS only (no inline `display`).
 
 ### Verification
 
