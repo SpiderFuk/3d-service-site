@@ -10,9 +10,17 @@
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Card from '$lib/components/ui/Card.svelte';
 	import { abiertoAhora } from '$lib/stores/hoursStore';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
+
+	/** Baldosas de datos (BUILD.md, 02 Hero) */
+	const datos = [
+		{ fondo: 'mantequilla', valor: '24 a 48 h', detalle: 'en la mayoría de los pedidos' },
+		{ fondo: 'menta', valor: 'Hasta 25 cm', detalle: 'de alto, ancho y largo' },
+		{ fondo: 'tomate', valor: 'Hasta 4 colores', detalle: 'en una misma pieza' }
+	] as const;
 </script>
 
 <Section id="inicio" class="hero" contentClass="hero-contenido">
@@ -40,6 +48,14 @@
 			<span class="boton-carrete" aria-hidden="true"><span></span><span></span></span>
 			Pedir presupuesto
 		</Button>
+		<ul class="datos" aria-label="printo en datos">
+			{#each datos as dato (dato.valor)}
+				<Card as="li" radius="chip" fondo={dato.fondo} class="dato">
+					<strong>{dato.valor}</strong>
+					<span>{dato.detalle}</span>
+				</Card>
+			{/each}
+		</ul>
 	</div>
 
 	<div class="hero-arte"></div>
@@ -114,6 +130,37 @@
 		background: var(--color-menta);
 	}
 
+	.datos {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 14px;
+		max-width: 560px;
+		margin: 4px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.datos :global(.dato) {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		padding: 16px 18px;
+	}
+
+	.datos strong {
+		font-family: var(--font-display);
+		font-size: 28px;
+		font-weight: 800;
+		line-height: 1.05;
+		letter-spacing: -0.02em;
+	}
+
+	.datos span {
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 1.3;
+	}
+
 	.hero-arte {
 		flex: 1 1 340px;
 		min-width: 0;
@@ -139,6 +186,23 @@
 		/* Ancho completo en el teléfono */
 		.hero-texto :global(.hero-cta) {
 			align-self: stretch;
+		}
+
+		.datos {
+			gap: 8px;
+		}
+
+		.datos :global(.dato) {
+			gap: 4px;
+			padding: 12px 10px;
+		}
+
+		.datos strong {
+			font-size: 20px;
+		}
+
+		.datos span {
+			font-size: 12px;
 		}
 
 		.hero-arte {
