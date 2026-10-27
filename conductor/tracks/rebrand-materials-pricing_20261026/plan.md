@@ -13,11 +13,11 @@ Materials first (it consumes the stock list from track 1), then pricing, which i
 
 ### Tasks
 
-- [ ] Task 1.1: Section shell, heading, line in `landing/Materiales.svelte`.
-- [ ] Task 1.2: PLA and PETG cards (Disponible tag, tagline, description, property tags).
-- [ ] Task 1.3: Rewrite `ui/ColorSwatch.svelte`: round, border, translucent support, sold-out state (faded, diagonal, "Agotado" 14 px tag), accessible name.
-- [ ] Task 1.4: Swatch grids per material from `materialsStore`; "Los agotados vuelven a entrar" line.
-- [ ] Task 1.5: Multicolor box (overlapping dots, decorative), detail box (three levels with layer-line squares), relief-frame note.
+- [x] Task 1.1: Section shell, heading, line in `landing/Materiales.svelte`.
+- [x] Task 1.2: PLA and PETG cards (Disponible tag, tagline, description, property tags).
+- [x] Task 1.3: Rewrite `ui/ColorSwatch.svelte`: round, border, translucent support, sold-out state (faded, diagonal, "Agotado" 14 px tag), accessible name.
+- [x] Task 1.4: Swatch grids per material from `materialsStore`; "Los agotados vuelven a entrar" line.
+- [x] Task 1.5: Multicolor box (overlapping dots, decorative), detail box (three levels with layer-line squares), relief-frame note.
 
 ### Verification
 
@@ -27,11 +27,11 @@ Materials first (it consumes the stock list from track 1), then pricing, which i
 
 ### Tasks
 
-- [ ] Task 2.1: Section shell + heading in `landing/Precios.svelte`.
-- [ ] Task 2.2: `PriceChip` (crema, 20 px radius, title + line) and the Piezas card (5 chips, 2 cols) and Cuadros en relieve card (3 chips).
-- [ ] Task 2.3: Plazo + Entrega boxes; desktop 3-col grid with equal heights and centered text.
-- [ ] Task 2.4: 960–1199 layout (cards side by side, boxes in a row) and phone layout (one column, merged Plazo/Entrega box, 14 px texts).
-- [ ] Task 2.5: Tomate closing strip with tinta "Pedir el precio".
+- [x] Task 2.1: Section shell + heading in `landing/Precios.svelte`.
+- [x] Task 2.2: `PriceChip` (crema, 20 px radius, title + line) and the Piezas card (5 chips, 2 cols) and Cuadros en relieve card (3 chips).
+- [x] Task 2.3: Plazo + Entrega boxes; desktop 3-col grid with equal heights and centered text.
+- [x] Task 2.4: 960–1199 layout (cards side by side, boxes in a row) and phone layout (one column, merged Plazo/Entrega box, 14 px texts).
+- [x] Task 2.5: Tomate closing strip with tinta "Pedir el precio".
 
 ### Verification
 
