@@ -21,6 +21,15 @@
 		{ fondo: 'menta', valor: 'Hasta 25 cm', detalle: 'de alto, ancho y largo' },
 		{ fondo: 'tomate', valor: 'Hasta 4 colores', detalle: 'en una misma pieza' }
 	] as const;
+
+	/** Anillos del carrete, de afuera hacia adentro (radio en un viewBox de 100) */
+	const anillos = [
+		{ r: 38, color: 'tomate' },
+		{ r: 29, color: 'mantequilla' },
+		{ r: 20, color: 'menta' },
+		{ r: 12, color: 'crema' },
+		{ r: 5, color: 'cobalto' }
+	] as const;
 </script>
 
 <Section id="inicio" class="hero" contentClass="hero-contenido">
@@ -58,7 +67,22 @@
 		</ul>
 	</div>
 
-	<div class="hero-arte"></div>
+	<div class="hero-arte">
+		<!-- Decorativo: cuadrado cobalto con el carrete; la única extrusión de la vista -->
+		<div class="hero-carrete" aria-hidden="true">
+			<svg viewBox="0 0 100 100" focusable="false">
+				{#each anillos as anillo (anillo.r)}
+					<circle
+						cx="50"
+						cy="50"
+						r={anillo.r}
+						style:fill="var(--color-{anillo.color})"
+						vector-effect="non-scaling-stroke"
+					/>
+				{/each}
+			</svg>
+		</div>
+	</div>
 </Section>
 
 <style>
@@ -169,6 +193,24 @@
 		padding: 0 30px 30px 0;
 	}
 
+	.hero-carrete {
+		aspect-ratio: 1 / 1;
+		border: var(--border);
+		background: var(--color-cobalto);
+		box-shadow: var(--shadow-extrude);
+	}
+
+	.hero-carrete svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.hero-carrete circle {
+		stroke: var(--color-tinta);
+		stroke-width: var(--border-width);
+	}
+
 	@media (max-width: 959px) {
 		:global(.hero) {
 			--section-pt: 32px;
@@ -208,6 +250,11 @@
 		.hero-arte {
 			max-width: 240px;
 			padding: 0 20px 20px 0;
+		}
+
+		/* Extrusión más corta (20 px) en el teléfono */
+		.hero-carrete {
+			box-shadow: var(--shadow-extrude-md);
 		}
 	}
 </style>
