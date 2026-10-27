@@ -4,7 +4,9 @@
 	 *
 	 * Desktop: logo (112 px, a #inicio) y los cuatro links del menú.
 	 * Teléfono (hasta 959 px): barra de 64 px, logo de 96 px, píldora "Presupuesto"
-	 * (misma regla que el botón de la barra) y botón redondo de menú.
+	 * (misma regla que el botón de la barra) y botón redondo de menú. El menú abre un panel
+	 * con los links (filas de 56 px, el actual en mantequilla), Instagram, el email y
+	 * "Pedir presupuesto" a todo el ancho.
 	 * Queda dentro de <header>: el Hero mide su alto para saber si la barra tapa su botón.
 	 *
 	 * "Pedir presupuesto" (cobalto) aparece solo cuando el botón del Hero salió de vista
@@ -21,6 +23,7 @@
 	import { uiStore, heroCtaVisible } from '$lib/stores/uiStore';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
+	import { contactInfo } from '$lib/config/contact';
 	import { getVisibleNavItems } from '$lib/utils/visibilityHelpers';
 	import { observarSeccionActual } from '$lib/utils/scroll';
 
@@ -108,6 +111,39 @@
 			>
 				<span class="barra-menu-rayas" aria-hidden="true"><span></span><span></span><span></span></span>
 			</button>
+		</div>
+
+		<div id="menu-movil" class="panel" hidden={!menuAbierto}>
+			<ul class="panel-enlaces">
+				{#each items as item (item.href)}
+					{@const actual = seccionActual === item.href.slice(1)}
+					<li>
+						<a
+							href={item.href}
+							aria-label={item.ariaLabel}
+							aria-current={actual ? 'location' : undefined}
+							class="panel-enlace"
+							class:actual>{item.label}</a
+						>
+					</li>
+				{/each}
+			</ul>
+
+			<div class="panel-canales">
+				<a href={contactInfo.socialMedia.instagram} target="_blank" rel="noopener">Instagram</a>
+				<a href="mailto:{contactInfo.email}">{contactInfo.email}</a>
+			</div>
+
+			<Button
+				variant="quote"
+				size="lg"
+				full
+				href={whatsappUrl(mensajes.presupuesto)}
+				aria-label="Pedir presupuesto por WhatsApp"
+			>
+				<CarreteChico />
+				Pedir presupuesto
+			</Button>
 		</div>
 	</nav>
 </header>
@@ -271,6 +307,68 @@
 		transform: translateY(-6px) rotate(-45deg);
 	}
 
+	/* Panel del menú: debajo de la barra (64 px + 2 px de borde), ocupa el resto de la pantalla */
+	.panel {
+		display: none;
+		position: fixed;
+		top: 66px;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		flex-direction: column;
+		gap: 20px;
+		padding: 16px var(--gutter) 24px;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		background: var(--color-crema);
+	}
+
+	.panel-enlaces {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.panel-enlace {
+		display: flex;
+		align-items: center;
+		min-height: 56px;
+		padding: 0 20px;
+		border: var(--border);
+		border-radius: var(--radius-md);
+		background: var(--color-blanco);
+		color: var(--color-tinta);
+		font-family: var(--font-display);
+		font-size: 22px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		text-decoration: none;
+	}
+
+	.panel-enlace:hover {
+		color: var(--color-tinta);
+	}
+
+	.panel-enlace.actual {
+		background: var(--color-mantequilla);
+	}
+
+	.panel-canales {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 24px;
+	}
+
+	.panel-canales a {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--tap-min);
+		font-weight: 600;
+	}
+
 	/* Teléfono: solo CSS, sin display en línea que pise la media query */
 	@media (max-width: 959px) {
 		.barra-nav {
@@ -283,6 +381,11 @@
 		}
 
 		.barra-menu {
+			display: flex;
+		}
+
+		/* El panel se muestra solo en el teléfono y solo abierto (sin el atributo hidden) */
+		.panel:not([hidden]) {
 			display: flex;
 		}
 
