@@ -12,9 +12,13 @@
 	import { get } from 'svelte/store';
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
+	import Card from '$lib/components/ui/Card.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 	import TrabajoDestacado from './TrabajoDestacado.svelte';
 	import TrabajoPieza from './TrabajoPieza.svelte';
 	import { contactInfo } from '$lib/config/contact';
+	import { mensajes } from '$lib/config/whatsappMessages';
+	import { whatsappUrl } from '$lib/utils/whatsapp';
 	import { trabajosStore, loadTrabajos } from '$lib/stores/trabajosStore';
 	import { armarGaleria, elegirDestacado } from '$lib/utils/galeria';
 
@@ -47,6 +51,19 @@
 			{/each}
 		</ul>
 	{/if}
+
+	<!-- Franja de cierre: en teléfono el texto arriba y el botón a todo el ancho -->
+	<Card
+		radius="tile"
+		fondo="mantequilla"
+		class="mt-7 flex flex-wrap items-center justify-between gap-x-7 gap-y-4 px-8 py-7 max-desk:flex-col max-desk:items-stretch"
+	>
+		<p class="cierre">¿Querés el tuyo? Mandanos la foto.</p>
+		<Button
+			href={whatsappUrl(mensajes.trabajos)}
+			aria-label="Quiero el mío, mandar una foto por WhatsApp">Quiero el mío</Button
+		>
+	</Card>
 </Section>
 
 <style>
@@ -79,6 +96,15 @@
 		min-height: var(--tap-min);
 		font-size: 17px;
 		font-weight: 600;
+	}
+
+	.cierre {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: 30px;
+		font-weight: 700;
+		line-height: 1.1;
+		letter-spacing: -0.01em;
 	}
 
 	/* Desktop: 4 columnas, la destacada ocupa 2 columnas y 2 filas */

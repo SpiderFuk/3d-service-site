@@ -30,7 +30,7 @@ One phase per section, in page order, each checked against the reference before 
 - [x] Task 2.2: Heading, line, Instagram link in `landing/Trabajos.svelte`.
 - [x] Task 2.3: Grid with random featured (2×2 desktop, full-width photo-left at 960–1199, full-width on 2-col phone grid).
 - [x] Task 2.4: Featured card (tag, title, line, story) and small cards (photo, tag, title).
-- [ ] Task 2.5: Mantequilla closing strip with "Quiero el mío".
+- [x] Task 2.5: Mantequilla closing strip with "Quiero el mío".
 
 ### Verification
 
