@@ -17,7 +17,7 @@ Build the state machine and static UI first (testable without WebGL), then the l
 - [x] Task 1.2: Section shell, heading, line, examples intro in `landing/Visor.svelte`; layouts for the three breakpoints (stacked at 960–1199).
 - [x] Task 1.3: Example cards with thumbnails, `aria-pressed`, mantequilla selected state, sideways-scrolling row on phone.
 - [x] Task 1.4: Frame (white, border, radius, extrusion, aspect ratios per breakpoint) with empty state (dashed area, drag text hidden on phone, real file input as "Elegir archivo", size hint) and drag-and-drop.
-- [ ] Task 1.5: Loading state (cobalto progress bar + text) and three error states with exact copy and "Probar otro".
+- [x] Task 1.5: Loading state (cobalto progress bar + text) and three error states with exact copy and "Probar otro".
 
 ### Verification
 

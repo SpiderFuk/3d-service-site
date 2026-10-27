@@ -8,7 +8,7 @@
 	 * Se puede soltar un archivo sobre el marco en cualquier estado.
 	 */
 	import Button from '$lib/components/ui/Button.svelte';
-	import { EXTENSIONES_VISOR, type FaseVisor } from '$lib/stores/viewerState';
+	import { EXTENSIONES_VISOR, type FaseVisor, type TipoError } from '$lib/stores/viewerState';
 
 	interface Props {
 		vista: FaseVisor;
@@ -23,6 +23,13 @@
 	let arrastrando = $state(false);
 
 	const etiqueta = 'Visor 3D. Elegí un archivo o un ejemplo.';
+
+	/** Textos de error (BUILD.md); los botones van debajo del marco */
+	const mensajesError: Record<TipoError, string> = {
+		tipo: 'Este archivo no lo podemos abrir. Probá con un STL o 3MF.',
+		tamano: 'Pesa más de 50 MB. Mandánoslo por WhatsApp y lo vemos.',
+		danado: 'No pudimos abrirlo. Puede estar dañado: probá exportarlo de nuevo.'
+	};
 
 	function traeArchivos(e: DragEvent): boolean {
 		return e.dataTransfer?.types.includes('Files') ?? false;
@@ -74,6 +81,17 @@
 			<strong class="vdrag">Arrastrá tu archivo acá</strong>
 			<Button id="visor-elegir" onclick={() => input.click()}>Elegir archivo</Button>
 			<span class="vayuda">STL o 3MF, hasta 50 MB</span>
+		</div>
+	{:else if vista.fase === 'loading'}
+		<div class="vcargando">
+			<span class="vbarra" aria-hidden="true">
+				<span class="vbarra-relleno" style:width="{vista.pct}%"></span>
+			</span>
+			<p class="vcargando-texto">Abriendo {vista.nombre}… {vista.pct}%</p>
+		</div>
+	{:else if vista.fase === 'error'}
+		<div class="vdrop">
+			<p class="verror">{mensajesError[vista.tipo]}</p>
 		</div>
 	{/if}
 
@@ -135,6 +153,51 @@
 	.vayuda {
 		font-size: 14px;
 		color: var(--color-tinta-suave);
+	}
+
+	.vcargando {
+		width: min(72%, 360px);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 14px;
+		text-align: center;
+	}
+
+	.vbarra {
+		display: block;
+		width: 100%;
+		height: 16px;
+		overflow: hidden;
+		background: var(--color-crema);
+		border: var(--border);
+		border-radius: var(--radius-pill);
+	}
+
+	.vbarra-relleno {
+		display: block;
+		height: 100%;
+		background: var(--color-cobalto);
+		transition: width 0.15s linear;
+	}
+
+	.vcargando-texto,
+	.verror {
+		margin: 0;
+		font-size: 17px;
+		font-weight: 600;
+		line-height: 1.35;
+		overflow-wrap: anywhere;
+	}
+
+	.verror {
+		max-width: 30ch;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.vbarra-relleno {
+			transition: none;
+		}
 	}
 
 	@media (min-width: 960px) and (max-width: 1199px) {

@@ -7,12 +7,16 @@
 	 * 960 a 1199 px todo en una columna (texto, ejemplos, visor);
 	 * teléfono texto, visor y después los ejemplos.
 	 */
+	import { onMount, tick } from 'svelte';
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 	import Ejemplos from './visor/Ejemplos.svelte';
 	import Marco from './visor/Marco.svelte';
-	import { viewerState } from '$lib/stores/viewerState';
+	import { viewerState, type OrigenModelo, type TipoError } from '$lib/stores/viewerState';
 	import type { EjemploId } from '$lib/config/visorEjemplos';
+	import { mensajes } from '$lib/config/whatsappMessages';
+	import { whatsappUrl } from '$lib/utils/whatsapp';
 
 	function elegirEjemplo(id: EjemploId) {
 		viewerState.abrirEjemplo(id);
@@ -21,6 +25,38 @@
 	function abrirArchivo(file: File) {
 		viewerState.abrirArchivo(file);
 	}
+
+	/** "Probar otro": vuelve al estado vacío y deja el foco en "Elegir archivo" */
+	async function probarOtro() {
+		viewerState.reiniciar();
+		await tick();
+		document.getElementById('visor-elegir')?.focus();
+	}
+
+	// Solo en desarrollo: forzar cada estado desde la consola para revisarlo a mano
+	// (__visor.cargando('pieza.stl', 55), __visor.error('tamano'), __visor.vacio()…)
+	onMount(() => {
+		if (!import.meta.env.DEV) return;
+		const w = window as unknown as Record<string, unknown>;
+		w.__visor = {
+			vacio: () => viewerState.reiniciar(),
+			cargando: (nombre = 'soporte-auriculares.stl', pct = 55) =>
+				viewerState.forzar({
+					vista: { fase: 'loading', nombre, pct, origen: 'archivo', carga: -1 },
+					ejemplo: null
+				}),
+			cargado: (nombre = 'soporte-auriculares.stl', origen: OrigenModelo = 'archivo') =>
+				viewerState.forzar({
+					vista: { fase: 'loaded', nombre, origen, carga: -1 },
+					ejemplo: null
+				}),
+			error: (tipo: TipoError = 'tipo') =>
+				viewerState.forzar({ vista: { fase: 'error', tipo }, ejemplo: null })
+		};
+		return () => {
+			delete w.__visor;
+		};
+	});
 </script>
 
 <Section id="visor" contentClass="">
@@ -45,6 +81,15 @@
 
 		<div class="vstage">
 			<Marco vista={$viewerState.vista} onarchivo={abrirArchivo} />
+
+			{#if $viewerState.vista.fase === 'error'}
+				<div class="vactions">
+					{#if $viewerState.vista.tipo === 'tamano'}
+						<Button href={whatsappUrl(mensajes.visorArchivoGrande)}>Mandar por WhatsApp</Button>
+					{/if}
+					<Button variant="plain" onclick={probarOtro}>Probar otro</Button>
+				</div>
+			{/if}
 		</div>
 	</div>
 </Section>
@@ -101,6 +146,15 @@
 		padding: 0 20px 20px 0;
 	}
 
+	/* Acciones debajo del marco (pasan la extrusión) */
+	.vactions {
+		margin-top: 36px;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px;
+	}
+
 	/* Desktop chico: texto y ejemplos arriba, visor abajo */
 	@media (min-width: 960px) and (max-width: 1199px) {
 		.visor {
@@ -134,6 +188,14 @@
 
 		.vstage {
 			padding: 0 12px 12px 0;
+		}
+
+		/* Botones a todo el ancho, uno debajo del otro */
+		.vactions {
+			margin-top: 20px;
+			flex-direction: column;
+			align-items: stretch;
+			gap: 8px;
 		}
 	}
 </style>
