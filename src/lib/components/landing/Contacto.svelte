@@ -58,14 +58,17 @@
 		<div>
 			<dt>Instagram</dt>
 			<dd>
-				<a href={contactInfo.socialMedia.instagram} target="_blank" rel="noopener"
-					>{contactInfo.socialMedia.instagramHandle}</a
+				<a
+					class="contacto-link"
+					href={contactInfo.socialMedia.instagram}
+					target="_blank"
+					rel="noopener">{contactInfo.socialMedia.instagramHandle}</a
 				>
 			</dd>
 		</div>
 		<div>
 			<dt>Email</dt>
-			<dd><a href="mailto:{contactInfo.email}">{contactInfo.email}</a></dd>
+			<dd><a class="contacto-link" href="mailto:{contactInfo.email}">{contactInfo.email}</a></dd>
 		</div>
 		<div>
 			<dt>Horario</dt>
@@ -178,7 +181,23 @@
 		margin: 0;
 		font-size: 19px;
 		font-weight: 600;
-		line-height: 1.35;
+		line-height: var(--dato-linea);
+	}
+
+	.contacto-datos {
+		--dato-linea: 1.35;
+	}
+
+	/*
+	 * Área de toque de 44 px en los links (Instagram, Email). El margen negativo
+	 * devuelve lo que sobra de la altura de línea, así la fila se ve igual que en
+	 * la referencia y el valor queda centrado.
+	 */
+	.contacto-link {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--tap-min);
+		margin-block: calc((var(--dato-linea) * 1em - var(--tap-min)) / 2);
 	}
 
 	.horario-corto,
