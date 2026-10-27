@@ -13,10 +13,10 @@ FAQ with its structured data, then Contacto (hours-driven pill), then the footer
 
 ### Tasks
 
-- [ ] Task 1.1: `config/faq.ts` with the eight Q&As (answer 8 from hours helper).
-- [ ] Task 1.2: Two-column layout in `landing/Preguntas.svelte` with sticky title column on desktop; link placement per breakpoint.
-- [ ] Task 1.3: Accordion rows: h3 > button with `aria-expanded`/`aria-controls`, multiple open, first open, mantequilla open row, CSS plus/minus circle.
-- [ ] Task 1.4: FAQPage JSON-LD in `<svelte:head>` generated from the same data.
+- [x] Task 1.1: `config/faq.ts` with the eight Q&As (answer 8 from hours helper).
+- [x] Task 1.2: Two-column layout in `landing/Preguntas.svelte` with sticky title column on desktop; link placement per breakpoint.
+- [x] Task 1.3: Accordion rows: h3 > button with `aria-expanded`/`aria-controls`, multiple open, first open, mantequilla open row, CSS plus/minus circle.
+- [x] Task 1.4: FAQPage JSON-LD in `<svelte:head>` generated from the same data.
 
 ### Verification
 
@@ -26,10 +26,10 @@ FAQ with its structured data, then Contacto (hours-driven pill), then the footer
 
 ### Tasks
 
-- [ ] Task 2.1: Cobalto section shell in `landing/Contacto.svelte` with crema scope for links and focus ring; 72/40 px headline with mantequilla second line.
-- [ ] Task 2.2: Mantequilla WhatsApp button with number and accessible name.
-- [ ] Task 2.3: Open-now pill bound to the hours store (menta/tomate dot, `aria-hidden` dot).
-- [ ] Task 2.4: `dl` details (Instagram, Email, Horario, Dónde) with crema rules; phone rows with short/long hours text.
+- [x] Task 2.1: Cobalto section shell in `landing/Contacto.svelte` with crema scope for links and focus ring; 72/40 px headline with mantequilla second line.
+- [x] Task 2.2: Mantequilla WhatsApp button with number and accessible name.
+- [x] Task 2.3: Open-now pill bound to the hours store (menta/tomate dot, `aria-hidden` dot).
+- [x] Task 2.4: `dl` details (Instagram, Email, Horario, Dónde) with crema rules; phone rows with short/long hours text.
 
 ### Verification
 
@@ -39,9 +39,9 @@ FAQ with its structured data, then Contacto (hours-driven pill), then the footer
 
 ### Tasks
 
-- [ ] Task 3.1: Rewrite `landing/Pie.svelte`: wordmark SVG link (68%/60%) + bottom-aligned phrase (32/15/13 px).
-- [ ] Task 3.2: 2 px rule, `nav aria-label="Pie"` with menu links, channels list; 44 px tap areas; centered on phone.
-- [ ] Task 3.3: Legal line with `new Date().getFullYear()`.
+- [x] Task 3.1: Rewrite `landing/Pie.svelte`: wordmark SVG link (68%/60%) + bottom-aligned phrase (32/15/13 px).
+- [x] Task 3.2: 2 px rule, `nav aria-label="Pie"` with menu links, channels list; 44 px tap areas; centered on phone.
+- [x] Task 3.3: Legal line with `new Date().getFullYear()`.
 
 ### Verification
 
