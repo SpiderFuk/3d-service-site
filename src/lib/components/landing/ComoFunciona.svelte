@@ -4,10 +4,15 @@
 	 *
 	 * Tres pasos numerados. La numeración la da el <ol>; los círculos cobalto son
 	 * decorativos (aria-hidden) para que el lector de pantalla no lea el número dos veces.
+	 * Fuera de la lista, la tarjeta menta "¿Lo imprimimos?" (párrafo, no titular).
 	 * Copy exacto de design/landing-v1/BUILD.md.
 	 */
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
+	import Card from '$lib/components/ui/Card.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import { mensajes } from '$lib/config/whatsappMessages';
+	import { whatsappUrl } from '$lib/utils/whatsapp';
 
 	const pasos = [
 		{
@@ -48,6 +53,15 @@
 				</li>
 			{/each}
 		</ol>
+
+		<Card fondo="menta" class="tuyo">
+			<p class="pregunta">¿Lo imprimimos?</p>
+			<Button
+				href={whatsappUrl(mensajes.comoFunciona)}
+				aria-label="Sí, escribamos por WhatsApp"
+				class="self-start">Sí, escribamos</Button
+			>
+		</Card>
 	</div>
 </Section>
 
@@ -112,5 +126,23 @@
 	.texto {
 		margin: 0;
 		color: var(--color-tinta-suave);
+	}
+
+	/* Tarjeta menta (Card): la cuarta columna en desktop */
+	.envoltura > :global(.tuyo) {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 20px;
+		padding: 28px 24px;
+	}
+
+	.pregunta {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: 40px;
+		font-weight: 800;
+		line-height: 0.95;
+		letter-spacing: -0.03em;
 	}
 </style>
