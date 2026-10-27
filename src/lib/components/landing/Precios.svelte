@@ -29,6 +29,27 @@
 		},
 		{ titulo: 'Soporte', linea: 'Siempre incluido, sin costo extra.' }
 	];
+
+	interface Plazo {
+		titulo: string;
+		valor: string;
+		texto: string;
+	}
+
+	const plazos: Plazo[] = [
+		{
+			titulo: 'Plazo',
+			valor: '24 a 48 h',
+			texto:
+				'En la mayoría de los pedidos. Piezas grandes, multicolor o en cantidad: te decimos el plazo junto con el precio.'
+		},
+		{
+			titulo: 'Entrega',
+			valor: 'Retiro o envío',
+			texto:
+				'Retirás en Montevideo o Las Piedras, o te lo enviamos a tu casa. El día, la hora y el envío los coordinamos por WhatsApp.'
+		}
+	];
 </script>
 
 <Section id="precios">
@@ -59,6 +80,19 @@
 				{/each}
 			</ul>
 		</article>
+
+		<!-- Plazo y Entrega: dos filas iguales que juntas miden lo mismo que las tarjetas -->
+		<div class="pside">
+			{#each plazos as caja (caja.titulo)}
+				<div class="pbox">
+					<div class="pbox-cabeza">
+						<h3 class="pbox-k">{caja.titulo}</h3>
+						<p class="pbox-v">{caja.valor}</p>
+					</div>
+					<p class="pbox-t">{caja.texto}</p>
+				</div>
+			{/each}
+		</div>
 	</div>
 </Section>
 
@@ -70,7 +104,7 @@
 	.pgrid {
 		margin-top: 28px;
 		display: grid;
-		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr) minmax(0, 0.75fr);
 		gap: 24px;
 		align-items: stretch;
 	}
@@ -109,6 +143,56 @@
 
 	.factores-2 {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	/* Columna lateral: grid de dos filas 1fr, sin medir con JS */
+	.pside {
+		display: grid;
+		grid-template-rows: 1fr 1fr;
+		gap: 16px;
+	}
+
+	.pbox {
+		min-width: 0;
+		padding: 18px 20px;
+		border: var(--border);
+		border-radius: var(--radius-md);
+		background: var(--color-blanco);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 4px;
+	}
+
+	.pbox-cabeza {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	/* h3 con aspecto de etiqueta (como el eyebrow) */
+	.pbox-k {
+		margin: 0;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.2;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-tinta-suave);
+	}
+
+	.pbox-v {
+		font-family: var(--font-display);
+		font-size: 28px;
+		line-height: 1;
+		font-weight: 800;
+		letter-spacing: -0.03em;
+	}
+
+	.pbox-t {
+		font-size: 14px;
+		color: var(--color-tinta-suave);
+		text-wrap: pretty;
 	}
 
 	@media (max-width: 959px) {
