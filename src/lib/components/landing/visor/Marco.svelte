@@ -14,11 +14,13 @@
 		vista: FaseVisor;
 		/** Archivo elegido con el input o soltado sobre el marco */
 		onarchivo: (file: File) => void;
+		/** El marco (enfocable; recibe las flechas) */
+		marco?: HTMLDivElement;
+		/** Donde el runtime monta el canvas de Three.js */
+		lienzo?: HTMLDivElement;
 	}
 
-	let { vista, onarchivo }: Props = $props();
-
-	let marco: HTMLDivElement;
+	let { vista, onarchivo, marco = $bindable(), lienzo = $bindable() }: Props = $props();
 	let input: HTMLInputElement;
 	let arrastrando = $state(false);
 
@@ -43,7 +45,7 @@
 	}
 
 	function alSalir(e: DragEvent) {
-		if (!marco.contains(e.relatedTarget as Node | null)) arrastrando = false;
+		if (!marco?.contains(e.relatedTarget as Node | null)) arrastrando = false;
 	}
 
 	function alSoltar(e: DragEvent) {
@@ -76,6 +78,9 @@
 	ondragleave={alSalir}
 	ondrop={alSoltar}
 >
+	<!-- El canvas vive siempre acá (un renderer por visor); solo se ve con el modelo abierto -->
+	<div bind:this={lienzo} class="vlienzo" class:visible={vista.fase === 'loaded'}></div>
+
 	{#if vista.fase === 'empty'}
 		<div class="vdrop">
 			<strong class="vdrag">Arrastrá tu archivo acá</strong>
@@ -125,6 +130,22 @@
 
 	.vframe:focus-visible {
 		outline-offset: 4px;
+	}
+
+	.vlienzo {
+		position: absolute;
+		inset: 0;
+		visibility: hidden;
+	}
+
+	.vlienzo.visible {
+		visibility: visible;
+	}
+
+	.vlienzo :global(.visor-canvas) {
+		display: block;
+		touch-action: pan-y;
+		user-select: none;
 	}
 
 	.vdrop {
