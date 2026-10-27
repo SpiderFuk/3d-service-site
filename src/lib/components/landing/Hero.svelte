@@ -9,11 +9,15 @@
 	 */
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 	import { abiertoAhora } from '$lib/stores/hoursStore';
+	import { mensajes } from '$lib/config/whatsappMessages';
+	import { whatsappUrl } from '$lib/utils/whatsapp';
 </script>
 
 <Section id="inicio" class="hero" contentClass="hero-contenido">
 	<div class="hero-texto">
+		<p class="eyebrow hero-etiqueta">Impresión 3D hecha en Uruguay</p>
 		<SectionHeading
 			id="inicio-titulo"
 			level={1}
@@ -21,6 +25,21 @@
 			primera={$abiertoAhora ? 'Capa por capa,' : 'Tu idea,'}
 			segunda={$abiertoAhora ? 'tu idea toma forma.' : 'en tus manos.'}
 		/>
+		<p class="hero-linea">
+			Mandanos una foto, un modelo que encontraste o tu archivo, y nosotros lo imprimimos.
+		</p>
+		<!-- Único botón cobalto en vista: el de la barra aparece cuando este sale de pantalla -->
+		<Button
+			variant="quote"
+			size="lg"
+			href={whatsappUrl(mensajes.presupuesto)}
+			id="hero-cta"
+			class="hero-cta"
+			aria-label="Pedir presupuesto por WhatsApp"
+		>
+			<span class="boton-carrete" aria-hidden="true"><span></span><span></span></span>
+			Pedir presupuesto
+		</Button>
 	</div>
 
 	<div class="hero-arte"></div>
@@ -48,6 +67,53 @@
 		gap: 28px;
 	}
 
+	.hero-etiqueta {
+		align-self: flex-start;
+		display: inline-flex;
+		align-items: center;
+		padding: 8px 16px;
+		border: var(--border);
+		border-radius: var(--radius-pill);
+		background: var(--color-blanco);
+	}
+
+	.hero-linea {
+		margin: 0;
+		max-width: 30em;
+		font-size: 18px;
+		line-height: 1.55;
+		color: var(--color-tinta-suave);
+	}
+
+	.hero-texto :global(.hero-cta) {
+		align-self: flex-start;
+		/* Menos aire a la izquierda: el carrete ya ocupa ese lugar */
+		padding-left: 22px;
+	}
+
+	/* Carrete chico del botón: anillos tomate, mantequilla y menta */
+	.boton-carrete {
+		flex: none;
+		position: relative;
+		width: 26px;
+		height: 26px;
+		border: var(--border);
+		border-radius: 50%;
+		background: var(--color-tomate);
+	}
+
+	.boton-carrete span {
+		position: absolute;
+		inset: 3px;
+		border-radius: 50%;
+		background: var(--color-mantequilla);
+	}
+
+	.boton-carrete span + span {
+		inset: 7px;
+		background: var(--color-menta);
+	}
+
 	.hero-arte {
 		flex: 1 1 340px;
 		min-width: 0;
@@ -68,6 +134,11 @@
 
 		.hero-texto {
 			gap: 20px;
+		}
+
+		/* Ancho completo en el teléfono */
+		.hero-texto :global(.hero-cta) {
+			align-self: stretch;
 		}
 
 		.hero-arte {
