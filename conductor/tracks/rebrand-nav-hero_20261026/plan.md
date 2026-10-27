@@ -29,7 +29,7 @@ Hero first, since the bar's quote button depends on the hero button's visibility
 
 - [x] Task 2.1: Rewrite `landing/Navegacion.svelte` → sticky bar with wordmark SVG (112 px, `#inicio`) and four links.
 - [x] Task 2.2: Section observer for the current link (weight 600, 4 px cobalto bar, `aria-current="location"`); replace the old scroll helpers.
-- [ ] Task 2.3: Cobalto "Pedir presupuesto" shown only when `heroCtaVisible` is false (animated in; no animation under reduced motion).
+- [x] Task 2.3: Cobalto "Pedir presupuesto" shown only when `heroCtaVisible` is false (animated in; no animation under reduced motion).
 
 ### Verification
 

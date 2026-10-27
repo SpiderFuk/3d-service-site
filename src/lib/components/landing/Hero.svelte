@@ -12,6 +12,7 @@
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
+	import CarreteChico from './CarreteChico.svelte';
 	import { abiertoAhora } from '$lib/stores/hoursStore';
 	import { heroCtaVisible } from '$lib/stores/uiStore';
 	import { mensajes } from '$lib/config/whatsappMessages';
@@ -89,7 +90,7 @@
 			class="hero-cta"
 			aria-label="Pedir presupuesto por WhatsApp"
 		>
-			<span class="boton-carrete" aria-hidden="true"><span></span><span></span></span>
+			<CarreteChico />
 			Pedir presupuesto
 		</Button>
 		<ul class="datos" aria-label="printo en datos">
@@ -164,29 +165,6 @@
 		align-self: flex-start;
 		/* Menos aire a la izquierda: el carrete ya ocupa ese lugar */
 		padding-left: 22px;
-	}
-
-	/* Carrete chico del botón: anillos tomate, mantequilla y menta */
-	.boton-carrete {
-		flex: none;
-		position: relative;
-		width: 26px;
-		height: 26px;
-		border: var(--border);
-		border-radius: 50%;
-		background: var(--color-tomate);
-	}
-
-	.boton-carrete span {
-		position: absolute;
-		inset: 3px;
-		border-radius: 50%;
-		background: var(--color-mantequilla);
-	}
-
-	.boton-carrete span + span {
-		inset: 7px;
-		background: var(--color-menta);
 	}
 
 	.datos {

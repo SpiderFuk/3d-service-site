@@ -5,12 +5,20 @@
 	 * Desktop: logo (112 px, a #inicio) y los cuatro links del menú.
 	 * Queda dentro de <header>: el Hero mide su alto para saber si la barra tapa su botón.
 	 *
+	 * "Pedir presupuesto" (cobalto) aparece solo cuando el botón del Hero salió de vista
+	 * (heroCtaVisible). Su lugar está reservado siempre: la barra no cambia de tamaño
+	 * al aparecer el botón, así el margen del observer del Hero sigue siendo correcto.
+	 *
 	 * Link actual: un IntersectionObserver sobre las secciones con ancla escribe
 	 * uiStore.activeSection; solo los cuatro destinos del menú marcan un link.
 	 */
 	import { tick } from 'svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import CarreteChico from './CarreteChico.svelte';
 	import { sectionsVisibilityFlag } from '$lib/stores/featureFlagsStore';
-	import { uiStore } from '$lib/stores/uiStore';
+	import { uiStore, heroCtaVisible } from '$lib/stores/uiStore';
+	import { mensajes } from '$lib/config/whatsappMessages';
+	import { whatsappUrl } from '$lib/utils/whatsapp';
 	import { getVisibleNavItems } from '$lib/utils/visibilityHelpers';
 	import { observarSeccionActual } from '$lib/utils/scroll';
 
@@ -56,6 +64,20 @@
 				</li>
 			{/each}
 		</ul>
+
+		<div class="barra-cta">
+			{#if !$heroCtaVisible}
+				<Button
+					variant="quote"
+					href={whatsappUrl(mensajes.presupuesto)}
+					class="barra-cta-boton"
+					aria-label="Pedir presupuesto por WhatsApp"
+				>
+					<CarreteChico />
+					Pedir presupuesto
+				</Button>
+			{/if}
+		</div>
 	</nav>
 </header>
 
@@ -130,13 +152,46 @@
 		background: var(--color-cobalto);
 	}
 
+	/* Lugar fijo del botón: mismo ancho y alto con o sin botón (sin saltos de la barra) */
+	.barra-cta {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		min-width: 236px;
+		min-height: var(--tap-min);
+	}
+
+	/* 44 px de alto, como los links: la barra mide lo mismo que sin botón */
+	.barra-cta :global(.barra-cta-boton) {
+		height: var(--tap-min);
+		/* Menos aire a la izquierda: el carrete ya ocupa ese lugar */
+		padding-left: 12px;
+		animation: aparecer 0.15s ease-out;
+	}
+
+	@keyframes aparecer {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.barra-cta :global(.barra-cta-boton) {
+			animation: none;
+		}
+	}
+
 	/* Teléfono: solo CSS, sin display en línea que pise la media query */
 	@media (max-width: 959px) {
 		.barra-logo img {
 			width: 96px;
 		}
 
-		.barra-enlaces {
+		.barra-enlaces,
+		.barra-cta {
 			display: none;
 		}
 	}
