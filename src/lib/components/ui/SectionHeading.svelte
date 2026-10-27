@@ -36,9 +36,11 @@
 	<p class="eyebrow">{eyebrow}</p>
 {/if}
 <svelte:element this={`h${level}`} {id} class="headline headline-{size}">
-	<!-- xl corta la línea; lg deja que la segunda frase siga y se acomode (max-width 15em) -->
-	{primera}{#if size === 'xl'}<br />{:else}{' '}{/if}<span style:color="var(--color-{acento})"
-		>{segunda}</span
+	<!-- xl corta la línea; lg deja que la segunda frase siga y se acomode (max-width 15em).
+	     El espacio va en el mismo nodo de texto que la primera frase: un nodo con solo
+	     un espacio lo descarta el árbol de accesibilidad y el nombre queda "Más simple,imposible." -->
+	{size === 'xl' ? primera : `${primera} `}{#if size === 'xl'}<br />{/if}<span
+		style:color="var(--color-{acento})">{segunda}</span
 	>
 </svelte:element>
 
