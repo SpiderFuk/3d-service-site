@@ -28,6 +28,12 @@ export interface IModelLoader {
 	load(file: File): Promise<Object3D>;
 
 	/**
+	 * Parsea un archivo ya leído en memoria (sin volver a leerlo).
+	 * Opcional: lo implementan los loaders binarios (STL, 3MF).
+	 */
+	parse?(buffer: ArrayBuffer): Object3D;
+
+	/**
 	 * Obtiene información del modelo cargado
 	 */
 	getModelInfo(object: Object3D): ModelInfo;

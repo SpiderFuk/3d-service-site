@@ -106,12 +106,20 @@
 	 * el resultado se descarta. Cualquier falla del loader, de la red o un modelo
 	 * vacío termina en "No pudimos abrirlo" (error 'danado').
 	 *
-	 * obtener devuelve el archivo a abrir, o null para el cuadro provisorio.
+	 * obtener devuelve el contenido y el nombre del archivo (la extensión elige
+	 * el loader), o null para el cuadro provisorio.
+	 *
+	 * Progreso: 0 a 95 % son los bytes leídos (archivo propio) o bajados (ejemplo);
+	 * en 95 % se parsea el modelo (un paso síncrono) y 100 % es cuando ya está en
+	 * la escena, justo antes de pasar a "abierto".
 	 */
 	async function abrir(
 		carga: number,
 		nombre: string,
-		obtener: (avance: (f: number) => void, signal: AbortSignal) => Promise<File | null>
+		obtener: (
+			avance: (f: number) => void,
+			signal: AbortSignal
+		) => Promise<{ buffer: ArrayBuffer; nombre: string } | null>
 	) {
 		cortarCarga();
 		const control = new AbortController();
@@ -133,7 +141,13 @@
 			});
 			escena.limpiar();
 
-			const objeto = archivo ? await rt.cargarModelo(archivo) : rt.crearCuadroProvisorio();
+			// Dejar que se pinte el 95 % antes del parseo, que bloquea el hilo
+			await new Promise((r) => requestAnimationFrame(() => setTimeout(r)));
+			if (!viewerState.esActual(carga)) return;
+
+			const objeto = archivo
+				? rt.cargarModelo(archivo.buffer, archivo.nombre)
+				: rt.crearCuadroProvisorio();
 			if (!viewerState.esActual(carga)) {
 				rt.liberarObjeto(objeto);
 				return;
@@ -165,7 +179,8 @@
 			// Sin archivo todavía (Cuadro en relieve): modelo provisorio
 			if (!ejemplo.archivo) return null;
 			const url = asset(`/models/${ejemplo.archivo}` as Parameters<typeof asset>[0]);
-			return descargarConProgreso(url, ejemplo.archivo, avance, signal);
+			const buffer = await descargarConProgreso(url, avance, signal);
+			return { buffer, nombre: ejemplo.archivo };
 		});
 	}
 
@@ -184,8 +199,8 @@
 			return;
 		}
 		abrir(carga, file.name, async (avance, signal) => {
-			await leerConProgreso(file, avance, signal);
-			return file;
+			const buffer = await leerConProgreso(file, avance, signal);
+			return { buffer, nombre: file.name };
 		});
 	}
 

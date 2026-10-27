@@ -1,7 +1,7 @@
 /**
  * Carga de modelos para el Visor 3D (parte del chunk diferido)
  *
- * - cargarModelo: usa el ModelLoaderFactory; si el loader falla o el modelo
+ * - cargarModelo: parsea con el ModelLoaderFactory; si el loader falla o el modelo
  *   queda vacío (sin triángulos o con medidas inválidas) lanza un error, que el
  *   visor muestra como "No pudimos abrirlo" (error 'danado').
  * - crearCuadroProvisorio: un cuadro en relieve de muestra hasta que la dueña
@@ -26,9 +26,14 @@ function esModeloValido(objeto: Object3D): boolean {
 	return [tamano.x, tamano.y, tamano.z].every(Number.isFinite) && tamano.length() > 0;
 }
 
-export async function cargarModelo(file: File): Promise<Object3D> {
-	const loader = ModelLoaderFactory.getLoader(file.name);
-	const objeto = await loader.load(file);
+/**
+ * Parsea un modelo ya leído (STL o 3MF) a partir de su contenido y su nombre
+ * de archivo (la extensión elige el loader). No vuelve a leer el archivo.
+ */
+export function cargarModelo(buffer: ArrayBuffer, nombre: string): Object3D {
+	const loader = ModelLoaderFactory.getLoader(nombre);
+	if (!loader.parse) throw new ModeloInvalidoError(`Formato no soportado por el visor: ${nombre}`);
+	const objeto = loader.parse(buffer);
 	if (!esModeloValido(objeto)) {
 		liberarObjeto(objeto);
 		throw new ModeloInvalidoError('El modelo está vacío o tiene medidas inválidas');

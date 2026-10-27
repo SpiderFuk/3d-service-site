@@ -13,10 +13,15 @@ function errorCortado(): DOMException {
 }
 
 /**
- * Lee un archivo local informando el avance (FileReader onprogress).
+ * Lee un archivo local informando el avance (FileReader onprogress) y devuelve
+ * su contenido, listo para parsear sin volver a leerlo.
  * Con `signal` se puede cortar: llama a lector.abort() y rechaza con AbortError.
  */
-export function leerConProgreso(file: Blob, avance: Avance, signal?: AbortSignal): Promise<void> {
+export function leerConProgreso(
+	file: Blob,
+	avance: Avance,
+	signal?: AbortSignal
+): Promise<ArrayBuffer> {
 	return new Promise((resolve, reject) => {
 		if (signal?.aborted) return reject(errorCortado());
 		const lector = new FileReader();
@@ -29,7 +34,7 @@ export function leerConProgreso(file: Blob, avance: Avance, signal?: AbortSignal
 		lector.onload = () => {
 			terminar();
 			avance(1);
-			resolve();
+			resolve(lector.result as ArrayBuffer);
 		};
 		lector.onerror = () => {
 			terminar();
@@ -44,37 +49,59 @@ export function leerConProgreso(file: Blob, avance: Avance, signal?: AbortSignal
 }
 
 /**
- * Baja un archivo informando el avance (Response en streaming).
- * Falla si la respuesta no es 2xx. Sin Content-Length no hay avance parcial.
- * Con `signal` se corta la descarga (fetch rechaza con AbortError).
+ * Baja un archivo informando el avance (Response en streaming) y devuelve su
+ * contenido. Falla si la respuesta no es 2xx. Sin Content-Length no hay avance
+ * parcial. Con `signal` se corta la descarga (fetch rechaza con AbortError).
+ *
+ * Con Content-Length los trozos se copian a un solo buffer reservado de antemano
+ * (sin copia extra al final). Si el servidor comprime, Content-Length es menor que
+ * lo recibido: se juntan los trozos y se arma el buffer al terminar.
  */
 export async function descargarConProgreso(
 	url: string,
-	nombre: string,
 	avance: Avance,
 	signal?: AbortSignal
-): Promise<File> {
+): Promise<ArrayBuffer> {
 	const respuesta = await fetch(url, { signal });
 	if (!respuesta.ok) throw new Error(`No se pudo bajar ${url}: ${respuesta.status}`);
 
-	// Con compresión, Content-Length es el tamaño comprimido: se limita a 1
 	const total = Number(respuesta.headers.get('content-length')) || 0;
 	const lector = respuesta.body?.getReader();
 	if (!lector) {
-		const blob = await respuesta.blob();
+		const buffer = await respuesta.arrayBuffer();
 		avance(1);
-		return new File([blob], nombre);
+		return buffer;
 	}
 
+	let destino: Uint8Array | null = total > 0 ? new Uint8Array(total) : null;
 	const partes: Uint8Array[] = [];
 	let recibido = 0;
 	for (;;) {
 		const { done, value } = await lector.read();
 		if (done) break;
-		partes.push(value);
+		if (destino && recibido + value.byteLength <= destino.byteLength) {
+			destino.set(value, recibido);
+		} else {
+			// Más bytes que Content-Length (compresión): pasar a juntar trozos
+			if (destino) partes.push(destino.subarray(0, recibido));
+			destino = null;
+			partes.push(value);
+		}
 		recibido += value.byteLength;
 		if (total > 0) avance(Math.min(1, recibido / total));
 	}
 	avance(1);
-	return new File(partes as BlobPart[], nombre);
+
+	if (destino) {
+		return recibido === destino.byteLength
+			? (destino.buffer as ArrayBuffer)
+			: (destino.buffer.slice(0, recibido) as ArrayBuffer);
+	}
+	const junto = new Uint8Array(recibido);
+	let posicion = 0;
+	for (const parte of partes) {
+		junto.set(parte, posicion);
+		posicion += parte.byteLength;
+	}
+	return junto.buffer;
 }

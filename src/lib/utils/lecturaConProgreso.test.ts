@@ -19,16 +19,26 @@ function respuesta(trozos: Uint8Array[], largo?: number): Response {
 
 describe('descargarConProgreso', () => {
 	it('informa el avance por bytes y termina en 1', async () => {
-		vi.stubGlobal('fetch', vi.fn(async () => respuesta([new Uint8Array(30), new Uint8Array(70)], 100)));
 		const avances: number[] = [];
-		const archivo = await descargarConProgreso('/models/a.stl', 'a.stl', (f) => avances.push(f));
-		expect(archivo.size).toBe(100);
+		const datos = new Uint8Array(100).map((_, i) => i);
+		vi.stubGlobal('fetch', vi.fn(async () => respuesta([datos.slice(0, 30), datos.slice(30)], 100)));
+		const buffer = await descargarConProgreso('/models/a.stl', (f) => avances.push(f));
+		expect(new Uint8Array(buffer)).toEqual(datos);
 		expect(avances).toEqual([0.3, 1, 1]);
+	});
+
+	it('sin Content-Length o con compresión arma el buffer completo', async () => {
+		const datos = new Uint8Array(50).map((_, i) => 200 - i);
+		for (const largo of [undefined, 20]) {
+			vi.stubGlobal('fetch', vi.fn(async () => respuesta([datos.slice(0, 15), datos.slice(15)], largo)));
+			const buffer = await descargarConProgreso('/x.stl', () => {});
+			expect(new Uint8Array(buffer)).toEqual(datos);
+		}
 	});
 
 	it('falla si la respuesta no es 2xx', async () => {
 		vi.stubGlobal('fetch', vi.fn(async () => new Response('no', { status: 404 })));
-		await expect(descargarConProgreso('/x.stl', 'x.stl', () => {})).rejects.toThrow('404');
+		await expect(descargarConProgreso('/x.stl', () => {})).rejects.toThrow('404');
 	});
 
 	it('pasa la señal a fetch para poder cortar la descarga', async () => {
@@ -40,7 +50,7 @@ describe('descargarConProgreso', () => {
 		const control = new AbortController();
 		control.abort();
 		await expect(
-			descargarConProgreso('/x.stl', 'x.stl', () => {}, control.signal)
+			descargarConProgreso('/x.stl', () => {}, control.signal)
 		).rejects.toMatchObject({ name: 'AbortError' });
 		expect(fetchFalso.mock.calls[0][1]?.signal).toBe(control.signal);
 	});
