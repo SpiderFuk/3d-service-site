@@ -13,7 +13,7 @@ Build the state machine and static UI first (testable without WebGL), then the l
 
 ### Tasks
 
-- [ ] Task 1.1: `viewerState` (store or `$state` module): `empty | loading(nombre, pct) | loaded(nombre, origen) | error(tipo)`, plus selected example. Unit-test the transitions and the file validation mapping (type / >50 MB / ok).
+- [x] Task 1.1: `viewerState` (store or `$state` module): `empty | loading(nombre, pct) | loaded(nombre, origen) | error(tipo)`, plus selected example. Unit-test the transitions and the file validation mapping (type / >50 MB / ok).
 - [ ] Task 1.2: Section shell, heading, line, examples intro in `landing/Visor.svelte`; layouts for the three breakpoints (stacked at 960–1199).
 - [ ] Task 1.3: Example cards with thumbnails, `aria-pressed`, mantequilla selected state, sideways-scrolling row on phone.
 - [ ] Task 1.4: Frame (white, border, radius, extrusion, aspect ratios per breakpoint) with empty state (dashed area, drag text hidden on phone, real file input as "Elegir archivo", size hint) and drag-and-drop.
