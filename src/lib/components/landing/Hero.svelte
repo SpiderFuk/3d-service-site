@@ -122,8 +122,10 @@
 </Section>
 
 <style>
-	/* Padding propio del hero: 72/104 desktop, 32/48 teléfono */
+	/* Padding propio del hero: 72/104 desktop, 32/48 teléfono.
+	   #inicio vuelve al tope de la página (el hero empieza justo debajo de la barra). */
 	:global(.hero) {
+		--section-scroll-margin: var(--header-height);
 		--section-pt: 72px;
 		--section-pb: 104px;
 	}

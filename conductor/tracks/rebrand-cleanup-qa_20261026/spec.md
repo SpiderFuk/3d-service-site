@@ -18,7 +18,7 @@ After tracks 2–6 the new page is complete, but the old components, Lucide, the
 
 - [ ] Legacy components no longer referenced are deleted (`Services`, `Gallery3D`, old `FilamentColors`, `ContactWhatsApp`, old `ModelViewer`/`viewer/*` pieces not reused, `ModelInfo`, `ViewerControls`, etc.), along with configs/types only they used (`services.ts`, `servicesVisibilityDefaults.ts`, `filamentColors.ts` if superseded).
 - [ ] `lucide-svelte` removed from `package.json`; no icons or emojis in the page (including the old WhatsApp message emoji).
-- [ ] Out-of-service modal and banner restyled with the new tokens (no icons, 2 px borders, tinta/crema buttons), banner placed so it does not clash with the sticky bar.
+- [x] ~~Out-of-service modal and banner restyled~~. Removed instead (modal, banner, flag parsing and state) on 2026-10-27.
 - [ ] Feature flags: `sections-visibility` works with the new ids; `services-visibility` and `materials-visibility` retired (stock list replaces them) with types, store derivations and AppConfig docs updated. (Confirm with owner before removing the AppConfig profiles themselves.)
 - [ ] Head: new title, description, Open Graph/Twitter tags, `theme-color` cobalto, new favicons from the logo set; old keywords mentioning ABS/TPU removed.
 - [ ] CLAUDE.md, `conductor/product-guidelines.md`, `conductor/tech-stack.md` and `conductor/product.md` describe the new brand, tokens, sections and single-source settings.

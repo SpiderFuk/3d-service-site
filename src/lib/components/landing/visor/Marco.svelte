@@ -6,6 +6,9 @@
 	 * Estado vacío: área punteada, "Arrastrá tu archivo acá" (oculto en teléfono),
 	 * "Elegir archivo" (abre el input de archivo real) y la ayuda de tipos y tamaño.
 	 * Se puede soltar un archivo sobre el marco en cualquier estado.
+	 *
+	 * Cada estado aparece con un fundido corto y el modelo abierto se funde sobre el
+	 * blanco del marco (sin animación con prefers-reduced-motion).
 	 */
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -172,11 +175,44 @@
 	.vlienzo {
 		position: absolute;
 		inset: 0;
+		opacity: 0;
 		visibility: hidden;
+		transition:
+			opacity 0.2s ease,
+			visibility 0s linear 0.2s;
 	}
 
 	.vlienzo.visible {
+		opacity: 1;
 		visibility: visible;
+		transition: opacity 0.35s ease;
+	}
+
+	/* Cada estado (vacío, cargando, error, pastillas) aparece con un fundido */
+	.vdrop,
+	.vcargando,
+	.vtl {
+		animation: aparecer-estado 0.25s ease-out;
+	}
+
+	@keyframes aparecer-estado {
+		from {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.vlienzo,
+		.vlienzo.visible {
+			transition: none;
+		}
+
+		.vdrop,
+		.vcargando,
+		.vtl {
+			animation: none;
+		}
 	}
 
 	.vlienzo :global(.visor-canvas) {
@@ -249,6 +285,12 @@
 		border: 2px dashed var(--color-tinta-suave);
 		border-radius: 18px;
 		text-align: center;
+	}
+
+	.vdrop {
+		transition:
+			border-color 0.15s ease,
+			background-color 0.15s ease;
 	}
 
 	.arrastrando .vdrop {

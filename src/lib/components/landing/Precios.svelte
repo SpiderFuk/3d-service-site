@@ -76,7 +76,7 @@
 
 		<article class="pcard">
 			<h3 class="pcard-h">Cuadros en relieve</h3>
-			<p class="pcard-sub">En blanco y negro. Lo que mueve el precio:</p>
+			<p class="pcard-sub">Lo que mueve el precio:</p>
 			<ul class="factores">
 				{#each factoresCuadros as f (f.titulo)}
 					<PriceChip titulo={f.titulo} linea={f.linea} />
@@ -162,6 +162,33 @@
 		gap: 16px;
 	}
 
+	/*
+	 * Desktop (las tarjetas lado a lado): las dos tarjetas comparten tres filas del grid
+	 * (título, bajada, factores) con subgrid, así cada parte arranca a la misma altura
+	 * aunque un texto ocupe más líneas. Los factores reparten su fila en partes iguales
+	 * (las dos listas tienen tres filas), así las filas de factores también se alinean.
+	 */
+	@media (min-width: 960px) {
+		.pgrid {
+			row-gap: 12px;
+		}
+
+		.pcard {
+			grid-row: span 3;
+			display: grid;
+			grid-template-rows: subgrid;
+			row-gap: 12px;
+		}
+
+		.factores {
+			grid-auto-rows: 1fr;
+		}
+
+		.pside {
+			grid-row: span 3;
+		}
+	}
+
 	.pbox {
 		min-width: 0;
 		padding: 18px 20px;
@@ -235,8 +262,11 @@
 
 		.pside {
 			grid-column: 1 / -1;
+			grid-row: auto;
 			grid-template-rows: none;
 			grid-template-columns: repeat(2, minmax(0, 1fr));
+			/* 12 px de row-gap del grid + 12 = 24 px, como entre columnas */
+			margin-top: 12px;
 		}
 	}
 

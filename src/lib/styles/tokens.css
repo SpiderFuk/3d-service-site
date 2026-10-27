@@ -45,8 +45,14 @@
 	--gutter: 64px;
 	--section-pad-y: 96px;
 	--section-gap: 20px;
-	--scroll-offset: 100px;
 	--tap-min: 44px;
+
+	/* Barra fija: alto total con el borde de abajo (la barra usa este valor) */
+	--header-height: 74px;
+	/* Aire entre la barra y el contenido de una sección al llegar por un ancla */
+	--anchor-gap: 32px;
+	/* Línea donde arranca el contenido bajo la barra (anclas y títulos sticky) */
+	--scroll-offset: calc(var(--header-height) + var(--anchor-gap));
 }
 
 /* Teléfono (hasta 959 px) */
@@ -55,5 +61,7 @@
 		--gutter: 16px;
 		--section-pad-y: 32px;
 		--section-gap: 12px;
+		--header-height: 66px;
+		--anchor-gap: 16px;
 	}
 }

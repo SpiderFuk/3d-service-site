@@ -66,22 +66,26 @@
 }
 
 @layer components {
-	/* Hover de botones de acción: sube 2 px y gira -1.5° */
+	/* Hover y foco de teclado de botones de acción: sube 2 px y gira -1.5°.
+	   Al apretar baja 1 px y se achica un poco (respuesta al toque) */
 	.cta {
 		transition: transform 0.15s ease;
 	}
 
-	.cta:hover {
+	.cta:hover,
+	.cta:focus-visible {
 		transform: translateY(-2px) rotate(-1.5deg);
 	}
 
 	.cta:active {
-		transform: translateY(1px);
+		transform: translateY(1px) scale(0.98);
+		transition-duration: 0.05s;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
 		.cta,
 		.cta:hover,
+		.cta:focus-visible,
 		.cta:active {
 			transition: none;
 			transform: none;

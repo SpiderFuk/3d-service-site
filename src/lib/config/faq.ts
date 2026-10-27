@@ -30,8 +30,7 @@ export const preguntasFrecuentes: readonly PreguntaFrecuente[] = [
 	},
 	{
 		pregunta: '¿Cuántos colores puede tener?',
-		respuesta:
-			'Hasta 4 colores en una misma pieza. Los cuadros en relieve son en blanco y negro.'
+		respuesta: 'Hasta 4 colores en una misma pieza.'
 	},
 	{
 		pregunta: '¿Cuánto demora?',

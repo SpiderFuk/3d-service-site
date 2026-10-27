@@ -15,7 +15,7 @@
 | SvelteKit | 2.x | Application framework (static adapter, SPA) |
 | Tailwind CSS | 3.4 | Utility-first styling |
 | Three.js | 0.160+ | 3D model rendering and interaction |
-| Lucide Svelte | 0.460+ | Icons (only in the out-of-service modal/banner; to be removed) |
+| Lucide Svelte | 0.460+ | Icons (only the legacy `config/services.ts`; to be removed) |
 | Bricolage Grotesque + Figtree | Google Fonts | Headlines / text (PRINTO Filamento) |
 | JSZip | 3.10+ | 3MF file parsing (ZIP extraction) |
 
