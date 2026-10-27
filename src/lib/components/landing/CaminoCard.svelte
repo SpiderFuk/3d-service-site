@@ -131,4 +131,38 @@
 		align-items: center;
 		gap: 8px 20px;
 	}
+
+	/* Regla extra dentro del desktop chico: bajo 1100 px la foto va a la izquierda */
+	@media (min-width: 960px) and (max-width: 1099px) {
+		.camino {
+			flex-direction: row;
+		}
+
+		.foto {
+			flex: 0 0 40%;
+			aspect-ratio: auto;
+			border-bottom: 0;
+			border-right: var(--border);
+		}
+	}
+
+	/* Teléfono: foto 16:9 arriba, botón a todo el ancho */
+	@media (max-width: 959px) {
+		.foto {
+			aspect-ratio: 16 / 9;
+		}
+
+		.cuerpo {
+			padding: 16px 16px 20px;
+		}
+
+		.titulo {
+			font-size: 24px;
+		}
+
+		.acciones {
+			flex-direction: column;
+			align-items: stretch;
+		}
+	}
 </style>

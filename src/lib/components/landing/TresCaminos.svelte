@@ -69,9 +69,29 @@
 		color: var(--color-tinta-suave);
 	}
 
+	/* Desktop: tres columnas */
 	.caminos {
 		list-style: none;
 		margin: 28px 0 0;
 		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 32px;
+	}
+
+	/* Desktop por debajo de 1100 px: una columna, tarjetas con la foto a la izquierda */
+	@media (min-width: 960px) and (max-width: 1099px) {
+		.caminos {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* Teléfono: apiladas */
+	@media (max-width: 959px) {
+		.caminos {
+			grid-template-columns: 1fr;
+			gap: 14px;
+			margin-top: 8px;
+		}
 	}
 </style>
