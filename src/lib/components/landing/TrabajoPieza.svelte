@@ -1,7 +1,9 @@
 <script lang="ts">
 	/**
-	 * Pieza chica de Trabajos: foto cuadrada con borde, sin tarjeta.
+	 * Pieza chica de Trabajos: foto cuadrada con borde (sin tarjeta), etiqueta de
+	 * categoría y título h3.
 	 */
+	import Tag from '$lib/components/ui/Tag.svelte';
 	import type { Trabajo } from '$lib/types/content';
 
 	interface Props {
@@ -15,6 +17,8 @@
 	<div class="foto">
 		<img src={trabajo.foto} alt={trabajo.alt} width="1200" height="1200" loading="lazy" />
 	</div>
+	<Tag color="blanco" class="self-start">{trabajo.categoria}</Tag>
+	<h3 class="titulo">{trabajo.titulo}</h3>
 </li>
 
 <style>
@@ -43,9 +47,21 @@
 		object-fit: cover;
 	}
 
+	.titulo {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: 20px;
+		font-weight: 700;
+		line-height: 1.15;
+	}
+
 	@media (max-width: 959px) {
 		.foto {
 			border-radius: 16px;
+		}
+
+		.titulo {
+			font-size: 16px;
 		}
 	}
 </style>
