@@ -10,11 +10,16 @@
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
 	import Ejemplos from './visor/Ejemplos.svelte';
+	import Marco from './visor/Marco.svelte';
 	import { viewerState } from '$lib/stores/viewerState';
 	import type { EjemploId } from '$lib/config/visorEjemplos';
 
 	function elegirEjemplo(id: EjemploId) {
 		viewerState.abrirEjemplo(id);
+	}
+
+	function abrirArchivo(file: File) {
+		viewerState.abrirArchivo(file);
 	}
 </script>
 
@@ -38,7 +43,9 @@
 			<Ejemplos seleccionado={$viewerState.ejemplo} onelegir={elegirEjemplo} />
 		</div>
 
-		<div class="vstage"></div>
+		<div class="vstage">
+			<Marco vista={$viewerState.vista} onarchivo={abrirArchivo} />
+		</div>
 	</div>
 </Section>
 
