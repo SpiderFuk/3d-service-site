@@ -42,7 +42,7 @@ Hero first, since the bar's quote button depends on the hero button's visibility
 - [x] Task 3.1: 64 px phone bar: wordmark 96 px, "Presupuesto" pill (same rule), round CSS-drawn menu button with `aria-expanded`/`aria-controls`.
 - [x] Task 3.2: Menu panel: 56 px rows (current mantequilla), Instagram, hola@printo.uy, full-width "Pedir presupuesto".
 - [x] Task 3.3: Focus management (first link on open, menu button on close), Escape closes, close on link tap and on resize >959 px, body scroll lock.
-- [ ] Task 3.4: Make sure desktop links/button are hidden on phone through CSS only (no inline `display`).
+- [x] Task 3.4: Make sure desktop links/button are hidden on phone through CSS only (no inline `display`).
 
 ### Verification
 
