@@ -77,21 +77,21 @@
 		transform: rotate(45deg);
 	}
 
+	/* Teléfono: el ancho lo pone la grilla de la lista (columnas de 64 px como mínimo) */
 	@media (max-width: 959px) {
 		.sw {
-			width: 64px;
-			font-size: 11px;
-		}
-
-		/* La etiqueta "Agotado" (14 px) es más ancha que 64 px: el agotado crece para no pisar al vecino */
-		.sw-agotado {
 			width: auto;
-			min-width: 64px;
+			font-size: 11px;
 		}
 
 		.sw-dot {
 			width: 32px;
 			height: 32px;
+		}
+
+		/* "Agotado" (14 px) es más ancho que 64 px: se achica de costado para no pisar al vecino */
+		.sw-agotado :global(.tag) {
+			padding-inline: 8px;
 		}
 	}
 </style>
