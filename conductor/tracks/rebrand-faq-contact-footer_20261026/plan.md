@@ -39,7 +39,7 @@ FAQ with its structured data, then Contacto (hours-driven pill), then the footer
 
 ### Tasks
 
-- [ ] Task 3.1: Rewrite `layout/Footer.svelte`: wordmark SVG link (68%/60%) + bottom-aligned phrase (32/15/13 px).
+- [ ] Task 3.1: Rewrite `landing/Pie.svelte`: wordmark SVG link (68%/60%) + bottom-aligned phrase (32/15/13 px).
 - [ ] Task 3.2: 2 px rule, `nav aria-label="Pie"` with menu links, channels list; 44 px tap areas; centered on phone.
 - [ ] Task 3.3: Legal line with `new Date().getFullYear()`.
 
