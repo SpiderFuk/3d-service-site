@@ -18,6 +18,40 @@
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
 
+	type Runtime = typeof import('$lib/three/viewerRuntime');
+
+	let seccion: HTMLDivElement;
+	let runtime: Promise<Runtime> | null = null;
+
+	/**
+	 * Baja el chunk de Three.js una sola vez. Lo dispara la cercanía a la sección
+	 * o, si la persona elige algo antes, la propia carga. Si falla la red, se
+	 * vuelve a intentar en el próximo pedido.
+	 */
+	function cargarRuntime(): Promise<Runtime> {
+		runtime ??= import('$lib/three/viewerRuntime').catch((error) => {
+			runtime = null;
+			throw error;
+		});
+		return runtime;
+	}
+
+	// Carga diferida: cuando la sección está a 600 px de la pantalla
+	onMount(() => {
+		if (!('IntersectionObserver' in window)) return;
+		const observador = new IntersectionObserver(
+			(entradas) => {
+				if (entradas.some((e) => e.isIntersecting)) {
+					observador.disconnect();
+					cargarRuntime().catch(() => {});
+				}
+			},
+			{ rootMargin: '600px 0px' }
+		);
+		observador.observe(seccion);
+		return () => observador.disconnect();
+	});
+
 	function elegirEjemplo(id: EjemploId) {
 		viewerState.abrirEjemplo(id);
 	}
@@ -60,7 +94,7 @@
 </script>
 
 <Section id="visor" contentClass="">
-	<div class="visor">
+	<div class="visor" bind:this={seccion}>
 		<div class="vtext">
 			<SectionHeading
 				id="visor-titulo"

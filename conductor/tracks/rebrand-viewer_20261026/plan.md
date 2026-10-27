@@ -27,7 +27,7 @@ Build the state machine and static UI first (testable without WebGL), then the l
 
 ### Tasks
 
-- [ ] Task 2.1: `three/viewerRuntime.ts` entry that re-exports scene setup + loader factory; imported dynamically when the section nears the viewport.
+- [x] Task 2.1: `three/viewerRuntime.ts` entry that re-exports scene setup + loader factory; imported dynamically when the section nears the viewport.
 - [ ] Task 2.2: Mount scene in the frame; cobalto material from the CSS token; keep orientation correction + camera fit; drop info extraction.
 - [ ] Task 2.3: Yaw-only rotation controller: pointer drag, `touch-action: pan-y`, arrow keys; no zoom/pan.
 - [ ] Task 2.4: File reading with progress → loading pct; example loading from `static/models/` with progress; wire error mapping.
