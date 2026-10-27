@@ -1,7 +1,9 @@
 <script lang="ts">
 	/**
-	 * Barra de navegación fija. Placeholder: menú de teléfono, link actual y botón
-	 * "Pedir presupuesto" se construyen en el track rebrand-nav-hero.
+	 * Barra de navegación fija (01 Navegación, BUILD.md)
+	 *
+	 * Desktop: logo (112 px, a #inicio) y los cuatro links del menú.
+	 * Queda dentro de <header>: el Hero mide su alto para saber si la barra tapa su botón.
 	 */
 	import { sectionsVisibilityFlag } from '$lib/stores/featureFlagsStore';
 	import { getVisibleNavItems } from '$lib/utils/visibilityHelpers';
@@ -9,24 +11,85 @@
 	const items = $derived(getVisibleNavItems($sectionsVisibilityFlag));
 </script>
 
-<header class="sticky top-0 z-20 border-b bg-crema">
-	<nav
-		aria-label="Principal"
-		class="mx-auto flex max-w-[1440px] items-center justify-between gap-7 px-gutter py-3.5"
-	>
-		<a href="#inicio" aria-label="printo, ir al inicio" class="flex min-h-tap items-center">
-			<img src="/brand/printo-wordmark-cobalto.svg" alt="" class="block h-auto w-28 max-desk:w-24" />
+<header class="barra">
+	<nav aria-label="Principal" class="barra-nav">
+		<a href="#inicio" aria-label="printo, ir al inicio" class="barra-logo">
+			<img src="/brand/printo-wordmark-cobalto.svg" alt="" />
 		</a>
-		<ul class="m-0 flex list-none items-center gap-8 p-0 max-desk:hidden">
+
+		<ul class="barra-enlaces">
 			{#each items as item (item.href)}
 				<li>
-					<a
-						href={item.href}
-						aria-label={item.ariaLabel}
-						class="inline-flex min-h-tap items-center font-medium no-underline">{item.label}</a
-					>
+					<a href={item.href} aria-label={item.ariaLabel} class="barra-enlace">{item.label}</a>
 				</li>
 			{/each}
 		</ul>
 	</nav>
 </header>
+
+<style>
+	.barra {
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		border-bottom: var(--border);
+		background: var(--color-crema);
+	}
+
+	.barra-nav {
+		max-width: 1440px;
+		margin: 0 auto;
+		padding: 14px var(--gutter);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px 28px;
+	}
+
+	.barra-logo {
+		display: flex;
+		align-items: center;
+		min-height: var(--tap-min);
+	}
+
+	.barra-logo img {
+		display: block;
+		width: 112px;
+		height: auto;
+	}
+
+	.barra-enlaces {
+		display: flex;
+		align-items: center;
+		gap: 4px 32px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.barra-enlace {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--tap-min);
+		color: var(--color-tinta);
+		font-size: 15px;
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.barra-enlace:hover {
+		color: var(--color-cobalto);
+	}
+
+	/* Teléfono: solo CSS, sin display en línea que pise la media query */
+	@media (max-width: 959px) {
+		.barra-logo img {
+			width: 96px;
+		}
+
+		.barra-enlaces {
+			display: none;
+		}
+	}
+</style>
