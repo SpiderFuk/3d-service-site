@@ -43,6 +43,17 @@
 	 */
 	let anuncio = $state('');
 
+	/**
+	 * Carga en curso: su número (el del store) y cómo cortarla. Se corta cuando
+	 * empieza otra, con "Probar otro" y al desmontar, así una descarga de 30 MB
+	 * abandonada no sigue bajando. El corte de una carga vieja no anuncia nada.
+	 */
+	let enCurso: { carga: number; control: AbortController } | null = null;
+	function cortarCarga() {
+		enCurso?.control.abort();
+		enCurso = null;
+	}
+
 	/** Si la persona ya giró el modelo abierto (oculta la ayuda) */
 	let girado = $state(false);
 	async function anunciar(texto: string) {
@@ -67,6 +78,7 @@
 	// Al desmontar: liberar renderer, contexto WebGL, canvas y escuchas, y volver
 	// a vacío (corta cualquier carga en curso; el store sobrevive al componente)
 	onDestroy(() => {
+		cortarCarga();
 		escena?.dispose();
 		escena = null;
 		viewerState.reiniciar();
@@ -99,15 +111,18 @@
 	async function abrir(
 		carga: number,
 		nombre: string,
-		obtener: (avance: (f: number) => void) => Promise<File | null>
+		obtener: (avance: (f: number) => void, signal: AbortSignal) => Promise<File | null>
 	) {
+		cortarCarga();
+		const control = new AbortController();
+		enCurso = { carga, control };
 		anunciar(textoAbriendo(nombre));
 		const avance = (fraccion: number) => viewerState.progreso(carga, fraccion * 95);
 		const pedidoRuntime = cargarRuntime();
 		pedidoRuntime.catch(() => {}); // el error se maneja abajo, al esperarlo
 
 		try {
-			const archivo = await obtener(avance);
+			const archivo = await obtener(avance, control.signal);
 			const rt = await pedidoRuntime;
 			if (!viewerState.esActual(carga) || !lienzo) return;
 
@@ -129,11 +144,14 @@
 			viewerState.listo(carga);
 			anunciar(nombreMarcoCargado(nombre));
 		} catch (error) {
-			if (!viewerState.esActual(carga)) return;
+			// Carga cortada o reemplazada: en silencio (sin error ni anuncio)
+			if (control.signal.aborted || !viewerState.esActual(carga)) return;
 			if (import.meta.env.DEV) console.error('Visor 3D:', error);
 			escena?.limpiar();
 			viewerState.fallo(carga, 'danado');
 			anunciar(mensajesError.danado);
+		} finally {
+			if (enCurso?.control === control) enCurso = null;
 		}
 	}
 
@@ -143,11 +161,11 @@
 	function elegirEjemplo(id: EjemploId) {
 		const ejemplo = getEjemplo(id);
 		const carga = viewerState.abrirEjemplo(id);
-		abrir(carga, ejemplo.nombre, async (avance) => {
+		abrir(carga, ejemplo.nombre, async (avance, signal) => {
 			// Sin archivo todavía (Cuadro en relieve): modelo provisorio
 			if (!ejemplo.archivo) return null;
 			const url = asset(`/models/${ejemplo.archivo}` as Parameters<typeof asset>[0]);
-			return descargarConProgreso(url, ejemplo.archivo, avance);
+			return descargarConProgreso(url, ejemplo.archivo, avance, signal);
 		});
 	}
 
@@ -159,19 +177,24 @@
 		const carga = viewerState.abrirArchivo(file);
 		// Tipo o tamaño inválido: no se lee ni se intenta abrir
 		if (carga === null) {
+			cortarCarga();
 			escena?.limpiar();
 			const vista = $viewerState.vista;
 			if (vista.fase === 'error') anunciar(mensajesError[vista.tipo]);
 			return;
 		}
-		abrir(carga, file.name, async (avance) => {
-			await leerConProgreso(file, avance);
+		abrir(carga, file.name, async (avance, signal) => {
+			await leerConProgreso(file, avance, signal);
 			return file;
 		});
 	}
 
-	/** "Probar otro": vuelve al estado vacío y deja el foco en "Elegir archivo" */
+	/**
+	 * "Probar otro" (con el modelo abierto, en error o mientras carga): corta la
+	 * carga en curso, vuelve al estado vacío y deja el foco en "Elegir archivo"
+	 */
 	async function probarOtro() {
+		cortarCarga();
 		escena?.limpiar();
 		viewerState.reiniciar();
 		anuncio = '';
@@ -237,6 +260,11 @@
 					{#if $viewerState.vista.origen === 'archivo'}
 						<p class="vnote">Se abre WhatsApp: adjuntá el archivo en el chat.</p>
 					{/if}
+				</div>
+			{:else if $viewerState.vista.fase === 'loading'}
+				<!-- Salida para una descarga lenta (ejemplos de 30 MB en el teléfono) -->
+				<div class="vactions">
+					<Button variant="plain" onclick={probarOtro}>Probar otro</Button>
 				</div>
 			{:else if $viewerState.vista.fase === 'error'}
 				<div class="vactions">
