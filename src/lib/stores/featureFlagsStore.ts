@@ -232,7 +232,7 @@ export const servicesVisibilityFlag = derived(
  * Development helpers
  * Expone funciones útiles para debugging en modo desarrollo
  */
-if (import.meta.env.DEV) {
+if (import.meta.env.DEV && typeof window !== 'undefined') {
 	(window as any).__featureFlags = {
 		store: featureFlagsStore,
 		forceRefresh: () => {

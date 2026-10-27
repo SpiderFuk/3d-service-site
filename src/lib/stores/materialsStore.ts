@@ -8,9 +8,8 @@
 import { writable } from 'svelte/store';
 import { fetchContent } from '$lib/services/contentService';
 import type { MaterialsContent, MaterialStock } from '$lib/types/content';
-import stockLocal from '../../../static/content/data/materials.json';
-
-const local: MaterialsContent = stockLocal;
+// static/content/data/materials.json, vía el plugin de vite.config.ts (en dev no se puede importar de static/)
+import local from '$contenido/materials.json';
 
 interface MaterialsState {
 	materials: MaterialsContent['materials'];
