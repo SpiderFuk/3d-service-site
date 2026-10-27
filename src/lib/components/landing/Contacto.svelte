@@ -13,6 +13,9 @@
 	import { abiertoAhora } from '$lib/stores/hoursStore';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
+	import { horarioCorto, horarioFrase, horarioLargo } from '$lib/utils/hours';
+
+	const [horarioSemana, horarioSabado] = horarioLargo();
 </script>
 
 <Section
@@ -50,6 +53,34 @@
 			</p>
 		</div>
 	</div>
+
+	<dl class="contacto-datos">
+		<div>
+			<dt>Instagram</dt>
+			<dd>
+				<a href={contactInfo.socialMedia.instagram} target="_blank" rel="noopener"
+					>{contactInfo.socialMedia.instagramHandle}</a
+				>
+			</dd>
+		</div>
+		<div>
+			<dt>Email</dt>
+			<dd><a href="mailto:{contactInfo.email}">{contactInfo.email}</a></dd>
+		</div>
+		<div>
+			<dt>Horario</dt>
+			<dd>
+				<span class="horario-largo">{horarioSemana}<br />{horarioSabado}</span>
+				<!-- Teléfono: versión corta a la vista, la completa para lectores de pantalla -->
+				<span class="horario-corto" aria-hidden="true">{horarioCorto()}</span>
+				<span class="horario-lector sr-only">{horarioFrase()}</span>
+			</dd>
+		</div>
+		<div>
+			<dt>Dónde</dt>
+			<dd>{contactInfo.city}</dd>
+		</div>
+	</dl>
 </Section>
 
 <style>
@@ -117,6 +148,44 @@
 		color: var(--color-tinta-suave);
 	}
 
+	/* Cuatro datos en columnas, cada uno bajo una línea crema de 2 px, sin cajas */
+	.contacto-datos {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 32px;
+		margin: 0;
+	}
+
+	.contacto-datos div {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		min-width: 0;
+		padding-top: 18px;
+		border-top: var(--border-width) solid var(--color-crema);
+	}
+
+	.contacto-datos dt {
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.2;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		opacity: 0.85;
+	}
+
+	.contacto-datos dd {
+		margin: 0;
+		font-size: 19px;
+		font-weight: 600;
+		line-height: 1.35;
+	}
+
+	.horario-corto,
+	.horario-lector {
+		display: none;
+	}
+
 	@media (max-width: 959px) {
 		.contacto-arriba {
 			gap: 14px;
@@ -141,6 +210,38 @@
 		.contacto-estado {
 			align-self: flex-start;
 			font-size: 13px;
+		}
+
+		/* Filas: etiqueta a la izquierda, valor a la derecha */
+		.contacto-datos {
+			grid-template-columns: 1fr;
+			gap: 0;
+		}
+
+		.contacto-datos div {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: baseline;
+			gap: 12px;
+			padding: 12px 0;
+			border-top-color: color-mix(in srgb, var(--color-crema) 35%, transparent);
+		}
+
+		.contacto-datos dd {
+			font-size: 14px;
+			text-align: right;
+		}
+
+		.horario-largo {
+			display: none;
+		}
+
+		.horario-corto {
+			display: inline;
+		}
+
+		.horario-lector {
+			display: block;
 		}
 	}
 </style>
