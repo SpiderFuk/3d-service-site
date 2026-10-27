@@ -25,10 +25,15 @@ import {
 	type Material,
 	type Object3D
 } from 'three';
+import { crearControlGiro } from './giro';
 
 export interface OpcionesVisor {
 	/** Elemento donde va el canvas (ocupa todo su tamaño) */
 	contenedor: HTMLElement;
+	/** Elemento enfocable que recibe las flechas (el marco) */
+	teclado?: HTMLElement;
+	/** Se llama cada vez que la persona gira el modelo */
+	ongiro?: () => void;
 }
 
 export interface MostrarOpciones {
@@ -71,7 +76,7 @@ function colorCobalto(elemento: HTMLElement): string | undefined {
 	return valor || undefined;
 }
 
-export function crearVisorEscena({ contenedor }: OpcionesVisor): VisorEscena {
+export function crearVisorEscena({ contenedor, teclado, ongiro }: OpcionesVisor): VisorEscena {
 	const scene = new Scene();
 
 	const camera = new PerspectiveCamera(50, 1, 0.1, 2000);
@@ -187,7 +192,17 @@ export function crearVisorEscena({ contenedor }: OpcionesVisor): VisorEscena {
 		pedirRender();
 	}
 
+	const control = crearControlGiro({
+		superficie: canvas,
+		teclado,
+		activo: () => modelo !== null,
+		obtener: () => pivote.rotation.y,
+		fijar: girar,
+		ongiro
+	});
+
 	function dispose() {
+		control.dispose();
 		limpiar();
 		cancelAnimationFrame(cuadroPendiente);
 		cuadroPendiente = 0;

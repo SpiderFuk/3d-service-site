@@ -146,6 +146,11 @@
 		display: block;
 		touch-action: pan-y;
 		user-select: none;
+		cursor: grab;
+	}
+
+	.vlienzo :global(.visor-canvas.girando) {
+		cursor: grabbing;
 	}
 
 	.vdrop {
