@@ -85,16 +85,17 @@ export function crearVisorEscena({ contenedor, teclado, ongiro }: OpcionesVisor)
 	// Fondo transparente: se ve el blanco del marco
 	const renderer = new WebGLRenderer({ antialias: true, alpha: true });
 	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-	renderer.setClearColor(0x000000, 0);
+	renderer.setClearAlpha(0);
 	const canvas = renderer.domElement;
 	canvas.classList.add('visor-canvas');
 	contenedor.appendChild(canvas);
 
-	scene.add(new AmbientLight(0xffffff, 0.6));
-	const luz = new DirectionalLight(0xffffff, 0.8);
+	// Luces blancas (color por defecto de Three.js): sin colores escritos acá
+	scene.add(new AmbientLight(undefined, 0.6));
+	const luz = new DirectionalLight(undefined, 0.8);
 	luz.position.set(5, 10, 7.5);
 	scene.add(luz);
-	const relleno = new DirectionalLight(0xffffff, 0.3);
+	const relleno = new DirectionalLight(undefined, 0.3);
 	relleno.position.set(-5, 0, -5);
 	scene.add(relleno);
 
