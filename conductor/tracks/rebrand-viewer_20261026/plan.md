@@ -13,11 +13,11 @@ Build the state machine and static UI first (testable without WebGL), then the l
 
 ### Tasks
 
-- [ ] Task 1.1: `viewerState` (store or `$state` module): `empty | loading(nombre, pct) | loaded(nombre, origen) | error(tipo)`, plus selected example. Unit-test the transitions and the file validation mapping (type / >50 MB / ok).
-- [ ] Task 1.2: Section shell, heading, line, examples intro in `landing/Visor.svelte`; layouts for the three breakpoints (stacked at 960–1199).
-- [ ] Task 1.3: Example cards with thumbnails, `aria-pressed`, mantequilla selected state, sideways-scrolling row on phone.
-- [ ] Task 1.4: Frame (white, border, radius, extrusion, aspect ratios per breakpoint) with empty state (dashed area, drag text hidden on phone, real file input as "Elegir archivo", size hint) and drag-and-drop.
-- [ ] Task 1.5: Loading state (cobalto progress bar + text) and three error states with exact copy and "Probar otro".
+- [x] Task 1.1: `viewerState` (store or `$state` module): `empty | loading(nombre, pct) | loaded(nombre, origen) | error(tipo)`, plus selected example. Unit-test the transitions and the file validation mapping (type / >50 MB / ok).
+- [x] Task 1.2: Section shell, heading, line, examples intro in `landing/Visor.svelte`; layouts for the three breakpoints (stacked at 960–1199).
+- [x] Task 1.3: Example cards with thumbnails, `aria-pressed`, mantequilla selected state, sideways-scrolling row on phone.
+- [x] Task 1.4: Frame (white, border, radius, extrusion, aspect ratios per breakpoint) with empty state (dashed area, drag text hidden on phone, real file input as "Elegir archivo", size hint) and drag-and-drop.
+- [x] Task 1.5: Loading state (cobalto progress bar + text) and three error states with exact copy and "Probar otro".
 
 ### Verification
 
@@ -27,11 +27,11 @@ Build the state machine and static UI first (testable without WebGL), then the l
 
 ### Tasks
 
-- [ ] Task 2.1: `three/viewerRuntime.ts` entry that re-exports scene setup + loader factory; imported dynamically when the section nears the viewport.
-- [ ] Task 2.2: Mount scene in the frame; cobalto material from the CSS token; keep orientation correction + camera fit; drop info extraction.
-- [ ] Task 2.3: Yaw-only rotation controller: pointer drag, `touch-action: pan-y`, arrow keys; no zoom/pan.
-- [ ] Task 2.4: File reading with progress → loading pct; example loading from `static/models/` with progress; wire error mapping.
-- [ ] Task 2.5: "Probar otro" disposes the model and returns to empty; full dispose on destroy.
+- [x] Task 2.1: `three/viewerRuntime.ts` entry that re-exports scene setup + loader factory; imported dynamically when the section nears the viewport.
+- [x] Task 2.2: Mount scene in the frame; cobalto material from the CSS token; keep orientation correction + camera fit; drop info extraction.
+- [x] Task 2.3: Yaw-only rotation controller: pointer drag, `touch-action: pan-y`, arrow keys; no zoom/pan.
+- [x] Task 2.4: File reading with progress → loading pct; example loading from `static/models/` with progress; wire error mapping.
+- [x] Task 2.5: "Probar otro" disposes the model and returns to empty; full dispose on destroy.
 
 ### Verification
 
@@ -41,10 +41,10 @@ Build the state machine and static UI first (testable without WebGL), then the l
 
 ### Tasks
 
-- [ ] Task 3.1: Frame `tabindex="0"` + accessible name with the file/example name; polite live region announcing loading, loaded, errors.
-- [ ] Task 3.2: Loaded overlay: file-name pill, hint pill (desktop/phone text) fading after the first turn (no fade animation under reduced motion).
-- [ ] Task 3.3: Under-frame actions: "Pedir el precio" with own-file / example / over-50 MB messages, "Probar otro", own-file attachment note.
-- [ ] Task 3.4: Placeholder thumbnail + model slot for "Cuadro en relieve"; note the owner TODOs (licenses, real thumbnails) in the track index.
+- [x] Task 3.1: Frame `tabindex="0"` + accessible name with the file/example name; polite live region announcing loading, loaded, errors.
+- [x] Task 3.2: Loaded overlay: file-name pill, hint pill (desktop/phone text) fading after the first turn (no fade animation under reduced motion).
+- [x] Task 3.3: Under-frame actions: "Pedir el precio" with own-file / example / over-50 MB messages, "Probar otro", own-file attachment note.
+- [x] Task 3.4: Placeholder thumbnail + model slot for "Cuadro en relieve"; note the owner TODOs (licenses, real thumbnails) in the track index.
 
 ### Verification
 

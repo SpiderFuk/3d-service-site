@@ -26,24 +26,7 @@ export class STLLoaderAdapter implements IModelLoader {
 						throw new Error('No se pudo leer el archivo');
 					}
 
-					const geometry = this.loader.parse(contents as ArrayBuffer);
-					this.loadedGeometries.push(geometry);
-
-					// Centrar geometría
-					geometry.computeBoundingBox();
-					const center = new Vector3();
-					geometry.boundingBox?.getCenter(center);
-					geometry.translate(-center.x, -center.y, -center.z);
-
-					// Crear mesh con material estándar
-					const material = new MeshStandardMaterial({
-						color: 0x3b82f6,
-						metalness: 0.3,
-						roughness: 0.6
-					});
-
-					const mesh = new Mesh(geometry, material);
-					resolve(mesh);
+					resolve(this.parse(contents as ArrayBuffer));
 				} catch (error) {
 					reject(new Error(`Error al parsear STL: ${error}`));
 				}
@@ -52,6 +35,30 @@ export class STLLoaderAdapter implements IModelLoader {
 			reader.onerror = () => reject(new Error('Error al leer el archivo'));
 			reader.readAsArrayBuffer(file);
 		});
+	}
+
+	/**
+	 * Parsea un STL ya leído (binario o ASCII) y lo devuelve centrado.
+	 * Lanza un error si el contenido no se puede interpretar.
+	 */
+	parse(buffer: ArrayBuffer): Object3D {
+		const geometry = this.loader.parse(buffer);
+		this.loadedGeometries.push(geometry);
+
+		// Centrar geometría
+		geometry.computeBoundingBox();
+		const center = new Vector3();
+		geometry.boundingBox?.getCenter(center);
+		geometry.translate(-center.x, -center.y, -center.z);
+
+		// Crear mesh con material estándar
+		const material = new MeshStandardMaterial({
+			color: 0x3b82f6,
+			metalness: 0.3,
+			roughness: 0.6
+		});
+
+		return new Mesh(geometry, material);
 	}
 
 	getModelInfo(object: Object3D): ModelInfo {
