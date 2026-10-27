@@ -7,6 +7,7 @@
 	 * "Elegir archivo" (abre el input de archivo real) y la ayuda de tipos y tamaño.
 	 * Se puede soltar un archivo sobre el marco en cualquier estado.
 	 */
+	import { onMount } from 'svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { EXTENSIONES_VISOR, type FaseVisor } from '$lib/stores/viewerState';
 	import {
@@ -65,6 +66,24 @@
 		const file = e.dataTransfer?.files[0];
 		if (file) onarchivo(file);
 	}
+
+	// Un archivo soltado unos píxeles fuera del marco no debe abrirse ni bajarse en
+	// el navegador: mientras el visor está montado, la página ignora esos drops
+	// (no carga el archivo; solo el marco lo hace)
+	onMount(() => {
+		const ignorar = (e: DragEvent) => {
+			// El marco ya lo atendió (pasa primero): no tocar su "copiar"
+			if (!traeArchivos(e) || e.defaultPrevented) return;
+			e.preventDefault();
+			if (e.dataTransfer) e.dataTransfer.dropEffect = 'none';
+		};
+		window.addEventListener('dragover', ignorar);
+		window.addEventListener('drop', ignorar);
+		return () => {
+			window.removeEventListener('dragover', ignorar);
+			window.removeEventListener('drop', ignorar);
+		};
+	});
 
 	function alElegir() {
 		const file = input.files?.[0];
