@@ -31,7 +31,7 @@ Build the state machine and static UI first (testable without WebGL), then the l
 - [x] Task 2.2: Mount scene in the frame; cobalto material from the CSS token; keep orientation correction + camera fit; drop info extraction.
 - [x] Task 2.3: Yaw-only rotation controller: pointer drag, `touch-action: pan-y`, arrow keys; no zoom/pan.
 - [x] Task 2.4: File reading with progress → loading pct; example loading from `static/models/` with progress; wire error mapping.
-- [ ] Task 2.5: "Probar otro" disposes the model and returns to empty; full dispose on destroy.
+- [x] Task 2.5: "Probar otro" disposes the model and returns to empty; full dispose on destroy.
 
 ### Verification
 

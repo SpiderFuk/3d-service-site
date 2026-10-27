@@ -7,7 +7,7 @@
 	 * 960 a 1199 px todo en una columna (texto, ejemplos, visor);
 	 * teléfono texto, visor y después los ejemplos.
 	 */
-	import { onMount, tick } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -42,6 +42,14 @@
 		});
 		return runtime;
 	}
+
+	// Al desmontar: liberar renderer, contexto WebGL, canvas y escuchas, y volver
+	// a vacío (corta cualquier carga en curso; el store sobrevive al componente)
+	onDestroy(() => {
+		escena?.dispose();
+		escena = null;
+		viewerState.reiniciar();
+	});
 
 	// Carga diferida: cuando la sección está a 600 px de la pantalla
 	onMount(() => {
@@ -122,6 +130,7 @@
 
 	/** "Probar otro": vuelve al estado vacío y deja el foco en "Elegir archivo" */
 	async function probarOtro() {
+		escena?.limpiar();
 		viewerState.reiniciar();
 		await tick();
 		document.getElementById('visor-elegir')?.focus();
