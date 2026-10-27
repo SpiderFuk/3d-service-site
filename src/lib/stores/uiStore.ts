@@ -82,6 +82,15 @@ function createUIStore() {
 export const uiStore = createUIStore();
 
 /**
+ * ¿El botón "Pedir presupuesto" del Hero está a la vista?
+ *
+ * Regla de BUILD.md: un solo botón de presupuesto a la vez. El Hero lo actualiza
+ * con un IntersectionObserver y la barra muestra el suyo solo cuando es false.
+ * Empieza en false para que, si el Hero está oculto por flags, la barra lo muestre.
+ */
+export const heroCtaVisible = writable(false);
+
+/**
  * Claves de localStorage para el sistema de dismissal
  */
 const STORAGE_KEY_MODAL = 'outOfServiceModalDismissed';

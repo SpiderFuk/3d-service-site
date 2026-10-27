@@ -7,11 +7,13 @@
 	 *
 	 * Layout (landing-final.html): flex con wrap; el arte baja debajo del texto cuando no entra.
 	 */
+	import { onMount } from 'svelte';
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import { abiertoAhora } from '$lib/stores/hoursStore';
+	import { heroCtaVisible } from '$lib/stores/uiStore';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
 
@@ -30,6 +32,39 @@
 		{ r: 12, color: 'crema' },
 		{ r: 5, color: 'cobalto' }
 	] as const;
+
+	/**
+	 * Visibilidad del botón del Hero → heroCtaVisible (la barra muestra el suyo cuando es false).
+	 * El margen superior descuenta la barra fija: un botón tapado por la barra no cuenta como visible.
+	 * Se vuelve a crear al cruzar 959 px porque la barra cambia de alto.
+	 */
+	onMount(() => {
+		const boton = document.getElementById('hero-cta');
+		if (!boton) return;
+
+		heroCtaVisible.set(true);
+		let observer: IntersectionObserver | null = null;
+
+		const observar = () => {
+			observer?.disconnect();
+			const altoBarra = document.querySelector('header')?.getBoundingClientRect().height ?? 0;
+			observer = new IntersectionObserver(
+				([entrada]) => heroCtaVisible.set(entrada.isIntersecting),
+				{ rootMargin: `-${Math.round(altoBarra)}px 0px 0px 0px` }
+			);
+			observer.observe(boton);
+		};
+
+		const telefono = window.matchMedia('(max-width: 959px)');
+		observar();
+		telefono.addEventListener('change', observar);
+
+		return () => {
+			telefono.removeEventListener('change', observar);
+			observer?.disconnect();
+			heroCtaVisible.set(false);
+		};
+	});
 </script>
 
 <Section id="inicio" class="hero" contentClass="hero-contenido">

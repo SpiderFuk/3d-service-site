@@ -17,7 +17,7 @@ Hero first, since the bar's quote button depends on the hero button's visibility
 - [x] Task 1.2: Eyebrow tag, copy line, cobalto quote button with inline spool shape (full width on phone).
 - [x] Task 1.3: Three claim tiles (mantequilla/menta/tomate, 20 px radius, 2 px border) with exact copy.
 - [x] Task 1.4: Spool art (cobalto square, four rings, cobalto center) as inline SVG with tomate extrusion, `aria-hidden`.
-- [ ] Task 1.5: `heroCtaVisible` store fed by an IntersectionObserver on the hero button (disconnect on destroy).
+- [x] Task 1.5: `heroCtaVisible` store fed by an IntersectionObserver on the hero button (disconnect on destroy).
 
 ### Verification
 
