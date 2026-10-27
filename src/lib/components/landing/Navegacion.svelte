@@ -3,6 +3,8 @@
 	 * Barra de navegación fija (01 Navegación, BUILD.md)
 	 *
 	 * Desktop: logo (112 px, a #inicio) y los cuatro links del menú.
+	 * Teléfono (hasta 959 px): barra de 64 px, logo de 96 px, píldora "Presupuesto"
+	 * (misma regla que el botón de la barra) y botón redondo de menú.
 	 * Queda dentro de <header>: el Hero mide su alto para saber si la barra tapa su botón.
 	 *
 	 * "Pedir presupuesto" (cobalto) aparece solo cuando el botón del Hero salió de vista
@@ -24,6 +26,7 @@
 
 	const items = $derived(getVisibleNavItems($sectionsVisibilityFlag));
 	const seccionActual = $derived($uiStore.activeSection);
+	const menuAbierto = $derived($uiStore.isMobileMenuOpen);
 
 	// Se vuelve a observar cuando los flags muestran u ocultan secciones
 	$effect(() => {
@@ -77,6 +80,34 @@
 					Pedir presupuesto
 				</Button>
 			{/if}
+		</div>
+
+		<!-- Solo teléfono. Está siempre en el DOM (vacío en desktop): así el espacio entre
+		     los links queda como en la referencia. -->
+		<div class="barra-movil">
+			{#if !$heroCtaVisible}
+				<Button
+					variant="quote"
+					href={whatsappUrl(mensajes.presupuesto)}
+					class="barra-pildora"
+					aria-label="Presupuesto por WhatsApp"
+				>
+					<CarreteChico tamano="sm" class="pildora-carrete" />
+					Presupuesto
+				</Button>
+			{/if}
+			<button
+				type="button"
+				id="menu-boton"
+				class="barra-menu"
+				class:abierto={menuAbierto}
+				aria-controls="menu-movil"
+				aria-expanded={menuAbierto}
+				aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
+				onclick={() => uiStore.toggleMobileMenu()}
+			>
+				<span class="barra-menu-rayas" aria-hidden="true"><span></span><span></span><span></span></span>
+			</button>
 		</div>
 	</nav>
 </header>
@@ -179,20 +210,106 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.barra-cta :global(.barra-cta-boton) {
+		.barra-cta :global(.barra-cta-boton),
+		.barra-movil :global(.barra-pildora) {
 			animation: none;
 		}
+
+		.barra-menu-rayas span {
+			transition: none;
+		}
+	}
+
+	.barra-movil {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	/* Píldora y botón de menú: solo en el teléfono */
+	.barra-movil :global(.barra-pildora),
+	.barra-menu {
+		display: none;
+	}
+
+	/* Botón redondo de menú con tres rayas dibujadas con CSS (cruz cuando está abierto) */
+	.barra-menu {
+		align-items: center;
+		justify-content: center;
+		width: var(--tap-min);
+		height: var(--tap-min);
+		padding: 0;
+		border: var(--border);
+		border-radius: 50%;
+		background: var(--color-blanco);
+		cursor: pointer;
+	}
+
+	.barra-menu-rayas {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.barra-menu-rayas span {
+		width: 18px;
+		height: 2px;
+		border-radius: 2px;
+		background: var(--color-tinta);
+		transition: transform 0.15s ease, opacity 0.15s ease;
+	}
+
+	.barra-menu.abierto .barra-menu-rayas span:nth-child(1) {
+		transform: translateY(6px) rotate(45deg);
+	}
+
+	.barra-menu.abierto .barra-menu-rayas span:nth-child(2) {
+		opacity: 0;
+	}
+
+	.barra-menu.abierto .barra-menu-rayas span:nth-child(3) {
+		transform: translateY(-6px) rotate(-45deg);
 	}
 
 	/* Teléfono: solo CSS, sin display en línea que pise la media query */
 	@media (max-width: 959px) {
+		.barra-nav {
+			height: 64px;
+			padding: 0 var(--gutter);
+		}
+
 		.barra-logo img {
 			width: 96px;
+		}
+
+		.barra-menu {
+			display: flex;
+		}
+
+		/* Píldora chica "Presupuesto": 44 px de alto para el dedo */
+		.barra-movil :global(.barra-pildora) {
+			display: inline-flex;
+			height: var(--tap-min);
+			gap: 8px;
+			padding: 0 16px 0 10px;
+			font-size: 15px;
+			animation: aparecer 0.15s ease-out;
 		}
 
 		.barra-enlaces,
 		.barra-cta {
 			display: none;
+		}
+	}
+
+	/* Bajo 360 px la píldora pierde el carrete para que entre todo */
+	@media (max-width: 359px) {
+		.barra-movil :global(.pildora-carrete) {
+			display: none;
+		}
+
+		.barra-movil :global(.barra-pildora) {
+			padding: 0 14px;
 		}
 	}
 </style>
