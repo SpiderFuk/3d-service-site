@@ -42,7 +42,7 @@ One phase per section, in page order, each checked against the reference before 
 
 - [x] Task 3.1: Ordered list of three steps with cobalto number circles (circles decorative, list provides numbering semantics).
 - [x] Task 3.2: Menta card with "¿Lo imprimimos?" paragraph + "Sí, escribamos" button.
-- [ ] Task 3.3: Layouts: 4 cols desktop, steps row + card below at 960–1199, rows + card on phone.
+- [x] Task 3.3: Layouts: 4 cols desktop, steps row + card below at 960–1199, rows + card on phone.
 
 ### Verification
 

@@ -145,4 +145,63 @@
 		line-height: 0.95;
 		letter-spacing: -0.03em;
 	}
+
+	/* Desktop chico: los tres pasos en fila y la tarjeta abajo, en horizontal */
+	@media (min-width: 960px) and (max-width: 1199px) {
+		.envoltura {
+			grid-template-columns: 1fr;
+		}
+
+		.pasos {
+			grid-column: auto;
+		}
+
+		.envoltura > :global(.tuyo) {
+			flex-direction: row;
+			align-items: center;
+		}
+	}
+
+	/* Teléfono: pasos como filas (círculo y texto, sin tarjeta), después la tarjeta menta */
+	@media (max-width: 959px) {
+		.envoltura {
+			grid-template-columns: 1fr;
+			gap: 20px;
+			margin-top: 12px;
+		}
+
+		.pasos {
+			grid-column: auto;
+			grid-template-columns: 1fr;
+			gap: 20px;
+		}
+
+		.paso {
+			flex-direction: row;
+			align-items: flex-start;
+			gap: 14px;
+			padding: 0;
+			border: 0;
+			background: none;
+		}
+
+		.numero {
+			width: 44px;
+			height: 44px;
+			font-size: 20px;
+		}
+
+		.titulo {
+			font-size: 21px;
+		}
+
+		.envoltura > :global(.tuyo) {
+			gap: 16px;
+			padding: 20px 16px;
+		}
+
+		.pregunta {
+			font-size: 32px;
+		}
+	}
 </style>
