@@ -16,7 +16,7 @@
 	 * Link actual: un IntersectionObserver sobre las secciones con ancla escribe
 	 * uiStore.activeSection; solo los cuatro destinos del menú marcan un link.
 	 */
-	import { tick } from 'svelte';
+	import { onDestroy, tick } from 'svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import CarreteChico from './CarreteChico.svelte';
 	import { sectionsVisibilityFlag } from '$lib/stores/featureFlagsStore';
@@ -30,6 +30,78 @@
 	const items = $derived(getVisibleNavItems($sectionsVisibilityFlag));
 	const seccionActual = $derived($uiStore.activeSection);
 	const menuAbierto = $derived($uiStore.isMobileMenuOpen);
+
+	let barra: HTMLElement;
+	let menuBoton: HTMLButtonElement;
+	let panel: HTMLDivElement;
+
+	/** Cierra el menú; por defecto devuelve el foco al botón de menú */
+	function cerrarMenu(devolverFoco = true) {
+		if (!menuAbierto) return;
+		uiStore.closeMobileMenu();
+		if (devolverFoco) menuBoton?.focus({ preventScroll: true });
+	}
+
+	/** Abre el menú y lleva el foco al primer link */
+	async function abrirMenu() {
+		uiStore.toggleMobileMenu();
+		await tick();
+		panel?.querySelector<HTMLElement>('a')?.focus();
+	}
+
+	function alternarMenu() {
+		if (menuAbierto) cerrarMenu();
+		else abrirMenu();
+	}
+
+	/**
+	 * Tocar cualquier link del panel (ancla, Instagram, email, WhatsApp) cierra el menú.
+	 * Con los links externos el foco vuelve al botón de menú; con las anclas lo maneja
+	 * el navegador (el siguiente Tab sigue desde la sección destino).
+	 */
+	function alTocarPanel(evento: MouseEvent) {
+		const link = (evento.target as HTMLElement).closest('a');
+		if (link) cerrarMenu(!link.getAttribute('href')?.startsWith('#'));
+	}
+
+	/** Si el foco sale de la barra con Tab (p. ej. después del último link), se cierra */
+	function alSalirFoco(evento: FocusEvent) {
+		const destino = evento.relatedTarget as Node | null;
+		if (menuAbierto && destino && !barra.contains(destino)) cerrarMenu(false);
+	}
+
+	// Mientras el menú está abierto: bloquear el scroll del body, Escape cierra y
+	// pasar a desktop (más de 959 px) cierra. La limpieza corre al cerrar por cualquier
+	// camino y al destruir el componente, así el bloqueo siempre se libera.
+	$effect(() => {
+		if (!menuAbierto) return;
+
+		const overflowPrevio = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+
+		const alTeclear = (evento: KeyboardEvent) => {
+			if (evento.key === 'Escape') {
+				evento.preventDefault();
+				cerrarMenu();
+			}
+		};
+		const escritorio = window.matchMedia('(min-width: 960px)');
+		const alCambiarAncho = () => {
+			if (escritorio.matches) cerrarMenu(false);
+		};
+
+		window.addEventListener('keydown', alTeclear);
+		escritorio.addEventListener('change', alCambiarAncho);
+
+		return () => {
+			document.body.style.overflow = overflowPrevio;
+			window.removeEventListener('keydown', alTeclear);
+			escritorio.removeEventListener('change', alCambiarAncho);
+		};
+	});
+
+	// Si la barra se desmonta (p. ej. por flags), el menú no queda abierto en el store
+	onDestroy(() => uiStore.closeMobileMenu());
 
 	// Se vuelve a observar cuando los flags muestran u ocultan secciones
 	$effect(() => {
@@ -50,7 +122,7 @@
 	});
 </script>
 
-<header class="barra">
+<header class="barra" bind:this={barra} onfocusout={alSalirFoco}>
 	<nav aria-label="Principal" class="barra-nav">
 		<a href="#inicio" aria-label="printo, ir al inicio" class="barra-logo">
 			<img src="/brand/printo-wordmark-cobalto.svg" alt="" />
@@ -102,18 +174,27 @@
 			<button
 				type="button"
 				id="menu-boton"
+				bind:this={menuBoton}
 				class="barra-menu"
 				class:abierto={menuAbierto}
 				aria-controls="menu-movil"
 				aria-expanded={menuAbierto}
 				aria-label={menuAbierto ? 'Cerrar menú' : 'Abrir menú'}
-				onclick={() => uiStore.toggleMobileMenu()}
+				onclick={alternarMenu}
 			>
 				<span class="barra-menu-rayas" aria-hidden="true"><span></span><span></span><span></span></span>
 			</button>
 		</div>
 
-		<div id="menu-movil" class="panel" hidden={!menuAbierto}>
+		<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+		<!-- El clic se delega a los links del panel (que ya son interactivos con teclado) -->
+		<div
+			id="menu-movil"
+			class="panel"
+			hidden={!menuAbierto}
+			bind:this={panel}
+			onclick={alTocarPanel}
+		>
 			<ul class="panel-enlaces">
 				{#each items as item (item.href)}
 					{@const actual = seccionActual === item.href.slice(1)}
