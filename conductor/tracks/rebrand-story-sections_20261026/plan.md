@@ -15,7 +15,7 @@ One phase per section, in page order, each checked against the reference before 
 
 - [x] Task 1.1: Section shell + heading + line in `landing/TresCaminos.svelte`.
 - [x] Task 1.2: `CaminoCard` (photo slot with color background, h3, copy, optional note box, optional link, button with message key).
-- [ ] Task 1.3: Three cards with exact copy and messages; "Ver tu modelo en 3D" → `#visor`.
+- [x] Task 1.3: Three cards with exact copy and messages; "Ver tu modelo en 3D" → `#visor`.
 - [ ] Task 1.4: Layouts: 3 cols desktop, photo-left under 1100 px, stacked 16:9 on phone.
 
 ### Verification
