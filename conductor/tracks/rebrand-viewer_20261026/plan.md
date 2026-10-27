@@ -41,7 +41,7 @@ Build the state machine and static UI first (testable without WebGL), then the l
 
 ### Tasks
 
-- [ ] Task 3.1: Frame `tabindex="0"` + accessible name with the file/example name; polite live region announcing loading, loaded, errors.
+- [x] Task 3.1: Frame `tabindex="0"` + accessible name with the file/example name; polite live region announcing loading, loaded, errors.
 - [ ] Task 3.2: Loaded overlay: file-name pill, hint pill (desktop/phone text) fading after the first turn (no fade animation under reduced motion).
 - [ ] Task 3.3: Under-frame actions: "Pedir el precio" with own-file / example / over-50 MB messages, "Probar otro", own-file attachment note.
 - [ ] Task 3.4: Placeholder thumbnail + model slot for "Cuadro en relieve"; note the owner TODOs (licenses, real thumbnails) in the track index.

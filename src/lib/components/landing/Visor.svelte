@@ -20,6 +20,7 @@
 	import type { VisorEscena } from '$lib/three/viewerRuntime';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
+	import { mensajesError, nombreMarcoCargado, textoAbriendo } from '$lib/config/visorTextos';
 
 	type Runtime = typeof import('$lib/three/viewerRuntime');
 
@@ -29,6 +30,18 @@
 	let runtime: Promise<Runtime> | null = null;
 	/** Un solo renderer por visor montado; se crea con la primera carga */
 	let escena: VisorEscena | null = null;
+
+	/**
+	 * Región en vivo (polite): se anuncia una vez por cambio de estado (empieza
+	 * a abrir, abierto, error), nunca cada porcentaje. Se vacía antes de escribir
+	 * para que un mismo texto dos veces seguidas (el mismo error) se vuelva a leer.
+	 */
+	let anuncio = $state('');
+	async function anunciar(texto: string) {
+		anuncio = '';
+		await tick();
+		anuncio = texto;
+	}
 
 	/**
 	 * Baja el chunk de Three.js una sola vez. Lo dispara la cercanía a la sección
@@ -75,7 +88,12 @@
 	 *
 	 * obtener devuelve el archivo a abrir, o null para el cuadro provisorio.
 	 */
-	async function abrir(carga: number, obtener: (avance: (f: number) => void) => Promise<File | null>) {
+	async function abrir(
+		carga: number,
+		nombre: string,
+		obtener: (avance: (f: number) => void) => Promise<File | null>
+	) {
+		anunciar(textoAbriendo(nombre));
 		const avance = (fraccion: number) => viewerState.progreso(carga, fraccion * 95);
 		const pedidoRuntime = cargarRuntime();
 		pedidoRuntime.catch(() => {}); // el error se maneja abajo, al esperarlo
@@ -96,18 +114,20 @@
 			escena.mostrar(objeto, { corregirOrientacion: archivo !== null });
 			viewerState.progreso(carga, 100);
 			viewerState.listo(carga);
+			anunciar(nombreMarcoCargado(nombre));
 		} catch (error) {
 			if (!viewerState.esActual(carga)) return;
 			if (import.meta.env.DEV) console.error('Visor 3D:', error);
 			escena?.limpiar();
 			viewerState.fallo(carga, 'danado');
+			anunciar(mensajesError.danado);
 		}
 	}
 
 	function elegirEjemplo(id: EjemploId) {
 		const ejemplo = getEjemplo(id);
 		const carga = viewerState.abrirEjemplo(id);
-		abrir(carga, async (avance) => {
+		abrir(carga, ejemplo.nombre, async (avance) => {
 			// Sin archivo todavía (Cuadro en relieve): modelo provisorio
 			if (!ejemplo.archivo) return null;
 			const url = asset(`/models/${ejemplo.archivo}` as Parameters<typeof asset>[0]);
@@ -116,13 +136,19 @@
 	}
 
 	function abrirArchivo(file: File) {
+		// Si el foco estaba en "Elegir archivo" (que desaparece al cambiar de estado),
+		// pasa al marco para no perderlo
+		if (marco?.contains(document.activeElement)) marco.focus();
+
 		const carga = viewerState.abrirArchivo(file);
 		// Tipo o tamaño inválido: no se lee ni se intenta abrir
 		if (carga === null) {
 			escena?.limpiar();
+			const vista = $viewerState.vista;
+			if (vista.fase === 'error') anunciar(mensajesError[vista.tipo]);
 			return;
 		}
-		abrir(carga, async (avance) => {
+		abrir(carga, file.name, async (avance) => {
 			await leerConProgreso(file, avance);
 			return file;
 		});
@@ -132,6 +158,7 @@
 	async function probarOtro() {
 		escena?.limpiar();
 		viewerState.reiniciar();
+		anuncio = '';
 		await tick();
 		document.getElementById('visor-elegir')?.focus();
 	}
@@ -193,6 +220,8 @@
 					<Button variant="plain" onclick={probarOtro}>Probar otro</Button>
 				</div>
 			{/if}
+
+			<p class="sr-only" aria-live="polite">{anuncio}</p>
 		</div>
 	</div>
 </Section>
