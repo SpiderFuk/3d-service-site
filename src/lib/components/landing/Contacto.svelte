@@ -10,6 +10,7 @@
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
 	import { contactInfo } from '$lib/config/contact';
+	import { abiertoAhora } from '$lib/stores/hoursStore';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
 </script>
@@ -41,6 +42,12 @@
 			>
 				WhatsApp <span class="contacto-numero">{contactInfo.whatsappDisplayNumber}</span>
 			</Button>
+
+			<!-- Se actualiza sola al abrir o cerrar (abiertoAhora se recalcula cada minuto) -->
+			<p class="contacto-estado">
+				<span class="contacto-punto" class:abierto={$abiertoAhora} aria-hidden="true"></span>
+				{$abiertoAhora ? 'Taller abierto ahora' : 'Cerrado ahora · te respondemos apenas abramos'}
+			</p>
 		</div>
 	</div>
 </Section>
@@ -76,6 +83,35 @@
 		padding: 0 30px;
 	}
 
+	/* Píldora crema "abierto ahora" con punto menta (abierto) o tomate (cerrado) */
+	.contacto-estado {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		margin: 0;
+		padding: 7px 14px;
+		border: var(--border);
+		border-radius: var(--radius-pill);
+		background: var(--color-crema);
+		color: var(--color-tinta);
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	.contacto-punto {
+		flex: none;
+		width: 10px;
+		height: 10px;
+		border: var(--border);
+		border-radius: 50%;
+		background: var(--color-tomate);
+	}
+
+	.contacto-punto.abierto {
+		background: var(--color-menta);
+	}
+
 	.contacto-numero {
 		font-weight: 500;
 		color: var(--color-tinta-suave);
@@ -100,6 +136,11 @@
 		.contacto-acciones :global(.contacto-whatsapp) {
 			height: 56px;
 			font-size: 17px;
+		}
+
+		.contacto-estado {
+			align-self: flex-start;
+			font-size: 13px;
 		}
 	}
 </style>
