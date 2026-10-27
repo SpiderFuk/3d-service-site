@@ -1,6 +1,8 @@
 <script lang="ts">
 	/**
-	 * Precio y plazos (#precios). Placeholder: el contenido se construye en el track rebrand-materials-pricing.
+	 * Precio y plazos (#precios), BUILD.md sección 07
+	 *
+	 * Solo lo que mueve el precio: sin precios ni precio mínimo en ningún lado.
 	 */
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
@@ -14,3 +16,4 @@
 		segunda="su precio."
 	/>
 </Section>
+
