@@ -27,7 +27,7 @@ FAQ with its structured data, then Contacto (hours-driven pill), then the footer
 ### Tasks
 
 - [x] Task 2.1: Cobalto section shell in `landing/Contacto.svelte` with crema scope for links and focus ring; 72/40 px headline with mantequilla second line.
-- [ ] Task 2.2: Mantequilla WhatsApp button with number and accessible name.
+- [x] Task 2.2: Mantequilla WhatsApp button with number and accessible name.
 - [ ] Task 2.3: Open-now pill bound to the hours store (menta/tomate dot, `aria-hidden` dot).
 - [ ] Task 2.4: `dl` details (Instagram, Email, Horario, Dónde) with crema rules; phone rows with short/long hours text.
 
