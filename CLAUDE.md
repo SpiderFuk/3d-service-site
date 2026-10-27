@@ -308,6 +308,7 @@ Each lives in exactly one place; components derive from it.
 - **Opening hours:** [src/lib/config/hours.ts](src/lib/config/hours.ts), `{ week: [600, 1080], sat: [720, 960] }` (minutes, Montevideo time). Helpers in [src/lib/utils/hours.ts](src/lib/utils/hours.ts): `isOpenAt(date)`, `horarioLargo()`, `horarioCorto()`, `horarioFrase()`.
 - **WhatsApp number:** [src/lib/config/contact.ts](src/lib/config/contact.ts) (`whatsappNumber: '59896341462'`, shown as `096 341 462`), plus Instagram and email.
 - **Filament stock:** [static/content/data/materials.json](static/content/data/materials.json), PLA + PETG, Bambu Lab hex codes (`#RRGGBBAA` + `translucido` for translucent), `agotado` per color. Types in [src/lib/types/content.ts](src/lib/types/content.ts). `src/lib/config/filamentColors.ts` is an old leftover; do not edit it.
+- **Importing content JSON:** import files from `static/content/data/` as `$contenido/<file>.json` (plugin in [vite.config.ts](vite.config.ts), types in [src/contenido.d.ts](src/contenido.d.ts)). Never import from `static/` by path: the build accepts it, but `npm run dev` returns 404 and the page renders blank.
 
 ### WhatsApp messages
 
@@ -376,7 +377,7 @@ formatPrice(price)               // Currency UYU
 
 ```typescript
 scrollToSection(sectionId)
-getActiveSection(sections)
+observarSeccionActual(secciones, alCambiar)  // IntersectionObserver; returns disconnect()
 debounce(func, wait)
 ```
 
