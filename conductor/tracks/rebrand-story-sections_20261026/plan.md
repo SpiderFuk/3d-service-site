@@ -26,7 +26,7 @@ One phase per section, in page order, each checked against the reference before 
 
 ### Tasks
 
-- [ ] Task 2.1: New `gallery.json` schema + types + placeholder data (5 pieces from BUILD.md) and placeholder photos.
+- [x] Task 2.1: New `gallery.json` schema + types + placeholder data (5 pieces from BUILD.md) and placeholder photos.
 - [ ] Task 2.2: Heading, line, Instagram link in `landing/Trabajos.svelte`.
 - [ ] Task 2.3: Grid with random featured (2×2 desktop, full-width photo-left at 960–1199, full-width on 2-col phone grid).
 - [ ] Task 2.4: Featured card (tag, title, line, story) and small cards (photo, tag, title).
