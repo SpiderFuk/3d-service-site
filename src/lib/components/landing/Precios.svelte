@@ -195,6 +195,19 @@
 		text-wrap: pretty;
 	}
 
+	/* Desktop chico: las dos tarjetas lado a lado, Plazo y Entrega en una fila abajo */
+	@media (min-width: 960px) and (max-width: 1199px) {
+		.pgrid {
+			grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+		}
+
+		.pside {
+			grid-column: 1 / -1;
+			grid-template-rows: none;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
 	@media (max-width: 959px) {
 		.pgrid {
 			grid-template-columns: 1fr;
@@ -220,6 +233,40 @@
 		.factores-2 {
 			grid-template-columns: 1fr;
 			gap: 6px;
+		}
+
+		/* Teléfono: Plazo y Entrega en una sola caja compacta con dos filas */
+		.pside {
+			grid-template-rows: none;
+			gap: 12px;
+			padding: 14px 16px;
+			border: var(--border);
+			border-radius: var(--radius-md);
+			background: var(--color-blanco);
+		}
+
+		.pbox {
+			padding: 0;
+			border: 0;
+			border-radius: 0;
+			gap: 2px;
+		}
+
+		.pbox + .pbox {
+			padding-top: 12px;
+			border-top: var(--border-width) solid var(--color-crema);
+		}
+
+		.pbox-cabeza {
+			flex-direction: row;
+			align-items: baseline;
+			gap: 8px;
+		}
+
+		.pbox-v {
+			font-size: 20px;
+			line-height: 1.1;
+			letter-spacing: 0;
 		}
 	}
 </style>
