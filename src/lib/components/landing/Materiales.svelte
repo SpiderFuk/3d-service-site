@@ -9,6 +9,7 @@
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import Tag from '$lib/components/ui/Tag.svelte';
+	import ColorSwatch from '$lib/components/ui/ColorSwatch.svelte';
 	import { materialsStore } from '$lib/stores/materialsStore';
 	import type { MaterialId } from '$lib/types/content';
 
@@ -62,9 +63,16 @@
 						<Tag>{propiedad}</Tag>
 					{/each}
 				</div>
+				<p class="eyebrow colores-titulo">Colores</p>
+				<ul class="sws" aria-label="Colores en {material.nombre}">
+					{#each material.colores as color (color.id)}
+						<ColorSwatch {color} />
+					{/each}
+				</ul>
 			</Card>
 		{/each}
 	</div>
+	<p class="nota">Los agotados vuelven a entrar. Preguntanos por WhatsApp.</p>
 </Section>
 
 <style>
@@ -113,6 +121,23 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 6px;
+	}
+
+	.colores-titulo {
+		margin-top: 8px;
+	}
+
+	.sws {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px 6px;
+	}
+
+	.nota {
+		color: var(--color-tinta-suave);
 	}
 
 	/* Desktop chico: una tarjeta por fila (como la referencia) */

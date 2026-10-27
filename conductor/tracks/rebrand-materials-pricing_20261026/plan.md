@@ -16,7 +16,7 @@ Materials first (it consumes the stock list from track 1), then pricing, which i
 - [x] Task 1.1: Section shell, heading, line in `landing/Materiales.svelte`.
 - [x] Task 1.2: PLA and PETG cards (Disponible tag, tagline, description, property tags).
 - [x] Task 1.3: Rewrite `ui/ColorSwatch.svelte`: round, border, translucent support, sold-out state (faded, diagonal, "Agotado" 14 px tag), accessible name.
-- [ ] Task 1.4: Swatch grids per material from `materialsStore`; "Los agotados vuelven a entrar" line.
+- [x] Task 1.4: Swatch grids per material from `materialsStore`; "Los agotados vuelven a entrar" line.
 - [ ] Task 1.5: Multicolor box (overlapping dots, decorative), detail box (three levels with layer-line squares), relief-frame note.
 
 ### Verification
