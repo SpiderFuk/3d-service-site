@@ -122,6 +122,9 @@
 		) => Promise<{ buffer: ArrayBuffer; nombre: string } | null>
 	) {
 		cortarCarga();
+		// Sacar ya el modelo anterior: una sola pieza en memoria y sin giro con
+		// flechas mientras se abre la nueva
+		escena?.limpiar();
 		const control = new AbortController();
 		enCurso = { carga, control };
 		anunciar(textoAbriendo(nombre));
@@ -139,7 +142,6 @@
 				teclado: marco,
 				ongiro: () => (girado = true)
 			});
-			escena.limpiar();
 
 			// Dejar que se pinte el 95 % antes del parseo, que bloquea el hilo
 			await new Promise((r) => requestAnimationFrame(() => setTimeout(r)));
