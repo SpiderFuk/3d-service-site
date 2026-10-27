@@ -16,6 +16,7 @@
 	import { whatsappUrl } from '$lib/utils/whatsapp';
 
 	const items = $derived(getVisibleNavItems($sectionsVisibilityFlag));
+	// El año sale de la fecha actual, no se escribe a mano
 	const anio = new Date().getFullYear();
 </script>
 
@@ -41,7 +42,7 @@
 		</div>
 	</div>
 
-	<p class="m-0 text-sm text-tinta-suave">© {anio} printo · Montevideo y Las Piedras, Uruguay</p>
+	<p class="pie-legal">© {anio} printo · {contactInfo.city}, Uruguay</p>
 </footer>
 
 <style>
@@ -110,6 +111,12 @@
 		font-weight: 600;
 	}
 
+	.pie-legal {
+		margin: 0;
+		font-size: 14px;
+		color: var(--color-tinta-suave);
+	}
+
 	@media (max-width: 959px) {
 		.pie {
 			gap: 16px;
@@ -140,6 +147,11 @@
 			justify-content: center;
 			gap: 0 16px;
 			font-size: 14px;
+		}
+
+		.pie-legal {
+			font-size: 12px;
+			text-align: center;
 		}
 	}
 
