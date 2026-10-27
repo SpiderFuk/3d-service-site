@@ -31,7 +31,7 @@ Materials first (it consumes the stock list from track 1), then pricing, which i
 - [x] Task 2.2: `PriceChip` (crema, 20 px radius, title + line) and the Piezas card (5 chips, 2 cols) and Cuadros en relieve card (3 chips).
 - [x] Task 2.3: Plazo + Entrega boxes; desktop 3-col grid with equal heights and centered text.
 - [x] Task 2.4: 960–1199 layout (cards side by side, boxes in a row) and phone layout (one column, merged Plazo/Entrega box, 14 px texts).
-- [ ] Task 2.5: Tomate closing strip with tinta "Pedir el precio".
+- [x] Task 2.5: Tomate closing strip with tinta "Pedir el precio".
 
 ### Verification
 

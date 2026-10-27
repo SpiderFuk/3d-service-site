@@ -6,7 +6,10 @@
 	 */
 	import Section from '$lib/components/ui/Section.svelte';
 	import SectionHeading from '$lib/components/ui/SectionHeading.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 	import PriceChip from '$lib/components/landing/PriceChip.svelte';
+	import { mensajes } from '$lib/config/whatsappMessages';
+	import { whatsappUrl } from '$lib/utils/whatsapp';
 
 	interface Factor {
 		titulo: string;
@@ -93,6 +96,13 @@
 				</div>
 			{/each}
 		</div>
+	</div>
+
+	<div class="cierre">
+		<p class="cierre-q">¿Tenés algo en mente? Preguntanos.</p>
+		<Button href={whatsappUrl(mensajes.precios)} aria-label="Pedir el precio por WhatsApp">
+			Pedir el precio
+		</Button>
 	</div>
 </Section>
 
@@ -195,6 +205,28 @@
 		text-wrap: pretty;
 	}
 
+	/* Franja de cierre tomate con botón tinta */
+	.cierre {
+		margin-top: 8px;
+		padding: 24px 32px;
+		border: var(--border);
+		border-radius: var(--radius-xl);
+		background: var(--color-tomate);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px 28px;
+	}
+
+	.cierre-q {
+		font-family: var(--font-display);
+		font-size: 28px;
+		line-height: 1.1;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+	}
+
 	/* Desktop chico: las dos tarjetas lado a lado, Plazo y Entrega en una fila abajo */
 	@media (min-width: 960px) and (max-width: 1199px) {
 		.pgrid {
@@ -267,6 +299,19 @@
 			font-size: 20px;
 			line-height: 1.1;
 			letter-spacing: 0;
+		}
+
+		/* El botón ocupa todo el ancho (ítem flex estirado) */
+		.cierre {
+			padding: 16px;
+			border-radius: var(--radius-md);
+			flex-direction: column;
+			align-items: stretch;
+			gap: 12px;
+		}
+
+		.cierre-q {
+			font-size: 20px;
 		}
 	}
 </style>
