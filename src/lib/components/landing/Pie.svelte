@@ -5,7 +5,17 @@
 	 * Arriba, el wordmark (68 % del ancho, 60 % en teléfono) y a su derecha, alineada
 	 * abajo, la frase. La frase queda siempre a la derecha del logo: la fila no
 	 * envuelve y la frase se achica (min-width: 0) en vez de bajar.
+	 *
+	 * Después, una línea tinta de 2 px, el menú (nav "Pie", con los mismos items
+	 * visibles que la barra) y los canales. Cada link tiene 44 px de alto de toque.
 	 */
+	import { contactInfo } from '$lib/config/contact';
+	import { mensajes } from '$lib/config/whatsappMessages';
+	import { sectionsVisibilityFlag } from '$lib/stores/featureFlagsStore';
+	import { getVisibleNavItems } from '$lib/utils/visibilityHelpers';
+	import { whatsappUrl } from '$lib/utils/whatsapp';
+
+	const items = $derived(getVisibleNavItems($sectionsVisibilityFlag));
 	const anio = new Date().getFullYear();
 </script>
 
@@ -16,6 +26,19 @@
 			<img src="/brand/printo-wordmark-cobalto.svg" alt="" width="2813" height="927" />
 		</a>
 		<p class="pie-frase">Impresión 3D hecha en Uruguay.</p>
+	</div>
+
+	<div class="pie-links">
+		<nav class="pie-fila" aria-label="Pie">
+			{#each items as item (item.href)}
+				<a href={item.href} aria-label={item.ariaLabel}>{item.label}</a>
+			{/each}
+		</nav>
+		<div class="pie-fila">
+			<a href={whatsappUrl(mensajes.contacto)} target="_blank" rel="noopener">WhatsApp</a>
+			<a href={contactInfo.socialMedia.instagram} target="_blank" rel="noopener">Instagram</a>
+			<a href="mailto:{contactInfo.email}">{contactInfo.email}</a>
+		</div>
 	</div>
 
 	<p class="m-0 text-sm text-tinta-suave">© {anio} printo · Montevideo y Las Piedras, Uruguay</p>
@@ -63,6 +86,30 @@
 		text-align: right;
 	}
 
+	/* Menú a la izquierda, canales a la derecha */
+	.pie-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 16px 32px;
+		padding-top: 24px;
+		border-top: var(--border);
+	}
+
+	.pie-fila {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0 24px;
+		font-size: 16px;
+	}
+
+	.pie-fila a {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--tap-min);
+		font-weight: 600;
+	}
+
 	@media (max-width: 959px) {
 		.pie {
 			gap: 16px;
@@ -80,6 +127,19 @@
 		.pie-frase {
 			font-size: 15px;
 			line-height: 1.15;
+		}
+
+		/* Teléfono: las dos filas centradas, una debajo de la otra */
+		.pie-links {
+			flex-direction: column;
+			gap: 0;
+			padding-top: 8px;
+		}
+
+		.pie-fila {
+			justify-content: center;
+			gap: 0 16px;
+			font-size: 14px;
 		}
 	}
 
