@@ -4,7 +4,9 @@
  * El marco y la región en vivo leen de acá, así un cambio de texto se hace una vez.
  */
 
-import type { TipoError } from '$lib/stores/viewerState';
+import type { TipoError, ViewerState } from '$lib/stores/viewerState';
+import { mensajes } from '$lib/config/whatsappMessages';
+import { getEjemplo } from '$lib/config/visorEjemplos';
 
 /** Nombre del marco sin modelo abierto (vacío, cargando o error) */
 export const nombreMarcoVacio = 'Visor 3D. Elegí un archivo o un ejemplo.';
@@ -25,3 +27,16 @@ export const mensajesError: Record<TipoError, string> = {
 	tamano: 'Pesa más de 50 MB. Mandánoslo por WhatsApp y lo vemos.',
 	danado: 'No pudimos abrirlo. Puede estar dañado: probá exportarlo de nuevo.'
 };
+
+/**
+ * Mensaje de WhatsApp de "Pedir el precio" con el modelo abierto: archivo propio
+ * con su nombre, ejemplo con su artículo ("el Santa borracho", "la Miniatura").
+ * null si no hay modelo abierto.
+ */
+export function mensajePedirPrecio({ vista, ejemplo }: ViewerState): string | null {
+	if (vista.fase !== 'loaded') return null;
+	if (vista.origen === 'ejemplo' && ejemplo) {
+		return mensajes.visorEjemplo(getEjemplo(ejemplo).conArticulo);
+	}
+	return mensajes.visorArchivo(vista.nombre);
+}

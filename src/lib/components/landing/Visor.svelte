@@ -20,7 +20,12 @@
 	import type { VisorEscena } from '$lib/three/viewerRuntime';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
-	import { mensajesError, nombreMarcoCargado, textoAbriendo } from '$lib/config/visorTextos';
+	import {
+		mensajePedirPrecio,
+		mensajesError,
+		nombreMarcoCargado,
+		textoAbriendo
+	} from '$lib/config/visorTextos';
 
 	type Runtime = typeof import('$lib/three/viewerRuntime');
 
@@ -132,6 +137,9 @@
 		}
 	}
 
+	/** Mensaje de "Pedir el precio" según el modelo abierto (archivo o ejemplo) */
+	const mensajePrecio = $derived(mensajePedirPrecio($viewerState));
+
 	function elegirEjemplo(id: EjemploId) {
 		const ejemplo = getEjemplo(id);
 		const carga = viewerState.abrirEjemplo(id);
@@ -220,7 +228,17 @@
 		<div class="vstage">
 			<Marco vista={$viewerState.vista} onarchivo={abrirArchivo} bind:marco bind:lienzo {girado} />
 
-			{#if $viewerState.vista.fase === 'error'}
+			{#if $viewerState.vista.fase === 'loaded' && mensajePrecio}
+				<div class="vactions">
+					<Button href={whatsappUrl(mensajePrecio)} aria-label="Pedir el precio por WhatsApp"
+						>Pedir el precio</Button
+					>
+					<Button variant="plain" onclick={probarOtro}>Probar otro</Button>
+					{#if $viewerState.vista.origen === 'archivo'}
+						<p class="vnote">Se abre WhatsApp: adjuntá el archivo en el chat.</p>
+					{/if}
+				</div>
+			{:else if $viewerState.vista.fase === 'error'}
 				<div class="vactions">
 					{#if $viewerState.vista.tipo === 'tamano'}
 						<Button href={whatsappUrl(mensajes.visorArchivoGrande)}>Mandar por WhatsApp</Button>
@@ -295,6 +313,12 @@
 		gap: 12px;
 	}
 
+	.vnote {
+		margin: 0;
+		font-size: 14px;
+		color: var(--color-tinta-suave);
+	}
+
 	/* Desktop chico: texto y ejemplos arriba, visor abajo */
 	@media (min-width: 960px) and (max-width: 1199px) {
 		.visor {
@@ -336,6 +360,10 @@
 			flex-direction: column;
 			align-items: stretch;
 			gap: 8px;
+		}
+
+		.vnote {
+			text-align: center;
 		}
 	}
 </style>
