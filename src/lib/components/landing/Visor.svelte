@@ -14,14 +14,21 @@
 	import Ejemplos from './visor/Ejemplos.svelte';
 	import Marco from './visor/Marco.svelte';
 	import { viewerState, type OrigenModelo, type TipoError } from '$lib/stores/viewerState';
-	import type { EjemploId } from '$lib/config/visorEjemplos';
+	import { getEjemplo, type EjemploId } from '$lib/config/visorEjemplos';
+	import { asset } from '$app/paths';
+	import { descargarConProgreso, leerConProgreso } from '$lib/utils/lecturaConProgreso';
+	import type { VisorEscena } from '$lib/three/viewerRuntime';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
 
 	type Runtime = typeof import('$lib/three/viewerRuntime');
 
 	let seccion: HTMLDivElement;
+	let marco = $state<HTMLDivElement>();
+	let lienzo = $state<HTMLDivElement>();
 	let runtime: Promise<Runtime> | null = null;
+	/** Un solo renderer por visor montado; se crea con la primera carga */
+	let escena: VisorEscena | null = null;
 
 	/**
 	 * Baja el chunk de Three.js una sola vez. Lo dispara la cercanía a la sección
@@ -52,12 +59,65 @@
 		return () => observador.disconnect();
 	});
 
+	/**
+	 * Abre un modelo: lee o baja el archivo (con progreso) mientras se baja el
+	 * runtime, y después lo muestra. Si mientras tanto la persona eligió otra cosa,
+	 * el resultado se descarta. Cualquier falla del loader, de la red o un modelo
+	 * vacío termina en "No pudimos abrirlo" (error 'danado').
+	 *
+	 * obtener devuelve el archivo a abrir, o null para el cuadro provisorio.
+	 */
+	async function abrir(carga: number, obtener: (avance: (f: number) => void) => Promise<File | null>) {
+		const avance = (fraccion: number) => viewerState.progreso(carga, fraccion * 95);
+		const pedidoRuntime = cargarRuntime();
+		pedidoRuntime.catch(() => {}); // el error se maneja abajo, al esperarlo
+
+		try {
+			const archivo = await obtener(avance);
+			const rt = await pedidoRuntime;
+			if (!viewerState.esActual(carga) || !lienzo) return;
+
+			escena ??= rt.crearVisorEscena({ contenedor: lienzo, teclado: marco });
+			escena.limpiar();
+
+			const objeto = archivo ? await rt.cargarModelo(archivo) : rt.crearCuadroProvisorio();
+			if (!viewerState.esActual(carga)) {
+				rt.liberarObjeto(objeto);
+				return;
+			}
+			escena.mostrar(objeto, { corregirOrientacion: archivo !== null });
+			viewerState.progreso(carga, 100);
+			viewerState.listo(carga);
+		} catch (error) {
+			if (!viewerState.esActual(carga)) return;
+			if (import.meta.env.DEV) console.error('Visor 3D:', error);
+			escena?.limpiar();
+			viewerState.fallo(carga, 'danado');
+		}
+	}
+
 	function elegirEjemplo(id: EjemploId) {
-		viewerState.abrirEjemplo(id);
+		const ejemplo = getEjemplo(id);
+		const carga = viewerState.abrirEjemplo(id);
+		abrir(carga, async (avance) => {
+			// Sin archivo todavía (Cuadro en relieve): modelo provisorio
+			if (!ejemplo.archivo) return null;
+			const url = asset(`/models/${ejemplo.archivo}` as Parameters<typeof asset>[0]);
+			return descargarConProgreso(url, ejemplo.archivo, avance);
+		});
 	}
 
 	function abrirArchivo(file: File) {
-		viewerState.abrirArchivo(file);
+		const carga = viewerState.abrirArchivo(file);
+		// Tipo o tamaño inválido: no se lee ni se intenta abrir
+		if (carga === null) {
+			escena?.limpiar();
+			return;
+		}
+		abrir(carga, async (avance) => {
+			await leerConProgreso(file, avance);
+			return file;
+		});
 	}
 
 	/** "Probar otro": vuelve al estado vacío y deja el foco en "Elegir archivo" */
@@ -114,7 +174,7 @@
 		</div>
 
 		<div class="vstage">
-			<Marco vista={$viewerState.vista} onarchivo={abrirArchivo} />
+			<Marco vista={$viewerState.vista} onarchivo={abrirArchivo} bind:marco bind:lienzo />
 
 			{#if $viewerState.vista.fase === 'error'}
 				<div class="vactions">

@@ -112,6 +112,16 @@ describe('viewerState', () => {
 		});
 	});
 
+	it('esActual solo es cierto para la carga en curso', () => {
+		const primera = viewerState.abrirEjemplo('santa');
+		expect(viewerState.esActual(primera)).toBe(true);
+		const segunda = viewerState.abrirEjemplo('jarron');
+		expect(viewerState.esActual(primera)).toBe(false);
+		expect(viewerState.esActual(segunda)).toBe(true);
+		viewerState.listo(segunda);
+		expect(viewerState.esActual(segunda)).toBe(false);
+	});
+
 	it('"Probar otro" vuelve a vacío y corta la carga en curso', () => {
 		const carga = viewerState.abrirEjemplo('santa');
 		viewerState.reiniciar();

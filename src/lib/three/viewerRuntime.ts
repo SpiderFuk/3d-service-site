@@ -9,3 +9,4 @@
 export { ModelLoaderFactory } from '$lib/loaders/ModelLoaderFactory';
 export { crearVisorEscena, liberarObjeto } from './visorEscena';
 export type { VisorEscena, MostrarOpciones } from './visorEscena';
+export { cargarModelo, crearCuadroProvisorio } from './modeloVisor';

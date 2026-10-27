@@ -9,7 +9,7 @@
  * No depende de Three.js: el runtime del visor solo llama a estas funciones.
  */
 
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { getEjemplo, type EjemploId } from '$lib/config/visorEjemplos';
 import { MAX_FILE_SIZE } from '$lib/utils/fileValidation';
 
@@ -70,8 +70,16 @@ function crearViewerState() {
 		return carga;
 	}
 
+	const store = { subscribe };
+
 	return {
 		subscribe,
+
+		/** Si esta carga sigue siendo la que se está abriendo */
+		esActual(carga: number): boolean {
+			const v = get(store).vista;
+			return v.fase === 'loading' && v.carga === carga;
+		},
 
 		/**
 		 * Archivo propio (input o arrastrar y soltar).
