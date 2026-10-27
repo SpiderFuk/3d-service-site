@@ -37,6 +37,9 @@
 	 * para que un mismo texto dos veces seguidas (el mismo error) se vuelva a leer.
 	 */
 	let anuncio = $state('');
+
+	/** Si la persona ya giró el modelo abierto (oculta la ayuda) */
+	let girado = $state(false);
 	async function anunciar(texto: string) {
 		anuncio = '';
 		await tick();
@@ -103,7 +106,11 @@
 			const rt = await pedidoRuntime;
 			if (!viewerState.esActual(carga) || !lienzo) return;
 
-			escena ??= rt.crearVisorEscena({ contenedor: lienzo, teclado: marco });
+			escena ??= rt.crearVisorEscena({
+				contenedor: lienzo,
+				teclado: marco,
+				ongiro: () => (girado = true)
+			});
 			escena.limpiar();
 
 			const objeto = archivo ? await rt.cargarModelo(archivo) : rt.crearCuadroProvisorio();
@@ -111,6 +118,7 @@
 				rt.liberarObjeto(objeto);
 				return;
 			}
+			girado = false;
 			escena.mostrar(objeto, { corregirOrientacion: archivo !== null });
 			viewerState.progreso(carga, 100);
 			viewerState.listo(carga);
@@ -210,7 +218,7 @@
 		</div>
 
 		<div class="vstage">
-			<Marco vista={$viewerState.vista} onarchivo={abrirArchivo} bind:marco bind:lienzo />
+			<Marco vista={$viewerState.vista} onarchivo={abrirArchivo} bind:marco bind:lienzo {girado} />
 
 			{#if $viewerState.vista.fase === 'error'}
 				<div class="vactions">

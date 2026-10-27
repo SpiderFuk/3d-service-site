@@ -24,9 +24,17 @@
 		marco?: HTMLDivElement;
 		/** Donde el runtime monta el canvas de Three.js */
 		lienzo?: HTMLDivElement;
+		/** La persona ya giró el modelo: la ayuda se desvanece */
+		girado?: boolean;
 	}
 
-	let { vista, onarchivo, marco = $bindable(), lienzo = $bindable() }: Props = $props();
+	let {
+		vista,
+		onarchivo,
+		marco = $bindable(),
+		lienzo = $bindable(),
+		girado = false
+	}: Props = $props();
 	let input: HTMLInputElement;
 	let arrastrando = $state(false);
 
@@ -83,7 +91,15 @@
 	<!-- El canvas vive siempre acá (un renderer por visor); solo se ve con el modelo abierto -->
 	<div bind:this={lienzo} class="vlienzo" class:visible={vista.fase === 'loaded'}></div>
 
-	{#if vista.fase === 'empty'}
+	{#if vista.fase === 'loaded'}
+		<!-- Pastillas sobre el modelo: decorativas (el nombre del marco ya dice archivo y cómo girar) y
+		     sin eventos, para que el arrastre llegue al canvas -->
+		<span class="vpill vtl" aria-hidden="true">{vista.nombre}</span>
+		<span class="vpill vbc" class:girado aria-hidden="true">
+			<span class="hint-d">Arrastrá para girarlo</span>
+			<span class="hint-m">Deslizá para girarlo</span>
+		</span>
+	{:else if vista.fase === 'empty'}
 		<div class="vdrop">
 			<strong class="vdrag">Arrastrá tu archivo acá</strong>
 			<Button id="visor-elegir" onclick={() => input.click()}>Elegir archivo</Button>
@@ -153,6 +169,53 @@
 
 	.vlienzo :global(.visor-canvas.girando) {
 		cursor: grabbing;
+	}
+
+	.vpill {
+		position: absolute;
+		display: inline-flex;
+		align-items: center;
+		height: 32px;
+		padding: 0 14px;
+		border: var(--border);
+		border-radius: var(--radius-pill);
+		background: var(--color-crema);
+		font-size: 13px;
+		font-weight: 600;
+		white-space: nowrap;
+		pointer-events: none;
+	}
+
+	.vtl {
+		left: 20px;
+		top: 20px;
+		max-width: calc(100% - 40px);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: block;
+		line-height: 28px;
+	}
+
+	.vbc {
+		left: 50%;
+		bottom: 20px;
+		transform: translateX(-50%);
+		transition: opacity 0.4s ease;
+	}
+
+	/* Después del primer giro la ayuda se va (sin animación con movimiento reducido) */
+	.vbc.girado {
+		opacity: 0;
+	}
+
+	.hint-m {
+		display: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.vbc {
+			transition: none;
+		}
 	}
 
 	.vdrop {
@@ -243,6 +306,28 @@
 
 		.vdrag {
 			display: none;
+		}
+
+		.vtl {
+			left: 12px;
+			top: 12px;
+			max-width: calc(100% - 24px);
+		}
+
+		.vbc {
+			bottom: 12px;
+		}
+
+		.vpill {
+			font-size: 12px;
+		}
+
+		.hint-d {
+			display: none;
+		}
+
+		.hint-m {
+			display: inline;
 		}
 	}
 </style>
