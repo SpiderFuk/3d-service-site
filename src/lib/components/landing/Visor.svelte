@@ -135,7 +135,9 @@
 		try {
 			const archivo = await obtener(avance, control.signal);
 			const rt = await pedidoRuntime;
-			if (!viewerState.esActual(carga) || !lienzo) return;
+			if (!viewerState.esActual(carga)) return;
+			// Sin lugar para el canvas no se puede mostrar: error, nunca quedar cargando
+			if (!lienzo) throw new Error('Falta el contenedor del canvas');
 
 			escena ??= rt.crearVisorEscena({
 				contenedor: lienzo,
