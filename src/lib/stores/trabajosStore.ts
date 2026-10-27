@@ -11,7 +11,8 @@ import { writable } from 'svelte/store';
 import { fetchContent } from '$lib/services/contentService';
 import { PIEZAS_GALERIA } from '$lib/utils/galeria';
 import type { GalleryContent, Trabajo } from '$lib/types/content';
-import galeriaLocal from '../../../static/content/data/gallery.json';
+// static/content/data/gallery.json, vía el plugin de vite.config.ts (en dev no se puede importar de static/)
+import galeriaLocal from '$contenido/gallery.json';
 
 export const galeriaBundle: GalleryContent = galeriaLocal;
 
