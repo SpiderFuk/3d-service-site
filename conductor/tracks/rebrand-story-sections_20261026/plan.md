@@ -3,7 +3,7 @@
 **Track ID:** rebrand-story-sections_20261026
 **Spec:** [spec.md](./spec.md)
 **Created:** 2026-10-26
-**Status:** [ ] Not Started
+**Status:** [~] In Progress
 
 ## Overview
 
@@ -13,10 +13,10 @@ One phase per section, in page order, each checked against the reference before 
 
 ### Tasks
 
-- [ ] Task 1.1: Section shell + heading + line in `landing/TresCaminos.svelte`.
-- [ ] Task 1.2: `CaminoCard` (photo slot with color background, h3, copy, optional note box, optional link, button with message key).
-- [ ] Task 1.3: Three cards with exact copy and messages; "Ver tu modelo en 3D" → `#visor`.
-- [ ] Task 1.4: Layouts: 3 cols desktop, photo-left under 1100 px, stacked 16:9 on phone.
+- [x] Task 1.1: Section shell + heading + line in `landing/TresCaminos.svelte`.
+- [x] Task 1.2: `CaminoCard` (photo slot with color background, h3, copy, optional note box, optional link, button with message key).
+- [x] Task 1.3: Three cards with exact copy and messages; "Ver tu modelo en 3D" → `#visor`.
+- [x] Task 1.4: Layouts: 3 cols desktop, photo-left under 1100 px, stacked 16:9 on phone.
 
 ### Verification
 
@@ -26,11 +26,11 @@ One phase per section, in page order, each checked against the reference before 
 
 ### Tasks
 
-- [ ] Task 2.1: New `gallery.json` schema + types + placeholder data (5 pieces from BUILD.md) and placeholder photos.
-- [ ] Task 2.2: Heading, line, Instagram link in `landing/Trabajos.svelte`.
-- [ ] Task 2.3: Grid with random featured (2×2 desktop, full-width photo-left at 960–1199, full-width on 2-col phone grid).
-- [ ] Task 2.4: Featured card (tag, title, line, story) and small cards (photo, tag, title).
-- [ ] Task 2.5: Mantequilla closing strip with "Quiero el mío".
+- [x] Task 2.1: New `gallery.json` schema + types + placeholder data (5 pieces from BUILD.md) and placeholder photos.
+- [x] Task 2.2: Heading, line, Instagram link in `landing/Trabajos.svelte`.
+- [x] Task 2.3: Grid with random featured (2×2 desktop, full-width photo-left at 960–1199, full-width on 2-col phone grid).
+- [x] Task 2.4: Featured card (tag, title, line, story) and small cards (photo, tag, title).
+- [x] Task 2.5: Mantequilla closing strip with "Quiero el mío".
 
 ### Verification
 
@@ -40,9 +40,9 @@ One phase per section, in page order, each checked against the reference before 
 
 ### Tasks
 
-- [ ] Task 3.1: Ordered list of three steps with cobalto number circles (circles decorative, list provides numbering semantics).
-- [ ] Task 3.2: Menta card with "¿Lo imprimimos?" paragraph + "Sí, escribamos" button.
-- [ ] Task 3.3: Layouts: 4 cols desktop, steps row + card below at 960–1199, rows + card on phone.
+- [x] Task 3.1: Ordered list of three steps with cobalto number circles (circles decorative, list provides numbering semantics).
+- [x] Task 3.2: Menta card with "¿Lo imprimimos?" paragraph + "Sí, escribamos" button.
+- [x] Task 3.3: Layouts: 4 cols desktop, steps row + card below at 960–1199, rows + card on phone.
 
 ### Verification
 

@@ -23,17 +23,27 @@ export interface MaterialsContent {
 	updatedAt: string;
 }
 
-export interface GalleryItem {
+/**
+ * Piezas de Trabajos: static/content/data/gallery.json (único lugar).
+ * Para sumar o cambiar una pieza se edita el JSON y se reemplaza la foto.
+ */
+export interface Trabajo {
+	/** Identificador estable (mantiene la pieza destacada si llega una copia nueva del JSON) */
 	id: string;
-	title: string;
-	description: string;
-	image: string;
-	category: string;
-	createdAt: string;
-	instagramPostId?: string;
+	/** Etiqueta de categoría, p. ej. "Mascotas" */
+	categoria: string;
+	titulo: string;
+	/** Una línea bajo el título (solo en la pieza destacada) */
+	linea: string;
+	/** Historia en dos líneas (solo en la pieza destacada) */
+	historia: string;
+	/** Ruta de la foto cuadrada, p. ej. /images/placeholders/trabajos-pieza-5.jpg */
+	foto: string;
+	/** Texto alternativo de la foto */
+	alt: string;
 }
 
 export interface GalleryContent {
-	items: GalleryItem[];
+	items: Trabajo[];
 	updatedAt: string;
 }

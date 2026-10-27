@@ -1,41 +1,50 @@
 {
 	"items": [
 		{
-			"id": "1",
-			"title": "Tu compañero peludo",
-			"description": "Dale vida a su personalidad única",
-			"image": "/images/galery/20260120_184323 (1).jpg",
-			"category": "Mascotas",
-			"createdAt": "2026-01-20T18:43:23Z",
-			"instagramPostId": ""
+			"id": "panel-de-manga",
+			"categoria": "Colección",
+			"titulo": "Tu panel de manga favorito",
+			"linea": "El momento que cambió toda la historia, ahora en relieve.",
+			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
+			"foto": "/images/placeholders/trabajos-coleccion-panel-de-manga.jpg",
+			"alt": "Cuadro en relieve de un panel de manga"
 		},
 		{
-			"id": "2",
-			"title": "Panel de manga favorito",
-			"description": "El momento que cambió toda la historia",
-			"image": "/images/galery/20260120_212023 (1).jpg",
-			"category": "Colección",
-			"createdAt": "2026-01-20T21:20:23Z",
-			"instagramPostId": ""
+			"id": "juntos-para-siempre",
+			"categoria": "Momentos",
+			"titulo": "Juntos para siempre",
+			"linea": "Su historia, en una pieza para la repisa.",
+			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
+			"foto": "/images/placeholders/trabajos-momentos-pareja.jpg",
+			"alt": "Cuadro en relieve de una pareja"
 		},
 		{
-			"id": "3",
-			"title": "Juntos para siempre",
-			"description": "Inmortalizamos tu historia de amor",
-			"image": "/images/galery/20260120_211651 (1).jpg",
-			"category": "Momentos",
-			"createdAt": "2026-01-20T21:16:51Z",
-			"instagramPostId": ""
+			"id": "escena-favorita",
+			"categoria": "Ilustración",
+			"titulo": "Tu escena favorita",
+			"linea": "Ese cuadro inolvidable, ahora con volumen.",
+			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
+			"foto": "/images/placeholders/trabajos-ilustracion-escena.jpg",
+			"alt": "Cuadro en relieve de una ilustración"
 		},
 		{
-			"id": "4",
-			"title": "Tu escena favorita",
-			"description": "Dale forma a ese panel inolvidable",
-			"image": "/images/galery/20260120_211545(2).jpg",
-			"category": "Ilustración",
-			"createdAt": "2026-01-20T21:15:45Z",
-			"instagramPostId": ""
+			"id": "companero-peludo",
+			"categoria": "Mascotas",
+			"titulo": "Tu compañero peludo",
+			"linea": "Con toda su personalidad, en blanco y negro.",
+			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
+			"foto": "/images/placeholders/trabajos-mascotas-companero-peludo.jpg",
+			"alt": "Cuadro en relieve de una mascota"
+		},
+		{
+			"id": "pieza-5",
+			"categoria": "[Categoría]",
+			"titulo": "[Título]",
+			"linea": "[Una línea]",
+			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
+			"foto": "/images/placeholders/trabajos-pieza-5.jpg",
+			"alt": "Cuadro en relieve de [motivo]"
 		}
 	],
-	"updatedAt": "2026-02-14T00:00:00Z"
+	"updatedAt": "2026-10-27T00:00:00Z"
 }
