@@ -1,7 +1,7 @@
 <script lang="ts">
 	/**
 	 * Pieza destacada de Trabajos: tarjeta grande con foto cuadrada, etiqueta de
-	 * categoría en mantequilla, título h3, línea e historia.
+	 * categoría en mantequilla, título h3, y línea.
 	 * La ubicación en la grilla (2 × 2 o ancho completo) la pone Trabajos.svelte.
 	 */
 	import Card from '$lib/components/ui/Card.svelte';
@@ -23,7 +23,6 @@
 		<Tag color="mantequilla" class="self-start">{trabajo.categoria}</Tag>
 		<h3 class="titulo">{trabajo.titulo}</h3>
 		<p class="linea">{trabajo.linea}</p>
-		<p class="historia">{trabajo.historia}</p>
 	</div>
 </Card>
 
@@ -64,11 +63,6 @@
 		margin: 0;
 		font-size: 17px;
 		line-height: 1.5;
-	}
-
-	.historia {
-		margin: 0;
-		color: var(--color-tinta-suave);
 	}
 
 	/* Desktop chico: foto a la izquierda, mitad del ancho */

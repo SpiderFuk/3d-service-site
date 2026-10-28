@@ -35,8 +35,6 @@ export interface Trabajo {
 	titulo: string;
 	/** Una línea bajo el título (solo en la pieza destacada) */
 	linea: string;
-	/** Historia en dos líneas (solo en la pieza destacada) */
-	historia: string;
 	/** Ruta de la foto cuadrada, p. ej. /images/trabajos/gato.jpg */
 	foto: string;
 	/** Texto alternativo de la foto */

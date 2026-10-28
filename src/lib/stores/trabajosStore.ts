@@ -30,7 +30,7 @@ const { subscribe, update } = writable<TrabajosState>({
 
 export const trabajosStore = { subscribe };
 
-const CAMPOS: (keyof Trabajo)[] = ['id', 'categoria', 'titulo', 'linea', 'historia', 'foto', 'alt'];
+const CAMPOS: (keyof Trabajo)[] = ['id', 'categoria', 'titulo', 'linea', 'foto', 'alt'];
 
 function esTrabajoValido(t: unknown): t is Trabajo {
 	if (typeof t !== 'object' || t === null) return false;

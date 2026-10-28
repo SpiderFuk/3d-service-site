@@ -5,7 +5,6 @@
 			"categoria": "Colección",
 			"titulo": "Tu panel de manga favorito",
 			"linea": "El momento que cambió toda la historia, ahora en relieve.",
-			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
 			"foto": "/images/trabajos/panel-de-manga.jpg",
 			"alt": "Cuadro en relieve de un samurái de manga con el globo \"Swing as if you have no arms\""
 		},
@@ -14,7 +13,6 @@
 			"categoria": "Momentos",
 			"titulo": "Juntos para siempre",
 			"linea": "Su historia, en una pieza para la repisa.",
-			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
 			"foto": "/images/trabajos/juntos-para-siempre.jpg",
 			"alt": "Cuadro en relieve de una pareja, en blanco y negro con marco blanco"
 		},
@@ -22,8 +20,7 @@
 			"id": "escena-favorita",
 			"categoria": "Ilustración",
 			"titulo": "Tu escena favorita",
-			"linea": "Ese cuadro inolvidable, ahora con volumen.",
-			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
+			"linea": "La escena que te marcó, ahora al alcance de la mano.",
 			"foto": "/images/trabajos/escena-favorita.jpg",
 			"alt": "Cuadro en relieve de una ilustración: una niña con sombrero de cono sobre fondo negro y blanco"
 		},
@@ -32,7 +29,6 @@
 			"categoria": "Mascotas",
 			"titulo": "Tu compañero peludo",
 			"linea": "Con toda su personalidad, en blanco y negro.",
-			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
 			"foto": "/images/trabajos/companero-peludo.jpg",
 			"alt": "Cuadro en relieve de un perro pastor, con marco blanco y soporte"
 		},
@@ -41,7 +37,6 @@
 			"categoria": "Mascotas",
 			"titulo": "Tu gato, en relieve",
 			"linea": "Hasta el último bigote, en blanco y negro.",
-			"historia": "[Para quién fue y qué tenía de especial, en dos líneas.]",
 			"foto": "/images/trabajos/gato.jpg",
 			"alt": "Cuadro en relieve de un gato negro, con marco blanco y soporte"
 		}

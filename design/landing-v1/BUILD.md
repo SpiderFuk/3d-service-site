@@ -100,12 +100,12 @@ Anchors used by the menu: `#inicio`, `#que-imprimimos`, `#trabajos`, `#precios`,
 ### 04 Trabajos (`#trabajos`)
 
 - Eyebrow "Trabajos". Headline "Cada cuadro," / "una historia." Line "Cuadros en relieve que ya salieron del taller." Link "Ver más en Instagram" (https://www.instagram.com/printo.uy).
-- Gallery of 5 pieces: one featured (big card, square photo, category tag in mantequilla, title, line, two-line story) and four small (square photo, category tag, title).
+- Gallery of 5 pieces: one featured (big card, square photo, category tag in mantequilla, title, line) and four small (square photo, category tag, title).
 - The featured piece is picked at random on each visit; the other four fill the grid. Desktop: featured spans 2 columns and 2 rows of a 4-column grid; 960 to 1199 px: featured full width with photo left; phone: 2 columns, featured full width.
 - Pieces (photos in static/images/trabajos/):
   - Colección · "Tu panel de manga favorito" · "El momento que cambió toda la historia, ahora en relieve."
   - Momentos · "Juntos para siempre" · "Su historia, en una pieza para la repisa."
-  - Ilustración · "Tu escena favorita" · "Ese cuadro inolvidable, ahora con volumen."
+  - Ilustración · "Tu escena favorita" · "La escena que te marcó, ahora al alcance de la mano."
   - Mascotas · "Tu compañero peludo" · "Con toda su personalidad, en blanco y negro."
   - Mascotas · "Tu gato, en relieve" · "Hasta el último bigote, en blanco y negro."
 - Closing strip (mantequilla): "¿Querés el tuyo? Mandanos la foto." with button "Quiero el mío".
