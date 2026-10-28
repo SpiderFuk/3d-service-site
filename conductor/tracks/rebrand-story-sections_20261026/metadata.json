@@ -2,15 +2,15 @@
   "id": "rebrand-story-sections_20261026",
   "title": "Rebrand · Tres caminos, Trabajos & Cómo funciona",
   "type": "feature",
-  "status": "pending",
+  "status": "complete",
   "created": "2026-10-26T00:00:00Z",
-  "updated": "2026-10-26T00:00:00Z",
+  "updated": "2026-10-27T12:40:53-03:00",
   "phases": {
     "total": 3,
-    "completed": 0
+    "completed": 3
   },
   "tasks": {
     "total": 12,
-    "completed": 0
+    "completed": 12
   }
 }

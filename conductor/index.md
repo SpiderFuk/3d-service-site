@@ -13,15 +13,15 @@ Navigation hub for project context.
 
 ## Active Tracks
 
-Rebrand to printo landing v1 (`design/landing-v1/`). Track 1 first; 2–6 in parallel; 7 last.
+Rebrand to printo landing v1 (`design/landing-v1/`). Tracks 1–6 are complete; track 7 (cleanup, SEO, QA) is in progress.
 
-- [ ] [Rebrand · Design System Foundation & Single-Source Config](./tracks/rebrand-foundation_20261026/index.md) — Feature (0/18 tasks)
-- [ ] [Rebrand · Navigation & Hero](./tracks/rebrand-nav-hero_20261026/index.md) — Feature (0/12 tasks)
-- [ ] [Rebrand · Tres caminos, Trabajos & Cómo funciona](./tracks/rebrand-story-sections_20261026/index.md) — Feature (0/12 tasks)
-- [ ] [Rebrand · Materiales y colores & Precio y plazos](./tracks/rebrand-materials-pricing_20261026/index.md) — Feature (0/10 tasks)
-- [ ] [Rebrand · Visor 3D](./tracks/rebrand-viewer_20261026/index.md) — Feature (0/14 tasks)
-- [ ] [Rebrand · Preguntas, Contacto & Pie](./tracks/rebrand-faq-contact-footer_20261026/index.md) — Feature (0/11 tasks)
-- [ ] [Rebrand · Legacy Cleanup, SEO & Launch QA](./tracks/rebrand-cleanup-qa_20261026/index.md) — Chore (0/13 tasks)
+- [x] [Rebrand · Design System Foundation & Single-Source Config](./tracks/rebrand-foundation_20261026/index.md) — Feature (18/18 tasks)
+- [x] [Rebrand · Navigation & Hero](./tracks/rebrand-nav-hero_20261026/index.md) — Feature (12/12 tasks)
+- [x] [Rebrand · Tres caminos, Trabajos & Cómo funciona](./tracks/rebrand-story-sections_20261026/index.md) — Feature (12/12 tasks)
+- [x] [Rebrand · Materiales y colores & Precio y plazos](./tracks/rebrand-materials-pricing_20261026/index.md) — Feature (10/10 tasks)
+- [x] [Rebrand · Visor 3D](./tracks/rebrand-viewer_20261026/index.md) — Feature (14/14 tasks)
+- [x] [Rebrand · Preguntas, Contacto & Pie](./tracks/rebrand-faq-contact-footer_20261026/index.md) — Feature (11/11 tasks)
+- [ ] [Rebrand · Legacy Cleanup, SEO & Launch QA](./tracks/rebrand-cleanup-qa_20261026/index.md) — Chore (2/13 tasks)
 
 ## Archived Tracks
 

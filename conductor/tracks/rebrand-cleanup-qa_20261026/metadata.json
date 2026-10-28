@@ -1,16 +1,16 @@
 {
   "id": "rebrand-cleanup-qa_20261026",
-  "title": "Rebrand · Legacy Cleanup, SEO & Launch QA",
+  "title": "Rebrand \u00b7 Legacy Cleanup, SEO & Launch QA",
   "type": "chore",
-  "status": "pending",
+  "status": "in_progress",
   "created": "2026-10-26T00:00:00Z",
-  "updated": "2026-10-26T00:00:00Z",
+  "updated": "2026-10-28T00:00:00Z",
   "phases": {
     "total": 3,
     "completed": 0
   },
   "tasks": {
     "total": 13,
-    "completed": 0
+    "completed": 2
   }
 }

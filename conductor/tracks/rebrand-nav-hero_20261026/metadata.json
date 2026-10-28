@@ -2,15 +2,15 @@
   "id": "rebrand-nav-hero_20261026",
   "title": "Rebrand · Navigation & Hero",
   "type": "feature",
-  "status": "pending",
+  "status": "complete",
   "created": "2026-10-26T00:00:00Z",
-  "updated": "2026-10-26T00:00:00Z",
+  "updated": "2026-10-27T12:39:34-03:00",
   "phases": {
     "total": 3,
-    "completed": 0
+    "completed": 3
   },
   "tasks": {
     "total": 12,
-    "completed": 0
+    "completed": 12
   }
 }

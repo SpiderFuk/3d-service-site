@@ -3,7 +3,7 @@
 **Track ID:** rebrand-cleanup-qa_20261026
 **Spec:** [spec.md](./spec.md)
 **Created:** 2026-10-26
-**Status:** [ ] Not Started
+**Status:** [~] In Progress
 
 ## Overview
 
@@ -30,7 +30,7 @@ Clean up the code first, then the head and docs, then run the full QA pass on th
 - [x] Task 2.1: ~~Restyle `OutOfServiceModal` and `OutOfServiceBanner`~~. Dropped: the out-of-service modal, banner and flag were removed on 2026-10-27 (review issue 1, branch `fix/review-issues`).
 - [ ] Task 2.2: `<svelte:head>`: title, description, OG/Twitter, `theme-color`, canonical; new favicons/OG image from the logo set.
 - [ ] Task 2.3: Update CLAUDE.md (design tokens, sections, single-source settings, viewer behavior, removed flags).
-- [ ] Task 2.4: Update `conductor/product.md`, `product-guidelines.md`, `tech-stack.md` (fonts, no Lucide, Vitest).
+- [x] Task 2.4: Update `conductor/product.md`, `product-guidelines.md`, `tech-stack.md` (fonts, no Lucide, Vitest).
 
 ### Verification
 
