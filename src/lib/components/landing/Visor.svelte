@@ -21,6 +21,7 @@
 	import { asset } from '$app/paths';
 	import { descargarConProgreso, leerConProgreso } from '$lib/utils/lecturaConProgreso';
 	import type { VisorEscena } from '$lib/three/viewerRuntime';
+	import type { Orientacion } from '$lib/three/visorEscena';
 	import { mensajes } from '$lib/config/whatsappMessages';
 	import { whatsappUrl } from '$lib/utils/whatsapp';
 	import {
@@ -122,7 +123,7 @@
 		obtener: (
 			avance: (f: number) => void,
 			signal: AbortSignal
-		) => Promise<{ buffer: ArrayBuffer; nombre: string } | null>
+		) => Promise<{ buffer: ArrayBuffer; nombre: string; orientacion?: Orientacion } | null>
 	) {
 		cortarCarga();
 		// Sacar ya el modelo anterior: una sola pieza en memoria y sin giro con
@@ -153,14 +154,16 @@
 			if (!viewerState.esActual(carga)) return;
 
 			const objeto = archivo
-				? rt.cargarModelo(archivo.buffer, archivo.nombre)
+				? rt.cargarModelo(archivo.buffer)
 				: rt.crearCuadroProvisorio();
 			if (!viewerState.esActual(carga)) {
 				rt.liberarObjeto(objeto);
 				return;
 			}
 			girado = false;
-			escena.mostrar(objeto, { corregirOrientacion: archivo !== null });
+			escena.mostrar(objeto, {
+				orientacion: archivo ? (archivo.orientacion ?? 'estandar') : 'dePie'
+			});
 			viewerState.progreso(carga, 100);
 			viewerState.listo(carga);
 			anunciar(nombreMarcoCargado(nombre));
@@ -187,7 +190,7 @@
 			if (!ejemplo.archivo) return null;
 			const url = asset(`/models/${ejemplo.archivo}` as Parameters<typeof asset>[0]);
 			const buffer = await descargarConProgreso(url, avance, signal);
-			return { buffer, nombre: ejemplo.archivo };
+			return { buffer, nombre: ejemplo.archivo, orientacion: ejemplo.orientacion };
 		});
 	}
 
@@ -260,7 +263,7 @@
 				segunda="dale una vuelta."
 			/>
 			<p class="vlinea">
-				Abrí tu STL o 3MF acá y giralo para verlo por todos lados. No se sube a ningún lado hasta
+				Abrí tu STL acá y giralo para verlo por todos lados. No se sube a ningún lado hasta
 				que nos lo mandes.
 			</p>
 		</div>

@@ -5,7 +5,7 @@
 	 * Imagen, idea o archivo: cada camino lleva a WhatsApp con su propio mensaje.
 	 * Copy exacto de design/landing-v1/BUILD.md.
 	 *
-	 * Fotos provisorias en static/images/placeholders/ (JPG 4:3, 1200 × 900): para
+	 * Fotos en static/images/caminos/ (JPG 4:3, 1200 × 900): para
 	 * poner las reales alcanza con reemplazar cada archivo manteniendo el nombre.
 	 */
 	import Section from '$lib/components/ui/Section.svelte';
@@ -26,7 +26,7 @@
 		<CaminoCard
 			fondo="mantequilla"
 			foto={{
-				src: '/images/placeholders/caminos-imagen-cuadro-en-relieve.jpg',
+				src: '/images/caminos/imagen-cuadro-en-relieve.jpg',
 				alt: 'Cuadro en relieve en blanco y negro, sobre su soporte'
 			}}
 			titulo="Tengo una imagen"
@@ -38,8 +38,8 @@
 		<CaminoCard
 			fondo="menta"
 			foto={{
-				src: '/images/placeholders/caminos-idea-modelo-encontrado.jpg',
-				alt: 'Pieza impresa a partir de un modelo encontrado online'
+				src: '/images/caminos/idea-modelo-encontrado.jpg',
+				alt: 'Cuadro en relieve de una ilustración con flechas, sobre su soporte'
 			}}
 			titulo="Tengo una idea"
 			texto="Contanos qué buscás y te ayudamos a encontrar el modelo en MakerWorld, Printables o Thingiverse. ¿Ya encontraste uno? Mandanos el link."
@@ -49,8 +49,8 @@
 		<CaminoCard
 			fondo="tomate"
 			foto={{
-				src: '/images/placeholders/caminos-archivo-pieza-tecnica.jpg',
-				alt: 'Pieza técnica impresa en 3D'
+				src: '/images/caminos/archivo-pieza-tecnica.jpg',
+				alt: 'Dos cuadros en relieve de ilustraciones manga, sobre su soporte'
 			}}
 			titulo="Tengo un archivo"
 			texto="Mandanos tu STL o 3MF y lo imprimimos en PLA o PETG."

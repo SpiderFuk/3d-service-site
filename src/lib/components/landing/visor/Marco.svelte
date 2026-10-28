@@ -125,7 +125,7 @@
 		<div class="vdrop">
 			<strong class="vdrag">Arrastrá tu archivo acá</strong>
 			<Button id="visor-elegir" onclick={() => input.click()}>Elegir archivo</Button>
-			<span class="vayuda">STL o 3MF, hasta 50 MB</span>
+			<span class="vayuda">STL, hasta 50 MB</span>
 		</div>
 	{:else if vista.fase === 'loading'}
 		<div class="vcargando">

@@ -23,7 +23,7 @@ export function textoAbriendo(nombre: string): string {
 
 /** Textos de error; los botones van debajo del marco */
 export const mensajesError: Record<TipoError, string> = {
-	tipo: 'Este archivo no lo podemos abrir. Probá con un STL o 3MF.',
+	tipo: 'Este archivo no lo podemos abrir. Probá con un STL.',
 	tamano: 'Pesa más de 50 MB. Mandánoslo por WhatsApp y lo vemos.',
 	danado: 'No pudimos abrirlo. Puede estar dañado: probá exportarlo de nuevo.'
 };

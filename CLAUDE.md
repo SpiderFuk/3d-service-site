@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a **SPA (Single Page Application) for a 3D printing service** built with SvelteKit 5, TypeScript, Tailwind CSS, and Three.js. The main feature is an interactive 3D model viewer that allows users to visualize pre-loaded models or upload their own STL/3MF files for quotation via WhatsApp.
+This is a **SPA (Single Page Application) for a 3D printing service** built with SvelteKit 5, TypeScript, Tailwind CSS, and Three.js. The main feature is an interactive 3D model viewer that allows users to visualize pre-loaded models or upload their own STL files for quotation via WhatsApp.
 
 **Business:** [PRINTO] - Montevideo | Las Piedras, Uruguay
 
@@ -74,8 +74,8 @@ src/
 static/
 ├── brand/                 # printo wordmark (SVG)
 ├── content/data/          # materials.json (filament stock list), gallery.json
-├── images/                # Old logo variants, hero image
-└── models/                # Preloaded 3D models (4 STL files)
+├── images/                # caminos/, trabajos/, visor/ (photos and thumbnails)
+└── models/                # Viewer example models (4 STL files)
 ```
 
 ### Svelte 5 Runes
@@ -336,7 +336,7 @@ getVisibleServices(flag?)
 
 [src/lib/utils/fileValidation.ts](src/lib/utils/fileValidation.ts):
 - Max file size: 50MB
-- Supported extensions: `.stl`, `.3mf`
+- Supported extensions: `.stl` (the viewer only accepts STL)
 
 ### WhatsApp Integration
 
@@ -367,16 +367,12 @@ debounce(func, wait)
 
 ### Images (`static/images/`)
 
-- **Logo variants:** `logo.png`, `logo-with-no-bg.png`, `logo animado.gif` (animated), logo nombre variants
-- **SEO:** `og-image.png`
-- **Hero:** `imagen hero.png`
+- `caminos/` (Tres caminos, 4:3), `trabajos/` (gallery.json, square), `visor/` (example thumbnails, `<id>.webp`)
+- **SEO:** `static/og-image.png`; favicons in `static/icons/`; wordmark in `static/brand/`
 
 ### 3D Models (`static/models/`)
 
-- `FlowerVase.stl`
-- `mini.stl`
-- `DiceTower.stl`
-- `DrunkSanta.stl`
+STL only, one per viewer example (`visorEjemplos.ts`): `DrunkSanta.stl`, `mini.stl`, `FlowerVase.stl`, `agus-ine.stl`.
 
 ## Styling Guidelines
 

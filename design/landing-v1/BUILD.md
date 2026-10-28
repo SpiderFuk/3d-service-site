@@ -102,12 +102,12 @@ Anchors used by the menu: `#inicio`, `#que-imprimimos`, `#trabajos`, `#precios`,
 - Eyebrow "Trabajos". Headline "Cada cuadro," / "una historia." Line "Cuadros en relieve que ya salieron del taller." Link "Ver más en Instagram" (https://www.instagram.com/printo.uy).
 - Gallery of 5 pieces: one featured (big card, square photo, category tag in mantequilla, title, line, two-line story) and four small (square photo, category tag, title).
 - The featured piece is picked at random on each visit; the other four fill the grid. Desktop: featured spans 2 columns and 2 rows of a 4-column grid; 960 to 1199 px: featured full width with photo left; phone: 2 columns, featured full width.
-- Pieces (placeholders until real ones):
+- Pieces (photos in static/images/trabajos/):
   - Colección · "Tu panel de manga favorito" · "El momento que cambió toda la historia, ahora en relieve."
   - Momentos · "Juntos para siempre" · "Su historia, en una pieza para la repisa."
   - Ilustración · "Tu escena favorita" · "Ese cuadro inolvidable, ahora con volumen."
   - Mascotas · "Tu compañero peludo" · "Con toda su personalidad, en blanco y negro."
-  - [Categoría] · [Título] · [Una línea]
+  - Mascotas · "Tu gato, en relieve" · "Hasta el último bigote, en blanco y negro."
 - Closing strip (mantequilla): "¿Querés el tuyo? Mandanos la foto." with button "Quiero el mío".
 
 ### 05 Cómo funciona (`#como-funciona`)
@@ -149,14 +149,14 @@ Anchors used by the menu: `#inicio`, `#que-imprimimos`, `#trabajos`, `#precios`,
 
 Not in the menu; reached from "Ver tu modelo en 3D".
 
-- Eyebrow "Visor 3D". Headline "Antes de imprimirla," / "dale una vuelta." Line "Abrí tu STL o 3MF acá y giralo para verlo por todos lados. No se sube a ningún lado hasta que nos lo mandes."
+- Eyebrow "Visor 3D". Headline "Antes de imprimirla," / "dale una vuelta." Line "Abrí tu STL acá y giralo para verlo por todos lados. No se sube a ningún lado hasta que nos lo mandes."
 - Examples: "¿No tenés un archivo a mano? Probá con uno de estos:" and four cards with a square thumbnail and a name: Santa borracho, Miniatura, Jarrón, Cuadro en relieve. The selected one turns mantequilla (`aria-pressed`). Phone: a sideways-scrolling row.
 - Viewer frame: white, 2 px border, 24 px radius, tomate extrusion, 4:3.3 on desktop, square on the phone, 16:9 from 960 to 1199 px.
 - States:
-  - Empty: dashed inner area, "Arrastrá tu archivo acá" (hidden on the phone), button "Elegir archivo" (the real file input), "STL o 3MF, hasta 50 MB".
+  - Empty: dashed inner area, "Arrastrá tu archivo acá" (hidden on the phone), button "Elegir archivo" (the real file input), "STL, hasta 50 MB".
   - Loading: progress bar (cobalto fill) and "Abriendo {nombre}… 55%".
   - Loaded: the model in cobalto, turnable by mouse drag, finger (sideways swipe only, vertical swipe scrolls the page: `touch-action: pan-y`) and arrow keys. File name pill top left, hint pill at the bottom ("Arrastrá para girarlo" / phone "Deslizá para girarlo", fades after the first turn). Under the frame: "Pedir el precio" (tinta, WhatsApp) and "Probar otro"; for an own file also "Se abre WhatsApp: adjuntá el archivo en el chat."
-  - Errors: "Este archivo no lo podemos abrir. Probá con un STL o 3MF." / "Pesa más de 50 MB. Mandánoslo por WhatsApp y lo vemos." (button "Mandar por WhatsApp") / "No pudimos abrirlo. Puede estar dañado: probá exportarlo de nuevo." Each with "Probar otro".
+  - Errors: "Este archivo no lo podemos abrir. Probá con un STL." / "Pesa más de 50 MB. Mandánoslo por WhatsApp y lo vemos." (button "Mandar por WhatsApp") / "No pudimos abrirlo. Puede estar dañado: probá exportarlo de nuevo." Each with "Probar otro".
 - The viewer does not measure the piece and shows no size warnings.
 - The file never leaves the browser. If the viewer ever uploads files, change the line about it the same day.
 - Load the 3D library only when the visitor gets near this section.

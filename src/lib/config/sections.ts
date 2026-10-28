@@ -77,7 +77,7 @@ export const secciones = {
 		id: 'visor',
 		nombre: 'Visor 3D',
 		habilitada: true,
-		descripcion: 'Visor para abrir un STL o 3MF en el navegador'
+		descripcion: 'Visor para abrir un STL en el navegador'
 	},
 	preguntas: {
 		id: 'preguntas',

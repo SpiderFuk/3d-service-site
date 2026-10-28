@@ -75,15 +75,15 @@
 		transition-duration: 0.05s;
 	}
 
-	.vthumb :global(svg) {
+	.vthumb :global(img) {
 		transition: transform 0.25s cubic-bezier(0.3, 0.7, 0.2, 1);
 	}
 
-	.vcard:hover .vthumb :global(svg) {
+	.vcard:hover .vthumb :global(img) {
 		transform: scale(1.08) rotate(-3deg);
 	}
 
-	.vcard-on .vthumb :global(svg) {
+	.vcard-on .vthumb :global(img) {
 		animation: salto 0.4s cubic-bezier(0.3, 0.7, 0.2, 1);
 	}
 
@@ -97,13 +97,13 @@
 		.vcard,
 		.vcard:hover,
 		.vcard:active,
-		.vthumb :global(svg),
-		.vcard:hover .vthumb :global(svg) {
+		.vthumb :global(img),
+		.vcard:hover .vthumb :global(img) {
 			transition: none;
 			transform: none;
 		}
 
-		.vcard-on .vthumb :global(svg) {
+		.vcard-on .vthumb :global(img) {
 			animation: none;
 		}
 	}

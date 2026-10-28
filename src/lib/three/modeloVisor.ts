@@ -9,7 +9,7 @@
  */
 
 import { Box3, BoxGeometry, Group, Mesh, PlaneGeometry, Vector3, type Object3D } from 'three';
-import { ModelLoaderFactory } from '$lib/loaders/ModelLoaderFactory';
+import { STLLoaderAdapter } from '$lib/loaders/STLLoaderAdapter';
 import { liberarObjeto } from './visorEscena';
 
 /** Error de modelo vacío o ilegible (se muestra como archivo dañado) */
@@ -27,13 +27,10 @@ function esModeloValido(objeto: Object3D): boolean {
 }
 
 /**
- * Parsea un modelo ya leído (STL o 3MF) a partir de su contenido y su nombre
- * de archivo (la extensión elige el loader). No vuelve a leer el archivo.
+ * Parsea un STL ya leído a partir de su contenido. No vuelve a leer el archivo.
  */
-export function cargarModelo(buffer: ArrayBuffer, nombre: string): Object3D {
-	const loader = ModelLoaderFactory.getLoader(nombre);
-	if (!loader.parse) throw new ModeloInvalidoError(`Formato no soportado por el visor: ${nombre}`);
-	const objeto = loader.parse(buffer);
+export function cargarModelo(buffer: ArrayBuffer): Object3D {
+	const objeto = new STLLoaderAdapter().parse(buffer);
 	if (!esModeloValido(objeto)) {
 		liberarObjeto(objeto);
 		throw new ModeloInvalidoError('El modelo está vacío o tiene medidas inválidas');

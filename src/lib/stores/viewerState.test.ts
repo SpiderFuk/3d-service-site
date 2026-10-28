@@ -5,9 +5,10 @@ import { validarArchivoVisor, viewerState } from './viewerState';
 const MB = 1024 * 1024;
 
 describe('validarArchivoVisor', () => {
-	it('acepta STL y 3MF de hasta 50 MB, sin importar mayúsculas', () => {
+	it('acepta STL de hasta 50 MB, sin importar mayúsculas', () => {
 		expect(validarArchivoVisor({ name: 'pieza.stl', size: 1 * MB })).toBe('ok');
-		expect(validarArchivoVisor({ name: 'Pieza.3MF', size: 50 * MB })).toBe('ok');
+		expect(validarArchivoVisor({ name: 'Pieza.STL', size: 50 * MB })).toBe('ok');
+		expect(validarArchivoVisor({ name: 'Pieza.3mf', size: 1 * MB })).toBe('tipo');
 	});
 
 	it('rechaza otros tipos (también OBJ y archivos sin extensión)', () => {
@@ -67,7 +68,7 @@ describe('viewerState', () => {
 		expect(viewerState.abrirArchivo({ name: 'foto.png', size: MB })).toBeNull();
 		expect(get(viewerState).vista).toEqual({ fase: 'error', tipo: 'tipo' });
 
-		expect(viewerState.abrirArchivo({ name: 'grande.3mf', size: 60 * MB })).toBeNull();
+		expect(viewerState.abrirArchivo({ name: 'grande.stl', size: 60 * MB })).toBeNull();
 		expect(get(viewerState).vista).toEqual({ fase: 'error', tipo: 'tamano' });
 	});
 

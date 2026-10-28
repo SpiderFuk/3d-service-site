@@ -6,8 +6,9 @@
  * Renderiza a pedido (cuando cambia el modelo, el giro o el tamaño), sin loop
  * permanente: si nada cambia, no se dibuja nada.
  *
- * Luces y cámara como sceneSetup.ts (ambiente 0.6, direccional 0.8, relleno 0.3;
- * FOV 50). Se mantiene la corrección de orientación del visor anterior (ThreeCanvas).
+ * Luces: desde three 0.155 las intensidades ya no se multiplican por π, así que van
+ * ~π veces más altas que en sceneSetup.ts (hemisférica de ambiente, principal arriba
+ * a la izquierda, contraluz suave). Cámara con FOV 50 como sceneSetup.ts. Se mantiene la corrección de orientación del visor anterior (ThreeCanvas).
  *
  * Encuadre: todos los modelos ocupan lo mismo del marco, sean altos, chatos o
  * redondos. La cámara se aleja lo justo para que el cilindro que barre el modelo
@@ -19,10 +20,10 @@
  */
 
 import {
-	AmbientLight,
-	Box3,
+		Box3,
 	DirectionalLight,
 	Group,
+	HemisphereLight,
 	Mesh,
 	MeshStandardMaterial,
 	PerspectiveCamera,
@@ -43,9 +44,16 @@ export interface OpcionesVisor {
 	ongiro?: () => void;
 }
 
+/**
+ * Cómo viene orientado el modelo:
+ * - estandar: la corrección de siempre (90° en X y 90° en Z)
+ * - zArriba: eje Z hacia arriba (slicers y CAD): solo 90° en X
+ * - dePie: ya está de pie, sin corrección
+ */
+export type Orientacion = 'estandar' | 'zArriba' | 'dePie';
+
 export interface MostrarOpciones {
-	/** Aplicar la corrección de orientación de los STL/3MF (por defecto true) */
-	corregirOrientacion?: boolean;
+	orientacion?: Orientacion;
 }
 
 export interface VisorEscena {
@@ -168,13 +176,17 @@ export function crearVisorEscena({ contenedor, teclado, ongiro }: OpcionesVisor)
 	canvas.classList.add('visor-canvas');
 	contenedor.appendChild(canvas);
 
-	// Luces blancas (color por defecto de Three.js): sin colores escritos acá
-	scene.add(new AmbientLight(undefined, 0.6));
-	const luz = new DirectionalLight(undefined, 0.8);
-	luz.position.set(5, 10, 7.5);
+	// Luces blancas (color por defecto de Three.js): sin colores escritos acá.
+	// La hemisférica deja el lado de abajo más oscuro que el de arriba, y la principal
+	// marca los volúmenes; sin esa diferencia la pieza se ve de un solo color plano.
+	const ambiente = new HemisphereLight(undefined, undefined, 0.9);
+	ambiente.groundColor.setScalar(0.25);
+	scene.add(ambiente);
+	const luz = new DirectionalLight(undefined, 2.6);
+	luz.position.set(-6, 10, 8);
 	scene.add(luz);
-	const relleno = new DirectionalLight(undefined, 0.3);
-	relleno.position.set(-5, 0, -5);
+	const relleno = new DirectionalLight(undefined, 0.8);
+	relleno.position.set(8, 2, -6);
 	scene.add(relleno);
 
 	// El pivote gira (eje Y del mundo); el modelo adentro guarda su orientación corregida
@@ -253,11 +265,11 @@ export function crearVisorEscena({ contenedor, teclado, ongiro }: OpcionesVisor)
 		pedirRender();
 	}
 
-	function mostrar(objeto: Object3D, { corregirOrientacion = true }: MostrarOpciones = {}) {
+	function mostrar(objeto: Object3D, { orientacion = 'estandar' }: MostrarOpciones = {}) {
 		limpiar();
 
 		// Un solo material cobalto para todo el modelo; se liberan los del loader
-		const material = new MeshStandardMaterial({ roughness: 0.6, metalness: 0.1 });
+		const material = new MeshStandardMaterial({ roughness: 0.45, metalness: 0.05 });
 		const color = colorCobalto(contenedor);
 		if (color) material.color.set(color);
 
@@ -267,13 +279,15 @@ export function crearVisorEscena({ contenedor, teclado, ongiro }: OpcionesVisor)
 			if (Array.isArray(anterior)) anterior.forEach((m) => m.dispose());
 			else anterior?.dispose();
 			hijo.material = material;
-			if (!hijo.geometry.getAttribute('normal')) hijo.geometry.computeVertexNormals();
+			// Siempre desde los triángulos: hay STL con la misma normal en todas las caras
+			// (mini.stl) y quedan de un solo color plano
+			hijo.geometry.computeVertexNormals();
 		});
 
-		if (corregirOrientacion) {
-			// Los modelos vienen rotados 90° en X (transversal) y 90° en Z (frontal)
+		if (orientacion !== 'dePie') {
+			// Los modelos vienen rotados 90° en X (transversal) y, salvo zArriba, 90° en Z (frontal)
 			objeto.rotation.x = -Math.PI / 2;
-			objeto.rotation.z = -Math.PI / 2;
+			if (orientacion === 'estandar') objeto.rotation.z = -Math.PI / 2;
 		}
 
 		// Centrar el modelo en el pivote para que gire sobre sí mismo

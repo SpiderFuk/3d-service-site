@@ -1,9 +1,10 @@
 /**
  * Modelos de ejemplo del Visor 3D (BUILD.md, sección 08)
  *
- * Los archivos viven en static/models/. "Cuadro en relieve" no tiene archivo todavía:
- * lo provee la dueña (ver "Still open" en BUILD.md).
+ * Los archivos viven en static/models/. "Cuadro en relieve" es el cuadro "Agus e Ine".
  */
+
+import type { Orientacion } from '$lib/three/visorEscena';
 
 export type EjemploId = 'santa' | 'miniatura' | 'jarron' | 'cuadro';
 
@@ -15,6 +16,8 @@ export interface EjemploVisor {
 	conArticulo: string;
 	/** Archivo en static/models/, o null si todavía no existe */
 	archivo: string | null;
+	/** Orientación del STL (por defecto 'estandar'; ver Orientacion en visorEscena.ts) */
+	orientacion?: Orientacion;
 }
 
 export const ejemplosVisor: readonly EjemploVisor[] = [
@@ -30,7 +33,8 @@ export const ejemplosVisor: readonly EjemploVisor[] = [
 		id: 'cuadro',
 		nombre: 'Cuadro en relieve',
 		conArticulo: 'el Cuadro en relieve',
-		archivo: null
+		archivo: 'agus-ine.stl',
+		orientacion: 'zArriba'
 	}
 ];
 

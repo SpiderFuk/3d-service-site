@@ -13,7 +13,7 @@ describe('piezas de Trabajos (gallery.json)', () => {
 			'Momentos · Juntos para siempre · Su historia, en una pieza para la repisa.',
 			'Ilustración · Tu escena favorita · Ese cuadro inolvidable, ahora con volumen.',
 			'Mascotas · Tu compañero peludo · Con toda su personalidad, en blanco y negro.',
-			'[Categoría] · [Título] · [Una línea]'
+			'Mascotas · Tu gato, en relieve · Hasta el último bigote, en blanco y negro.'
 		]);
 	});
 

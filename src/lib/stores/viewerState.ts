@@ -16,7 +16,7 @@ import { MAX_FILE_SIZE } from '$lib/utils/fileValidation';
 /** De dónde viene el modelo: archivo propio o ejemplo del visor */
 export type OrigenModelo = 'archivo' | 'ejemplo';
 
-/** tipo: no es STL/3MF · tamano: más de 50 MB · danado: el loader no pudo abrirlo */
+/** tipo: no es STL · tamano: más de 50 MB · danado: el loader no pudo abrirlo */
 export type TipoError = 'tipo' | 'tamano' | 'danado';
 
 export type FaseVisor =
@@ -32,7 +32,7 @@ export interface ViewerState {
 }
 
 /** Extensiones que acepta el visor (el input de archivo usa la misma lista) */
-export const EXTENSIONES_VISOR = ['.stl', '.3mf'] as const;
+export const EXTENSIONES_VISOR = ['.stl'] as const;
 
 export type ResultadoValidacion = 'ok' | Extract<TipoError, 'tipo' | 'tamano'>;
 
