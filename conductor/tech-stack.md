@@ -15,7 +15,8 @@
 | SvelteKit | 2.x | Application framework (static adapter, SPA) |
 | Tailwind CSS | 3.4 | Utility-first styling |
 | Three.js | 0.160+ | 3D model rendering and interaction |
-| Lucide Svelte | 0.460+ | Icon library |
+| Lucide Svelte | 0.460+ | Legacy only (`config/services.ts`); the design has no icons. Removed in the cleanup track |
+| Bricolage Grotesque + Figtree | Google Fonts | Headlines / text (PRINTO Filamento) |
 | JSZip | 3.10+ | 3MF file parsing (ZIP extraction) |
 
 ## Build & Tooling
@@ -26,6 +27,7 @@
 | PostCSS | 8.4 | CSS processing (with Autoprefixer) |
 | ESLint | 9.x | Code linting |
 | svelte-check | 4.x | Svelte type checking |
+| Vitest | 5.x | Unit tests for utilities and stores (`npm run test`) |
 
 ## Infrastructure
 
@@ -53,5 +55,5 @@
 
 - **Factory Pattern** for 3D model loaders (STL, 3MF, OBJ)
 - **Svelte stores** for global state (model, UI, feature flags)
-- **Feature flags** with graceful degradation (AWS AppConfig → local config fallback)
+- **Feature flags** (`sections-visibility` only; the out-of-service flag was removed 2026-10-27) with graceful degradation (AWS AppConfig → local config fallback)
 - **Deep cloning** for model thumbnails (prevents mutation)

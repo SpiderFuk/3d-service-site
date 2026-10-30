@@ -1,61 +1,137 @@
 <script lang="ts">
 	/**
-	 * Componente Button reutilizable
+	 * Botón de la marca (píldora, borde 2 px tinta, hover .cta)
+	 *
+	 * Variantes (BUILD.md):
+	 * - quote: cobalto, solo para "Pedir presupuesto" (hero y barra)
+	 * - ink: tinta con texto crema, el botón por defecto
+	 * - butter: mantequilla, solo WhatsApp en Contacto
+	 * - plain: blanco, acciones secundarias ("Probar otro")
+	 *
+	 * Con href se renderiza un <a>; los links externos (WhatsApp) abren en otra pestaña.
 	 */
 	import type { Snippet } from 'svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
 
-	type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'whatsapp';
-	type ButtonSize = 'sm' | 'md' | 'lg';
-
-	interface Props {
-		variant?: ButtonVariant;
-		size?: ButtonSize;
-		disabled?: boolean;
-		fullWidth?: boolean;
+	interface Props extends Omit<HTMLAttributes<HTMLElement>, 'class'> {
+		variant?: 'quote' | 'ink' | 'butter' | 'plain';
+		size?: 'md' | 'lg';
+		/** Ancho completo (botones en teléfono) */
+		full?: boolean;
+		href?: string;
+		/** Abrir en otra pestaña; por defecto true si href es absoluto */
+		external?: boolean;
 		type?: 'button' | 'submit' | 'reset';
-		onclick?: (event: MouseEvent) => void;
+		disabled?: boolean;
 		class?: string;
-		title?: string;
 		children?: Snippet;
 	}
 
 	let {
-		variant = 'primary',
+		variant = 'ink',
 		size = 'md',
-		disabled = false,
-		fullWidth = false,
+		full = false,
+		href,
+		external = href?.startsWith('http') ?? false,
 		type = 'button',
-		onclick,
+		disabled = false,
 		class: className = '',
-		title,
-		children
+		children,
+		...rest
 	}: Props = $props();
 
-	const baseClasses =
-		'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
-
-	const variantClasses = {
-		primary:
-			'bg-primary text-white hover:bg-blue-600 focus:ring-primary shadow-sm hover:shadow-md',
-		secondary:
-			'bg-gray-200 text-text hover:bg-gray-300 focus:ring-gray-400 shadow-sm hover:shadow-md',
-		outline:
-			'border-2 border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary',
-		whatsapp:
-			'bg-whatsapp text-white hover:bg-green-600 focus:ring-whatsapp shadow-sm hover:shadow-md'
-	};
-
-	const sizeClasses = {
-		sm: 'px-3 py-1.5 text-sm gap-1.5',
-		md: 'px-4 py-2.5 text-base gap-2',
-		lg: 'px-6 py-3 text-lg gap-2.5'
-	};
-
-	const fullWidthClass = $derived(fullWidth ? 'w-full' : '');
-
-	const classes = $derived(`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${fullWidthClass} ${className}`);
+	const classes = $derived(
+		`btn btn-${variant} btn-${size} cta ${full ? 'btn-full' : ''} ${className}`
+	);
 </script>
 
-<button {type} class={classes} {disabled} {onclick} {title}>
-	{@render children?.()}
-</button>
+{#if href}
+	<a
+		{href}
+		class={classes}
+		target={external ? '_blank' : undefined}
+		rel={external ? 'noopener' : undefined}
+		{...rest}
+	>
+		{@render children?.()}
+	</a>
+{:else}
+	<button {type} {disabled} class={classes} {...rest}>
+		{@render children?.()}
+	</button>
+{/if}
+
+<style>
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		min-height: var(--tap-min);
+		border: var(--border);
+		border-radius: var(--radius-pill);
+		font-family: var(--font-sans);
+		font-weight: 600;
+		line-height: 1;
+		text-decoration: none;
+		white-space: nowrap;
+		cursor: pointer;
+	}
+
+	.btn-md {
+		height: 48px;
+		padding: 0 24px;
+		font-size: 17px;
+	}
+
+	.btn-lg {
+		height: 60px;
+		padding: 0 32px;
+		font-size: 18px;
+	}
+
+	.btn-full {
+		display: flex;
+		width: 100%;
+	}
+
+	.btn-quote,
+	.btn-quote:hover {
+		background: var(--color-cobalto);
+		color: var(--color-crema);
+	}
+
+	.btn-ink,
+	.btn-ink:hover {
+		background: var(--color-tinta);
+		color: var(--color-crema);
+	}
+
+	.btn-butter,
+	.btn-butter:hover {
+		background: var(--color-mantequilla);
+		color: var(--color-tinta);
+	}
+
+	.btn-plain,
+	.btn-plain:hover {
+		background: var(--color-blanco);
+		color: var(--color-tinta);
+	}
+
+	.btn:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		transform: none;
+	}
+
+	@media (max-width: 959px) {
+		.btn-md {
+			height: 52px;
+		}
+
+		.btn-lg {
+			height: 56px;
+		}
+	}
+</style>

@@ -1,0 +1,43 @@
+{
+  "id": "rebrand-foundation_20261026",
+  "title": "Rebrand · Design System Foundation & Single-Source Config",
+  "type": "feature",
+  "status": "complete",
+  "created": "2026-10-26T00:00:00Z",
+  "updated": "2026-10-26T19:30:00Z",
+  "current_phase": 4,
+  "phases": {
+    "total": 4,
+    "completed": 4
+  },
+  "tasks": {
+    "total": 18,
+    "completed": 18
+  },
+  "commits": [
+    "5d8e196: chore(brand): add printo cobalto wordmark SVG (rebrand-foundation_20261026)",
+    "77af7ce: chore(brand): add PRINTO Filamento tokens.json from design canvas (rebrand-foundation_20261026)",
+    "98bf217: feat(ui): add PRINTO Filamento design tokens as CSS custom properties (rebrand-foundation_20261026)",
+    "db48c24: feat(ui): map Tailwind theme to brand tokens and add 360/960/1200 breakpoints (rebrand-foundation_20261026)",
+    "5c0ce78: feat(ui): load Bricolage Grotesque and Figtree, crema page background (rebrand-foundation_20261026)",
+    "5751196: chore: mark phase 1 complete (rebrand-foundation_20261026)",
+    "1007cea: feat(ui): add global focus ring, link, cta hover and extrusion styles (rebrand-foundation_20261026)",
+    "981455b: feat(ui): add Section shell with anchor offset and page padding (rebrand-foundation_20261026)",
+    "1e4f826: feat(ui): add SectionHeading with eyebrow and two-phrase headline (rebrand-foundation_20261026)",
+    "3045f0a: feat(ui): rewrite Button as brand pill with quote/ink/butter/plain variants (rebrand-foundation_20261026)",
+    "17c43a5: feat(ui): add Tag pill and rewrite Card with brand border and radius tiers (rebrand-foundation_20261026)",
+    "16b3cdd: fix(ui): match reference headline wrapping and default borders to tinta (rebrand-foundation_20261026)",
+    "39b2af2: chore: mark phase 2 complete (rebrand-foundation_20261026)",
+    "b7376c5: chore: add Vitest for utility unit tests (rebrand-foundation_20261026)",
+    "3d25b0f: feat(hours): store opening hours once with Montevideo-time open/closed and text helpers (rebrand-foundation_20261026)",
+    "5030a8a: test(hours): stub visitor time zone with vi.stubEnv (rebrand-foundation_20261026)",
+    "d61bd99: feat(hours): add abiertoAhora store rechecked every minute (rebrand-foundation_20261026)",
+    "b89ac13: feat(contact): single WhatsApp number, message catalog and whatsappUrl helper (rebrand-foundation_20261026)",
+    "6fac7b5: feat(materials): migrate stock list to Bambu Lab hex codes with agotado flag (rebrand-foundation_20261026)",
+    "bfb0f28: chore: mark phase 3 complete (rebrand-foundation_20261026)",
+    "477f364: feat(flags): re-key sections-visibility to the 11 landing v1 sections (rebrand-foundation_20261026)",
+    "42a575a: feat(layout): add landing v1 placeholder sections with real anchors and headlines (rebrand-foundation_20261026)",
+    "394a773: feat(layout): render landing v1 skeleton with skip link and remove legacy sections (rebrand-foundation_20261026)",
+    "3fc662f: feat(seo): placeholder title and description for the new brand (rebrand-foundation_20261026)"
+  ]
+}

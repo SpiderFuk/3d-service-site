@@ -1,41 +1,45 @@
 {
 	"items": [
 		{
-			"id": "1",
-			"title": "Tu compañero peludo",
-			"description": "Dale vida a su personalidad única",
-			"image": "/images/galery/20260120_184323 (1).jpg",
-			"category": "Mascotas",
-			"createdAt": "2026-01-20T18:43:23Z",
-			"instagramPostId": ""
+			"id": "panel-de-manga",
+			"categoria": "Colección",
+			"titulo": "Tu panel de manga favorito",
+			"linea": "El momento que cambió toda la historia, ahora en relieve.",
+			"foto": "/images/trabajos/panel-de-manga.jpg",
+			"alt": "Cuadro en relieve de un samurái de manga con el globo \"Swing as if you have no arms\""
 		},
 		{
-			"id": "2",
-			"title": "Panel de manga favorito",
-			"description": "El momento que cambió toda la historia",
-			"image": "/images/galery/20260120_212023 (1).jpg",
-			"category": "Colección",
-			"createdAt": "2026-01-20T21:20:23Z",
-			"instagramPostId": ""
+			"id": "juntos-para-siempre",
+			"categoria": "Momentos",
+			"titulo": "Juntos para siempre",
+			"linea": "Su historia, en una pieza para la repisa.",
+			"foto": "/images/trabajos/juntos-para-siempre.jpg",
+			"alt": "Cuadro en relieve de una pareja, en blanco y negro con marco blanco"
 		},
 		{
-			"id": "3",
-			"title": "Juntos para siempre",
-			"description": "Inmortalizamos tu historia de amor",
-			"image": "/images/galery/20260120_211651 (1).jpg",
-			"category": "Momentos",
-			"createdAt": "2026-01-20T21:16:51Z",
-			"instagramPostId": ""
+			"id": "escena-favorita",
+			"categoria": "Ilustración",
+			"titulo": "Tu escena favorita",
+			"linea": "La escena que te marcó, ahora al alcance de la mano.",
+			"foto": "/images/trabajos/escena-favorita.jpg",
+			"alt": "Cuadro en relieve de una ilustración: una niña con sombrero de cono sobre fondo negro y blanco"
 		},
 		{
-			"id": "4",
-			"title": "Tu escena favorita",
-			"description": "Dale forma a ese panel inolvidable",
-			"image": "/images/galery/20260120_211545(2).jpg",
-			"category": "Ilustración",
-			"createdAt": "2026-01-20T21:15:45Z",
-			"instagramPostId": ""
+			"id": "companero-peludo",
+			"categoria": "Mascotas",
+			"titulo": "Tu compañero peludo",
+			"linea": "Con toda su personalidad, en blanco y negro.",
+			"foto": "/images/trabajos/companero-peludo.jpg",
+			"alt": "Cuadro en relieve de un perro pastor, con marco blanco y soporte"
+		},
+		{
+			"id": "pieza-5",
+			"categoria": "Mascotas",
+			"titulo": "Tu gato, en relieve",
+			"linea": "Hasta el último bigote, en blanco y negro.",
+			"foto": "/images/trabajos/gato.jpg",
+			"alt": "Cuadro en relieve de un gato negro, con marco blanco y soporte"
 		}
 	],
-	"updatedAt": "2026-02-14T00:00:00Z"
+	"updatedAt": "2026-10-27T00:00:00Z"
 }

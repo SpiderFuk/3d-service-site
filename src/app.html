@@ -2,10 +2,20 @@
 <html lang="es">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/png" href="%sveltekit.assets%/favicon.png" />
-		<link rel="apple-touch-icon" href="%sveltekit.assets%/apple-touch-icon.png" />
+		<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/icons/favicon-p.svg" />
+		<link rel="icon" type="image/png" sizes="32x32" href="%sveltekit.assets%/icons/favicon-p-32.png" />
+		<link rel="apple-touch-icon" href="%sveltekit.assets%/icons/apple-touch-icon-p.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#3B82F6" />
+		<!-- Igual a --color-crema en src/lib/styles/tokens.css (meta no puede leer variables CSS) -->
+		<meta name="theme-color" content="#FFF4E0" />
+
+		<!-- Fuentes: Bricolage Grotesque (títulos) + Figtree (texto) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap"
+		/>
 
 		<!-- SEO Meta Tags -->
 		<meta

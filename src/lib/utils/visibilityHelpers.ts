@@ -10,7 +10,7 @@ import type {
 	SectionsVisibilityFlag,
 	ServicesVisibilityFlag
 } from '$lib/types/featureFlags';
-import { secciones } from '$lib/config/sections';
+import { secciones, type SeccionKey } from '$lib/config/sections';
 import { services, type Service } from '$lib/config/services';
 import { sectionsVisibilityDefaults } from '$lib/config/sectionsVisibilityDefaults';
 import { servicesVisibilityDefaults } from '$lib/config/servicesVisibilityDefaults';
@@ -24,7 +24,7 @@ import { servicesVisibilityDefaults } from '$lib/config/servicesVisibilityDefaul
  * Override mode: Si el flag está enabled, usa AppConfig; si no, usa sections.ts
  */
 export function isSeccionVisible(
-	sectionKey: keyof typeof secciones,
+	sectionKey: SeccionKey,
 	flag?: SectionsVisibilityFlag
 ): boolean {
 	if (!flag) {
@@ -48,7 +48,7 @@ export function isSeccionVisible(
 export function getSeccionesWithVisibility(flag?: SectionsVisibilityFlag) {
 	return Object.entries(secciones).map(([key, section]) => ({
 		...section,
-		visible: isSeccionVisible(key as keyof typeof secciones, flag)
+		visible: isSeccionVisible(key as SeccionKey, flag)
 	}));
 }
 
@@ -99,20 +99,20 @@ export function getVisibleServices(flag?: ServicesVisibilityFlag): Service[] {
  */
 export interface NavItem {
 	label: string;
+	/** Nombre accesible cuando difiere del texto visible */
+	ariaLabel?: string;
 	href: string;
-	sectionKey: keyof typeof secciones;
+	sectionKey: SeccionKey;
 }
 
 /**
  * Todos los items de navegación con sus secciones correspondientes
  */
 const navItems: NavItem[] = [
-	{ label: 'Inicio', href: '#hero', sectionKey: 'hero' },
-	{ label: 'Servicios', href: '#services', sectionKey: 'services' },
-	{ label: 'Visor 3D', href: '#viewer', sectionKey: 'modelViewer' },
-	{ label: 'Colores', href: '#filaments', sectionKey: 'filamentColors' },
-	{ label: 'Galería', href: '#gallery', sectionKey: 'gallery' },
-	{ label: 'Contacto', href: '#contact', sectionKey: 'contact' }
+	{ label: 'Qué imprimimos', href: '#que-imprimimos', sectionKey: 'tresCaminos' },
+	{ label: 'Trabajos', href: '#trabajos', sectionKey: 'trabajos' },
+	{ label: 'Precios', ariaLabel: 'Precios y plazos', href: '#precios', sectionKey: 'precios' },
+	{ label: 'Contacto', href: '#contacto', sectionKey: 'contacto' }
 ];
 
 /**

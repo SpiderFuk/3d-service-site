@@ -1,24 +1,23 @@
 /**
  * Información de contacto y redes sociales
+ *
+ * El número de WhatsApp vive SOLO acá. El horario está en ./hours.ts y los
+ * mensajes de WhatsApp en ./whatsappMessages.ts.
  */
 
 export const contactInfo = {
+	/** Formato internacional sin "+" (para wa.me) */
 	whatsappNumber: '59896341462',
-	whatsappDisplayNumber: '+598 96 341 462',
+	/** Como se muestra en la página */
+	whatsappDisplayNumber: '096 341 462',
 
-	businessName: '[PRINTO]',
-	city: 'Montevideo | Las Piedras',
+	businessName: 'printo',
+	city: 'Montevideo y Las Piedras',
 
 	email: 'hola@printo.uy',
 
 	socialMedia: {
 		instagram: 'https://www.instagram.com/printo.uy',
-		facebook: undefined as string | undefined
+		instagramHandle: '@printo.uy'
 	}
-};
-
-export const businessHours = {
-	weekdays: 'Lunes a Viernes: 9:00 - 18:00',
-	saturday: 'Sábados: 10:00 - 14:00',
-	sunday: 'Domingos: Cerrado'
 };

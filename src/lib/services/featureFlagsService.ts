@@ -10,12 +10,11 @@
 
 import type {
 	FeatureFlag,
-	OutOfServiceFlag,
 	SectionsVisibilityFlag,
 	ServicesVisibilityFlag
 } from '$lib/types/featureFlags';
-import { outOfServiceDefaults } from '$lib/config/outOfServiceConfig';
 import { sectionsVisibilityDefaults } from '$lib/config/sectionsVisibilityDefaults';
+import type { SeccionKey } from '$lib/config/sections';
 import { servicesVisibilityDefaults } from '$lib/config/servicesVisibilityDefaults';
 
 /**
@@ -41,12 +40,14 @@ function getDefaultFlags(): FeatureFlag[] {
  *
  * La respuesta esperada tiene el formato:
  * {
- *   "out-of-service": {
+ *   "sections-visibility": {
  *     "enabled": true,
- *     "modal": { "title": "...", ... },
- *     "banner": { "message": "...", ... }
+ *     "hero": true,
+ *     "visor": false
  *   }
  * }
+ *
+ * Las claves desconocidas (p. ej. un "out-of-service" que siga en AppConfig) se ignoran.
  *
  * @param data - Respuesta JSON del API
  * @returns Array de feature flags tipados con defaults mergeados
@@ -61,45 +62,6 @@ function parseAPIResponse(data: unknown): FeatureFlag[] {
 	// Iterar sobre cada flag en la respuesta
 	for (const [key, value] of Object.entries(data)) {
 		try {
-			if (key === 'out-of-service') {
-				// Parsear out-of-service flag
-				const rawFlag = value as Record<string, unknown>;
-				const enabled = rawFlag.enabled === true;
-
-				const flag: OutOfServiceFlag = {
-					type: 'out-of-service',
-					enabled,
-					config: {
-						modal: {
-							title:
-								(rawFlag.modal as { title?: string })?.title ||
-								outOfServiceDefaults.modal.title,
-							message:
-								(rawFlag.modal as { message?: string })?.message ||
-								outOfServiceDefaults.modal.message,
-							buttonText:
-								(rawFlag.modal as { buttonText?: string })?.buttonText ||
-								outOfServiceDefaults.modal.buttonText
-						},
-						banner: {
-							message:
-								(rawFlag.banner as { message?: string })?.message ||
-								outOfServiceDefaults.banner.message,
-							icon:
-								((rawFlag.banner as { icon?: string })?.icon as
-									| 'alert-circle'
-									| 'alert-triangle'
-									| 'info') || outOfServiceDefaults.banner.icon,
-							dismissible:
-								(rawFlag.banner as { dismissible?: boolean })?.dismissible ??
-								outOfServiceDefaults.banner.dismissible
-						}
-					}
-				};
-
-				flags.push(flag);
-			}
-
 			if (key === 'sections-visibility') {
 				// Parsear sections-visibility flag
 				const rawFlag = value as Record<string, unknown>;
@@ -108,16 +70,14 @@ function parseAPIResponse(data: unknown): FeatureFlag[] {
 				const flag: SectionsVisibilityFlag = {
 					type: 'sections-visibility',
 					enabled,
-					config: {
-						hero: (rawFlag.hero as boolean) ?? sectionsVisibilityDefaults.hero,
-						services: (rawFlag.services as boolean) ?? sectionsVisibilityDefaults.services,
-						modelViewer:
-							(rawFlag.modelViewer as boolean) ?? sectionsVisibilityDefaults.modelViewer,
-						filamentColors:
-							(rawFlag.filamentColors as boolean) ?? sectionsVisibilityDefaults.filamentColors,
-						gallery: (rawFlag.gallery as boolean) ?? sectionsVisibilityDefaults.gallery,
-						contact: (rawFlag.contact as boolean) ?? sectionsVisibilityDefaults.contact
-					}
+					config: Object.fromEntries(
+						(Object.keys(sectionsVisibilityDefaults) as SeccionKey[]).map((seccion) => [
+							seccion,
+							typeof rawFlag[seccion] === 'boolean'
+								? (rawFlag[seccion] as boolean)
+								: sectionsVisibilityDefaults[seccion]
+						])
+					)
 				};
 
 				flags.push(flag);

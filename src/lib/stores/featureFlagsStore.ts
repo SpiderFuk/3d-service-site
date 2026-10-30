@@ -12,7 +12,6 @@ import { writable, derived, get } from 'svelte/store';
 import type {
 	FeatureFlag,
 	FeatureFlagsState,
-	OutOfServiceFlag,
 	SectionsVisibilityFlag,
 	ServicesVisibilityFlag
 } from '$lib/types/featureFlags';
@@ -202,15 +201,6 @@ function createFeatureFlagsStore() {
 export const featureFlagsStore = createFeatureFlagsStore();
 
 /**
- * Derived store para el flag out-of-service
- * Provee acceso conveniente y tipado al flag específico
- */
-export const outOfServiceFlag = derived(
-	featureFlagsStore,
-	($flags) => $flags.flags['out-of-service'] as OutOfServiceFlag | undefined
-);
-
-/**
  * Derived store para el flag sections-visibility
  * Provee acceso conveniente y tipado al flag específico
  */
@@ -232,15 +222,11 @@ export const servicesVisibilityFlag = derived(
  * Development helpers
  * Expone funciones útiles para debugging en modo desarrollo
  */
-if (import.meta.env.DEV) {
+if (import.meta.env.DEV && typeof window !== 'undefined') {
 	(window as any).__featureFlags = {
 		store: featureFlagsStore,
 		forceRefresh: () => {
 			return featureFlagsStore.fetchFlags();
-		},
-		resetDismissal: () => {
-			localStorage.removeItem('outOfServiceModalDismissed');
-			localStorage.removeItem('outOfServiceFlagVersion');
 		},
 		getState: () => get(featureFlagsStore),
 		stopPolling: () => {

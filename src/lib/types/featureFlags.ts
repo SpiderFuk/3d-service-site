@@ -8,9 +8,11 @@
 
 /**
  * Interface base genérica para todos los feature flags
- * @template T - El nombre único del flag (e.g., 'out-of-service')
+ * @template T - El nombre único del flag (e.g., 'sections-visibility')
  * @template C - El tipo de configuración específica del flag
  */
+import type { SeccionKey } from '$lib/config/sections';
+
 export interface BaseFeatureFlag<T extends string, C = unknown> {
 	/** Nombre único del flag */
 	type: T;
@@ -21,37 +23,12 @@ export interface BaseFeatureFlag<T extends string, C = unknown> {
 }
 
 /**
- * Configuración del flag out-of-service
- * Controla la visualización de modal y banner de servicio no disponible
- */
-export interface OutOfServiceFlag extends BaseFeatureFlag<'out-of-service'> {
-	config?: {
-		modal?: {
-			title?: string;
-			message?: string;
-			buttonText?: string;
-		};
-		banner?: {
-			message?: string;
-			icon?: 'alert-circle' | 'alert-triangle' | 'info';
-			dismissible?: boolean;
-		};
-	};
-}
-
-/**
  * Configuración del flag sections-visibility
  * Controla qué secciones de la página están visibles
  */
 export interface SectionsVisibilityFlag extends BaseFeatureFlag<'sections-visibility'> {
-	config?: {
-		hero?: boolean;
-		services?: boolean;
-		modelViewer?: boolean;
-		filamentColors?: boolean;
-		gallery?: boolean;
-		contact?: boolean;
-	};
+	/** Claves de src/lib/config/sections.ts */
+	config?: Partial<Record<SeccionKey, boolean>>;
 }
 
 /**
@@ -70,10 +47,7 @@ export interface ServicesVisibilityFlag extends BaseFeatureFlag<'services-visibi
  * Union type de todos los feature flags disponibles
  * Agregar nuevos tipos de flags aquí para soporte completo de TypeScript
  */
-export type FeatureFlag =
-	| OutOfServiceFlag
-	| SectionsVisibilityFlag
-	| ServicesVisibilityFlag;
+export type FeatureFlag = SectionsVisibilityFlag | ServicesVisibilityFlag;
 
 /**
  * Estado completo del store de feature flags

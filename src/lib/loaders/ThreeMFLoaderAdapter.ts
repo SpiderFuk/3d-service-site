@@ -26,16 +26,7 @@ export class ThreeMFLoaderAdapter implements IModelLoader {
 						throw new Error('No se pudo leer el archivo');
 					}
 
-					const object = this.loader.parse(contents as ArrayBuffer);
-					this.loadedObjects.push(object);
-
-					// Centrar objeto
-					const box = new Box3().setFromObject(object);
-					const center = new Vector3();
-					box.getCenter(center);
-					object.position.sub(center);
-
-					resolve(object);
+					resolve(this.parse(contents as ArrayBuffer));
 				} catch (error) {
 					console.error('Error al parsear archivo 3MF:', error);
 					// El visualizador web no soporta todos los archivos 3MF (ej: Production Extension).
@@ -53,6 +44,23 @@ export class ThreeMFLoaderAdapter implements IModelLoader {
 			reader.onerror = () => reject(new Error('Error al leer el archivo'));
 			reader.readAsArrayBuffer(file);
 		});
+	}
+
+	/**
+	 * Parsea un 3MF ya leído y lo devuelve centrado.
+	 * Lanza un error si el contenido no se puede interpretar.
+	 */
+	parse(buffer: ArrayBuffer): Object3D {
+		const object = this.loader.parse(buffer);
+		this.loadedObjects.push(object);
+
+		// Centrar objeto
+		const box = new Box3().setFromObject(object);
+		const center = new Vector3();
+		box.getCenter(center);
+		object.position.sub(center);
+
+		return object;
 	}
 
 	getModelInfo(object: Object3D): ModelInfo {

@@ -18,16 +18,19 @@ Leverage the 3D model viewer and modern design to stand out from competitors. Th
 
 ## UI Standards
 
-- **Mobile-first** responsive design
-- **Primary color:** #3B82F6 (blue)
-- **WhatsApp CTA color:** #25D366 (green)
-- **Font:** Inter (400, 500, 600, 700)
-- Clean white backgrounds with subtle shadows
-- Smooth transitions (300ms ease-in-out)
+Design system: **PRINTO Filamento** (`design/landing-v1/BUILD.md` is the source of truth; tokens live in `src/lib/styles/tokens.css`).
+
+- **Mobile-first** responsive design (phone ≤959 px, small desktop 960–1199 px, desktop ≥1200 px)
+- **Colors:** cobalto `#2B3CFF`, tomate, mantequilla, menta, crema page background, tinta text and 2 px borders. No hex colors outside `tokens.css`
+- **Fonts:** Bricolage Grotesque (700/800, headlines) + Figtree (400/500/600, text)
+- **No icons, no emojis**
+- **Buttons:** the cobalto "Pedir presupuesto" button appears once at a time; the WhatsApp button in Contacto is mantequilla; the rest are tinta
+- **Extrusion:** tomate stacked shadow, once per view
+- Motion respects `prefers-reduced-motion`
 
 ## Content Guidelines
 
 - Keep section headings short and descriptive
-- Use action-oriented CTAs (e.g., "Cotizar por WhatsApp")
+- Use action-oriented CTAs (e.g., "Pedir presupuesto")
 - Display model dimensions and volume clearly
 - Show available materials and colors visually (color swatches)

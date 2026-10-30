@@ -6,7 +6,7 @@
 
 ## Description
 
-SPA for a 3D printing ([PRINTO]) service with interactive model viewer with WhatsApp quotation.
+SPA for a 3D printing ([PRINTO]) service: landing page rebuilt as PRINTO Filamento (11 sections), with an interactive model viewer and WhatsApp quotation.
 
 ## Problem Statement
 
