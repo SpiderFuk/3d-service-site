@@ -18,6 +18,10 @@
 	 * Debajo de los links, una sola barra cobalto se desliza hasta el link actual.
 	 * Al tocar un ancla (barra, panel, pie o cualquier botón de la página) el destino
 	 * pasa a ser el actual enseguida, sin recorrer las secciones del medio.
+	 *
+	 * Al acercarse "Qué imprimimos", el cobalto sube por la barra desde el borde de abajo,
+	 * a la par del scroll. Pasada la mitad, logo y links pasan a crema y la barra del link
+	 * actual y el botón de presupuesto a mantequilla (el panel del menú no cambia).
 	 */
 	import { onDestroy, onMount, tick } from 'svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -33,6 +37,35 @@
 	const items = $derived(getVisibleNavItems($sectionsVisibilityFlag));
 	const seccionActual = $derived($uiStore.activeSection);
 	const menuAbierto = $derived($uiStore.isMobileMenuOpen);
+
+	/**
+	 * Cuánto de la barra cubre el cobalto, de abajo hacia arriba (0 a 1). Sube a la par
+	 * del scroll en el último alto de barra antes de que "Qué imprimimos" la alcance.
+	 */
+	let relleno = $state(0);
+	/** Logo, links y botón pasan a crema cuando el cobalto cruza su centro (la mitad) */
+	const enCobalto = $derived(relleno >= 0.5);
+
+	onMount(() => {
+		// Se busca en cada evento: los flags pueden ocultar o mostrar la sección
+		const revisar = () => {
+			const seccion = document.getElementById('que-imprimimos');
+			if (!seccion) {
+				relleno = 0;
+				return;
+			}
+			const caja = barra.getBoundingClientRect();
+			const distancia = seccion.getBoundingClientRect().top - caja.bottom;
+			relleno = Math.min(1, Math.max(0, 1 - distancia / caja.height));
+		};
+		revisar();
+		window.addEventListener('scroll', revisar, { passive: true });
+		window.addEventListener('resize', revisar);
+		return () => {
+			window.removeEventListener('scroll', revisar);
+			window.removeEventListener('resize', revisar);
+		};
+	});
 
 	let barra: HTMLElement;
 	let menuBoton: HTMLButtonElement;
@@ -200,10 +233,18 @@
 	});
 </script>
 
-<header class="barra" bind:this={barra} onfocusout={alSalirFoco}>
+<header
+	class="barra"
+	class:cobalto={enCobalto}
+	style:--relleno={relleno}
+	bind:this={barra}
+	onfocusout={alSalirFoco}
+>
 	<nav aria-label="Principal" class="barra-nav">
+		<!-- Las dos versiones del logo están cargadas: el cambio a crema es un fundido -->
 		<a href="#inicio" aria-label="printo, ir al inicio" class="barra-logo">
 			<img src="/brand/printo-wordmark-cobalto.svg" alt="" />
+			<img src="/brand/printo-wordmark-crema.svg" alt="" class="barra-logo-crema" />
 		</a>
 
 		<div class="barra-centro">
@@ -278,14 +319,14 @@
 		<div
 			id="menu-movil"
 			class="panel"
-			hidden={!menuAbierto}
+			class:abierto={menuAbierto}
 			bind:this={panel}
 			onclick={alTocarPanel}
 		>
 			<ul class="panel-enlaces">
-				{#each items as item (item.href)}
+				{#each items as item, i (item.href)}
 					{@const actual = seccionActual === item.href.slice(1)}
-					<li>
+					<li style:--i={i}>
 						<a
 							href={item.href}
 							aria-label={item.ariaLabel}
@@ -325,6 +366,55 @@
 		background: var(--color-crema);
 	}
 
+	/* Cobalto que sube desde el borde de abajo según --relleno (lo escribe el scroll).
+	   Queda detrás del contenido: la barra con z-index es su propio contexto de apilado */
+	.barra::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: var(--color-cobalto);
+		transform: scaleY(var(--relleno, 0));
+		transform-origin: bottom;
+		pointer-events: none;
+	}
+
+	/* Con el cobalto pasada la mitad: logo y links crema, barra del link actual y
+	   botón de presupuesto mantequilla, anillo de foco crema */
+	.barra.cobalto .barra-logo img {
+		opacity: 0;
+	}
+
+	.barra.cobalto .barra-logo .barra-logo-crema {
+		opacity: 1;
+	}
+
+	.barra.cobalto .barra-enlace {
+		color: var(--color-crema);
+	}
+
+	.barra.cobalto .barra-enlace:hover {
+		color: var(--color-mantequilla);
+	}
+
+	.barra.cobalto .barra-indicador {
+		background: var(--color-mantequilla);
+	}
+
+	.barra.cobalto :global(.barra-cta-boton),
+	.barra.cobalto :global(.barra-pildora) {
+		background: var(--color-mantequilla);
+		color: var(--color-tinta);
+	}
+
+	.barra.cobalto .barra-logo:focus-visible,
+	.barra.cobalto .barra-enlace:focus-visible,
+	.barra.cobalto :global(.barra-cta-boton:focus-visible),
+	.barra.cobalto :global(.barra-pildora:focus-visible),
+	.barra.cobalto .barra-menu:focus-visible {
+		outline-color: var(--color-crema);
+	}
+
 	/* Alto fijo desde --header-height (las anclas y el panel del menú lo usan).
 	   Tres columnas: logo | links | botón. Las de los costados miden lo mismo (1fr),
 	   así los links quedan centrados en la página aunque el logo y el botón difieran.
@@ -343,6 +433,7 @@
 	.barra-logo {
 		grid-column: 1;
 		justify-self: start;
+		position: relative;
 		display: flex;
 		align-items: center;
 		min-height: var(--tap-min);
@@ -352,6 +443,16 @@
 		display: block;
 		width: 112px;
 		height: auto;
+		transition: opacity 0.2s ease;
+	}
+
+	/* Encima de la versión cobalto, oculta hasta que la barra pasa a cobalto */
+	.barra-logo .barra-logo-crema {
+		position: absolute;
+		left: 0;
+		top: 50%;
+		translate: 0 -50%;
+		opacity: 0;
 	}
 
 	.barra-centro {
@@ -376,6 +477,7 @@
 		font-size: 15px;
 		font-weight: 500;
 		text-decoration: none;
+		transition: color 0.2s ease;
 	}
 
 	.barra-enlace:hover {
@@ -448,6 +550,11 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		.barra-logo img,
+		.barra-enlace {
+			transition: none;
+		}
+
 		.barra-cta :global(.barra-cta-boton),
 		.barra-movil :global(.barra-pildora) {
 			animation: none;
@@ -502,7 +609,9 @@
 		height: 2px;
 		border-radius: 2px;
 		background: var(--color-tinta);
-		transition: transform 0.15s ease, opacity 0.15s ease;
+		transition:
+			transform 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+			opacity 0.2s ease;
 	}
 
 	.barra-menu.abierto .barra-menu-rayas span:nth-child(1) {
@@ -531,6 +640,53 @@
 		overflow-y: auto;
 		overscroll-behavior: contain;
 		background: var(--color-crema);
+	}
+
+	/* Cerrado: transparente, un poco más arriba y oculto (visibility cambia al final
+	   del cierre y al principio de la apertura, así se ve la animación, como en Preguntas) */
+	.panel {
+		opacity: 0;
+		transform: translateY(-12px);
+		visibility: hidden;
+		pointer-events: none;
+		transition:
+			transform 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+			opacity 0.2s ease,
+			visibility 0s linear 0.3s;
+	}
+
+	.panel.abierto {
+		opacity: 1;
+		transform: none;
+		visibility: visible;
+		pointer-events: auto;
+		transition:
+			transform 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+			opacity 0.25s ease,
+			visibility 0s;
+	}
+
+	/* Al abrir, los links bajan uno detrás del otro; al cerrar se van con el panel */
+	.panel-enlaces li {
+		opacity: 0;
+		transform: translateY(-8px);
+		transition:
+			transform 0.3s cubic-bezier(0.3, 0.7, 0.2, 1),
+			opacity 0.2s ease;
+	}
+
+	.panel.abierto .panel-enlaces li {
+		opacity: 1;
+		transform: none;
+		transition-delay: calc(0.05s + var(--i, 0) * 0.04s);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.panel,
+		.panel.abierto,
+		.panel-enlaces li {
+			transition: none;
+		}
 	}
 
 	.panel-enlaces {
@@ -588,6 +744,20 @@
 
 	/* Teléfono: solo CSS, sin display en línea que pise la media query */
 	@media (max-width: 959px) {
+		/* Logo a la izquierda, píldora y menú a la derecha. Sin la grilla de desktop
+		   (columnas 1fr y dos huecos de 24 px), que no dejaba lugar a la píldora y apretaba el logo */
+		.barra-nav {
+			display: flex;
+			justify-content: space-between;
+			gap: 12px;
+		}
+
+		/* El SVG no tiene ancho propio: sin flex: none se achica cuando falta lugar */
+		.barra-logo,
+		.barra-logo img {
+			flex: none;
+		}
+
 		.barra-logo img {
 			width: 96px;
 		}
@@ -596,8 +766,8 @@
 			display: flex;
 		}
 
-		/* El panel se muestra solo en el teléfono y solo abierto (sin el atributo hidden) */
-		.panel:not([hidden]) {
+		/* El panel existe solo en el teléfono; cerrado lo oculta visibility (ver .panel) */
+		.panel {
 			display: flex;
 		}
 
